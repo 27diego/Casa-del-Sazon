@@ -13,6 +13,9 @@
 		8B0DCFE32577473000A8A013 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B0DCFE22577473000A8A013 /* Preview Assets.xcassets */; };
 		8B0DCFE52577473000A8A013 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DCFE42577473000A8A013 /* Persistence.swift */; };
 		8B0DCFE82577473000A8A013 /* LaCasaDelSazon.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DCFE62577473000A8A013 /* LaCasaDelSazon.xcdatamodeld */; };
+		8B0DCFF12577474F00A8A013 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DCFF02577474F00A8A013 /* LoginView.swift */; };
+		8B0DCFF72577480E00A8A013 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DCFF62577480E00A8A013 /* Spacing.swift */; };
+		8BDADB92257749780000DBB4 /* ReusableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDADB91257749780000DBB4 /* ReusableViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		8B0DCFE42577473000A8A013 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		8B0DCFE72577473000A8A013 /* LaCasaDelSazon.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LaCasaDelSazon.xcdatamodel; sourceTree = "<group>"; };
 		8B0DCFE92577473000A8A013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B0DCFF02577474F00A8A013 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		8B0DCFF62577480E00A8A013 /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
+		8BDADB91257749780000DBB4 /* ReusableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +62,8 @@
 		8B0DCFDA2577472F00A8A013 /* LaCasaDelSazon */ = {
 			isa = PBXGroup;
 			children = (
+				8B0DCFF5257747FD00A8A013 /* Configurations */,
+				8B0DCFF32577477E00A8A013 /* View */,
 				8B0DCFDB2577472F00A8A013 /* LaCasaDelSazonApp.swift */,
 				8B0DCFDD2577472F00A8A013 /* ContentView.swift */,
 				8B0DCFDF2577473000A8A013 /* Assets.xcassets */,
@@ -73,6 +81,23 @@
 				8B0DCFE22577473000A8A013 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		8B0DCFF32577477E00A8A013 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8B0DCFF02577474F00A8A013 /* LoginView.swift */,
+				8BDADB91257749780000DBB4 /* ReusableViews.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8B0DCFF5257747FD00A8A013 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				8B0DCFF62577480E00A8A013 /* Spacing.swift */,
+			);
+			path = Configurations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,10 +169,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BDADB92257749780000DBB4 /* ReusableViews.swift in Sources */,
 				8B0DCFE82577473000A8A013 /* LaCasaDelSazon.xcdatamodeld in Sources */,
 				8B0DCFE52577473000A8A013 /* Persistence.swift in Sources */,
 				8B0DCFDE2577472F00A8A013 /* ContentView.swift in Sources */,
+				8B0DCFF12577474F00A8A013 /* LoginView.swift in Sources */,
 				8B0DCFDC2577472F00A8A013 /* LaCasaDelSazonApp.swift in Sources */,
+				8B0DCFF72577480E00A8A013 /* Spacing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
