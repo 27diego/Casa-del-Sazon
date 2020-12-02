@@ -23,7 +23,6 @@ struct LoginView: View {
                         .bold()
                     Spacer()
                 }
-                
                 Image("SazonLogo")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -33,16 +32,11 @@ struct LoginView: View {
                     Text("Login")
                     Spacer()
                 }
-                                
                 CustomTextFieldView(content: $email, placeholder: "Email", type: .nonSecure)
-                
                 CustomTextFieldView(content: $password, placeholder: "Password", type: .secure)
-                
-                
                 RegularButtonView(text: "Login", textColor: .white, buttonColor: .red) {}
                 RegularButtonView(symbolImage: "applelogo", text: "Continue with apple", textColor: .white, buttonColor: .black) {}
                 RegularButtonView(image: Image("google"), text: "Continue with Google", textColor: .white, buttonColor: Color(#colorLiteral(red: 0.2588235294, green: 0.5215686275, blue: 0.9568627451, alpha: 1))) {}
-                
                 VStack {
                     HStack {
                         Text("Don't have an account?")
@@ -52,7 +46,7 @@ struct LoginView: View {
                                 presentSignUpSheet.toggle()
                             }
                             .sheet(isPresented: $presentSignUpSheet, content: {
-                                Text("Hello")
+                                SignUpView()
                             })
                     }
                     Text("OR")

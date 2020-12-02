@@ -103,6 +103,14 @@ struct CustomTextFieldView: View {
     }
 }
 
+struct DragIndicatorView: View {
+    var body: some View {
+        RoundedRectangle(cornerRadius: 5)
+            .frame(width: 40, height: 4)
+            .foregroundColor(.gray)
+    }
+}
+
 struct ReusableViews_Previews: PreviewProvider {
     static var previews: some View {
         CustomTextFieldView(content: .constant(""), placeholder: "email", type: .secure)
