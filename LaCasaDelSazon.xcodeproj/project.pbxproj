@@ -15,6 +15,7 @@
 		8B0DCFE82577473000A8A013 /* LaCasaDelSazon.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DCFE62577473000A8A013 /* LaCasaDelSazon.xcdatamodeld */; };
 		8B0DCFF12577474F00A8A013 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DCFF02577474F00A8A013 /* LoginView.swift */; };
 		8B0DCFF72577480E00A8A013 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DCFF62577480E00A8A013 /* Spacing.swift */; };
+		8B8AE283257849E50095D334 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE282257849E50095D334 /* Enums.swift */; };
 		8BDADB92257749780000DBB4 /* ReusableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDADB91257749780000DBB4 /* ReusableViews.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		8B0DCFE92577473000A8A013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B0DCFF02577474F00A8A013 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		8B0DCFF62577480E00A8A013 /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
+		8B8AE282257849E50095D334 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		8BDADB91257749780000DBB4 /* ReusableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,6 +64,7 @@
 		8B0DCFDA2577472F00A8A013 /* LaCasaDelSazon */ = {
 			isa = PBXGroup;
 			children = (
+				8B8AE281257849D50095D334 /* Enums & Extensions */,
 				8B0DCFF5257747FD00A8A013 /* Configurations */,
 				8B0DCFF32577477E00A8A013 /* View */,
 				8B0DCFDB2577472F00A8A013 /* LaCasaDelSazonApp.swift */,
@@ -98,6 +101,14 @@
 				8B0DCFF62577480E00A8A013 /* Spacing.swift */,
 			);
 			path = Configurations;
+			sourceTree = "<group>";
+		};
+		8B8AE281257849D50095D334 /* Enums & Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8B8AE282257849E50095D334 /* Enums.swift */,
+			);
+			path = "Enums & Extensions";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,6 +186,7 @@
 				8B0DCFDE2577472F00A8A013 /* ContentView.swift in Sources */,
 				8B0DCFF12577474F00A8A013 /* LoginView.swift in Sources */,
 				8B0DCFDC2577472F00A8A013 /* LaCasaDelSazonApp.swift in Sources */,
+				8B8AE283257849E50095D334 /* Enums.swift in Sources */,
 				8B0DCFF72577480E00A8A013 /* Spacing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

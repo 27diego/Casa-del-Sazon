@@ -63,15 +63,48 @@ struct RegularButtonView: View {
     }
 }
 
+struct CustomTextFieldView: View {
+    var spacing: AppSpacing = AppSpacing()
+    @Binding var content: String
+    var placeholder: String
+    var type: FieldType
+    var width: CGFloat = 0
+    
+    init(content: Binding<String>, placeholder: String, type: FieldType, width: CGFloat) {
+        self._content = content
+        self.placeholder = placeholder
+        self.type = type
+        self.width = width
+    }
+    
+    init(content: Binding<String>, placeholder: String, type: FieldType) {
+        self._content = content
+        self.placeholder = placeholder
+        self.type = type
+    }
+    
+    var body: some View {
+        if type == .nonSecure{
+            TextField(placeholder, text: $content)
+                .padding()
+                .background(Color(#colorLiteral(red: 0.768627451, green: 0.768627451, blue: 0.768627451, alpha: 1)).opacity(0.40))
+                .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.black.opacity(0.6)))
+                .frame(width: width == 0 ? spacing.screenWidth * 0.9 : width)
+            
+        }
+        else if type == .secure {
+            SecureField(placeholder, text: $content)
+                .padding()
+                .background(Color(#colorLiteral(red: 0.768627451, green: 0.768627451, blue: 0.768627451, alpha: 1)).opacity(0.40))
+                .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.black.opacity(0.6)))
+                .frame(width: width == 0 ? spacing.screenWidth * 0.9 : width)
+        }
+        
+    }
+}
+
 struct ReusableViews_Previews: PreviewProvider {
     static var previews: some View {
-        VStack {
-            RegularButtonView(symbolImage: "applelogo", text: "Continue with apple", textColor: .black, buttonColor: .red) {
-                
-            }
-            RegularButtonView(image: Image("google"), text: "Continue with google", textColor: .white, buttonColor: .blue) {
-                
-            }
-        }
+        CustomTextFieldView(content: .constant(""), placeholder: "email", type: .secure)
     }
 }

@@ -33,20 +33,11 @@ struct LoginView: View {
                     Text("Login")
                     Spacer()
                 }
+                                
+                CustomTextFieldView(content: $email, placeholder: "Email", type: .nonSecure)
                 
-                // MARK: Fix borders
+                CustomTextFieldView(content: $password, placeholder: "Password", type: .secure)
                 
-                TextField("EmailAddress", text: $email)
-                    .padding()
-                    .background(Color(#colorLiteral(red: 0.768627451, green: 0.768627451, blue: 0.768627451, alpha: 1)).opacity(0.40))
-                    .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.black.opacity(0.6)))
-                    .frame(width: spacing.screenWidth * 0.9)
-                
-                SecureField("Password", text: $password)
-                    .padding()
-                    .background(Color(#colorLiteral(red: 0.768627451, green: 0.768627451, blue: 0.768627451, alpha: 1)).opacity(0.40))
-                    .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.black.opacity(0.6)))
-                    .frame(width: spacing.screenWidth * 0.9)
                 
                 RegularButtonView(text: "Login", textColor: .white, buttonColor: .red) {}
                 RegularButtonView(symbolImage: "applelogo", text: "Continue with apple", textColor: .white, buttonColor: .black) {}
@@ -57,6 +48,12 @@ struct LoginView: View {
                         Text("Don't have an account?")
                         Text("Create an account")
                             .foregroundColor(.red)
+                            .onTapGesture {
+                                presentSignUpSheet.toggle()
+                            }
+                            .sheet(isPresented: $presentSignUpSheet, content: {
+                                Text("Hello")
+                            })
                     }
                     Text("OR")
                     Text("Continue as guest")
