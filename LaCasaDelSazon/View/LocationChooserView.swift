@@ -11,7 +11,12 @@ import MapKit
 struct LocationChooserView: View {
     var spacing: AppSpacing = AppSpacing()
     @State var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 36.506900, longitude: -121.763223), span: MKCoordinateSpan(latitudeDelta: 0.4, longitudeDelta: 0.4))
-    @GestureState var menuOffsetDrag: CGFloat = .zero
+    @GestureState var dragMenu: CGFloat = .zero
+    @State var menuPosition: CGFloat
+    
+    init(){
+        self._menuPosition = State(initialValue: spacing.screenHeight+100)
+    }
     
     var body: some View {
         NavigationView {
@@ -21,7 +26,34 @@ struct LocationChooserView: View {
                     .navigationBarHidden(true)
                     .ignoresSafeArea()
                 
+                VStack {
+                    Text("Menu Position: \(menuPosition + dragMenu)")
+                    Text("Menu Position \(menuPosition)")
+                    Text("Drag Offset \(dragMenu)")
+                }
+                .zIndex(2)
+                
                 RestaurantChooserView(region: $region)
+                    .position(x: spacing.screenWidth/2, y: menuPosition)
+                    .offset(y: dragMenu)
+                    .gesture(
+                        DragGesture()
+                            .updating($dragMenu, body: { (value, state, _) in
+                                state = value.translation.height
+                                if menuPosition + state < 640 {
+                                    menuPosition = 640
+                                    state = value.translation.height * 0.1
+                                }
+                            })
+                            .onEnded { value in
+                                if menuPosition < 800 {
+                                    menuPosition = 640
+                                }
+                                else {
+                                    menuPosition += value.translation.height
+                                }
+                            }
+                    )
             }
         }
         .ignoresSafeArea()
@@ -35,6 +67,7 @@ struct RestaurantChooserView: View {
         VStack {
             DragIndicatorView()
                 .padding()
+            Text("Choose your favorite spot")
             ForEach(restaurants) { restaurant in
                 HStack(alignment: .center) {
                     Image(restaurant.image)
@@ -65,11 +98,13 @@ struct RestaurantChooserView: View {
                     }
                 }
             }
+            Spacer()
+                .frame(height: 100)
         }
         .padding()
         .frame(width: spacing.screenWidth)
         .background(Color.white)
-        .cornerRadius(10)
+        .cornerRadius(20)
     }
 }
 
