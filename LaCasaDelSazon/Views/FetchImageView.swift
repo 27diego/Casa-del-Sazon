@@ -7,37 +7,7 @@
 
 import SwiftUI
 
-struct RemoteImage: View {
-    private enum LoadState {
-        case loading, success, failure
-    }
-    
-    private class Loader: ObservableObject {
-        var data = Data()
-        var state = LoadState.loading
-    
-        init(url: String){
-            guard let parsedURL = URL(string: url) else {
-                fatalError("Invalid URL: \(url)")
-            }
-            
-            URLSession.shared.dataTask(with: parsedURL) { data, response, error in
-                if let data = data, data.count > 0 {
-                    self.data = data
-                    self.state = .success
-                }
-                else {
-                    self.state = .failure
-                }
-                
-                DispatchQueue.main.async {
-                    self.objectWillChange.send()
-                }
-            }.resume()
-        }
-    }
-    
-    
+struct FetchImageView: View {
     @StateObject private var loader: Loader
     var loading: Image
     var failure: Image
@@ -69,4 +39,35 @@ struct RemoteImage: View {
             }
         }
     }
+}
+
+
+private class Loader: ObservableObject {
+    @Published var data = Data()
+    @Published var state = LoadState.loading
+
+    init(url: String){
+        guard let parsedURL = URL(string: url) else {
+            fatalError("Invalid URL: \(url)")
+        }
+        
+        URLSession.shared.dataTask(with: parsedURL) { data, response, error in
+            if let data = data, data.count > 0 {
+                DispatchQueue.main.async {
+                    self.data = data
+                    self.state = .success
+                }
+            }
+            else {
+                DispatchQueue.main.async {
+                self.state = .failure
+                }
+            }
+        }.resume()
+    }
+}
+
+
+private enum LoadState {
+    case loading, success, failure
 }

@@ -13,7 +13,7 @@ struct LaCasaDelSazonApp: App {
 
     var body: some Scene {
         WindowGroup {
-            LocationChooserView()
+            ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

@@ -18,7 +18,7 @@
 		8B8AE283257849E50095D334 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE282257849E50095D334 /* Enums.swift */; };
 		8B8AE28825784D730095D334 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE28725784D730095D334 /* SignUpView.swift */; };
 		8B8AE28D257851F60095D334 /* LocationChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE28C257851F60095D334 /* LocationChooserView.swift */; };
-		8B8AE291257853FE0095D334 /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE290257853FE0095D334 /* RemoteImage.swift */; };
+		8B8AE291257853FE0095D334 /* FetchImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE290257853FE0095D334 /* FetchImageView.swift */; };
 		8BDADB92257749780000DBB4 /* ReusableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDADB91257749780000DBB4 /* ReusableViews.swift */; };
 /* End PBXBuildFile section */
 
@@ -36,7 +36,7 @@
 		8B8AE282257849E50095D334 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		8B8AE28725784D730095D334 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		8B8AE28C257851F60095D334 /* LocationChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationChooserView.swift; sourceTree = "<group>"; };
-		8B8AE290257853FE0095D334 /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
+		8B8AE290257853FE0095D334 /* FetchImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchImageView.swift; sourceTree = "<group>"; };
 		8BDADB91257749780000DBB4 /* ReusableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,7 +72,7 @@
 			children = (
 				8B8AE281257849D50095D334 /* Enums & Extensions */,
 				8B0DCFF5257747FD00A8A013 /* Configurations */,
-				8B0DCFF32577477E00A8A013 /* View */,
+				8B0DCFF32577477E00A8A013 /* Views */,
 				8B0DCFDB2577472F00A8A013 /* LaCasaDelSazonApp.swift */,
 				8B0DCFDD2577472F00A8A013 /* ContentView.swift */,
 				8B0DCFDF2577473000A8A013 /* Assets.xcassets */,
@@ -92,16 +92,16 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		8B0DCFF32577477E00A8A013 /* View */ = {
+		8B0DCFF32577477E00A8A013 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				8B0DCFF02577474F00A8A013 /* LoginView.swift */,
 				8B8AE28725784D730095D334 /* SignUpView.swift */,
 				8B8AE28C257851F60095D334 /* LocationChooserView.swift */,
 				8BDADB91257749780000DBB4 /* ReusableViews.swift */,
-				8B8AE290257853FE0095D334 /* RemoteImage.swift */,
+				8B8AE290257853FE0095D334 /* FetchImageView.swift */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		8B0DCFF5257747FD00A8A013 /* Configurations */ = {
@@ -193,7 +193,7 @@
 				8B0DCFE82577473000A8A013 /* LaCasaDelSazon.xcdatamodeld in Sources */,
 				8B0DCFE52577473000A8A013 /* Persistence.swift in Sources */,
 				8B0DCFDE2577472F00A8A013 /* ContentView.swift in Sources */,
-				8B8AE291257853FE0095D334 /* RemoteImage.swift in Sources */,
+				8B8AE291257853FE0095D334 /* FetchImageView.swift in Sources */,
 				8B0DCFF12577474F00A8A013 /* LoginView.swift in Sources */,
 				8B8AE28D257851F60095D334 /* LocationChooserView.swift in Sources */,
 				8B0DCFDC2577472F00A8A013 /* LaCasaDelSazonApp.swift in Sources */,
