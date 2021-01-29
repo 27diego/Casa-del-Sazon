@@ -95,10 +95,10 @@
 		8B0DCFF32577477E00A8A013 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8B2ED06625C3BB8C005A0DFA /* SubViews */,
 				8B0DCFF02577474F00A8A013 /* LoginView.swift */,
 				8B8AE28725784D730095D334 /* SignUpView.swift */,
 				8B8AE28C257851F60095D334 /* LocationChooserView.swift */,
-				8BDADB91257749780000DBB4 /* ReusableViews.swift */,
 				8B8AE290257853FE0095D334 /* FetchImageView.swift */,
 			);
 			path = Views;
@@ -110,6 +110,14 @@
 				8B0DCFF62577480E00A8A013 /* Spacing.swift */,
 			);
 			path = Configurations;
+			sourceTree = "<group>";
+		};
+		8B2ED06625C3BB8C005A0DFA /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				8BDADB91257749780000DBB4 /* ReusableViews.swift */,
+			);
+			path = SubViews;
 			sourceTree = "<group>";
 		};
 		8B8AE281257849D50095D334 /* Enums & Extensions */ = {
