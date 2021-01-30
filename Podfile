@@ -9,5 +9,6 @@ target 'LaCasaDelSazon' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
+  pod 'GoogleSignIn'
 
 end
