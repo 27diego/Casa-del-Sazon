@@ -1,0 +1,6 @@
+framework module Pods_LaCasaDelSazon {
+  umbrella header "Pods-LaCasaDelSazon-umbrella.h"
+
+  export *
+  module * { export * }
+}

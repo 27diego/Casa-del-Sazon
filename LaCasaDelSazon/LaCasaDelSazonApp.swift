@@ -6,10 +6,17 @@
 //
 
 import SwiftUI
+import Firebase
 
 @main
 struct LaCasaDelSazonApp: App {
-    let persistenceController = PersistenceController.shared
+    let persistenceController: PersistenceController
+    init() {
+        persistenceController = PersistenceController.shared
+        FirebaseApp.configure()
+    }
+    
+
 
     var body: some Scene {
         WindowGroup {
@@ -18,3 +25,16 @@ struct LaCasaDelSazonApp: App {
         }
     }
 }
+
+// MARK: - Traditional route, safer??
+
+//This goes inside struct
+//    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+
+
+//class AppDelegate: NSObject, UIApplicationDelegate {
+//    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+//        FirebaseApp.configure()
+//        return true
+//    }
+//}
