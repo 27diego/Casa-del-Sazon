@@ -59,7 +59,10 @@ class AppDelegate: NSObject, UIApplicationDelegate, GIDSignInDelegate {
                 return
             }
             
-            print("user = \(res?.user.email ?? "no email")")
+//            res?.user.uid
+//            res?.user.displayName
+//            res?.user.email
+//            res?.user.phoneNumber
         }
     }
 

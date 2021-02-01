@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct RegularButtonView: View {
-    var spacing = AppSpacing()
     
     var image: Image?
     var symbolImage: String?
@@ -56,7 +55,7 @@ struct RegularButtonView: View {
             }
             .foregroundColor(textColor)
             .padding()
-            .frame(width: spacing.screenWidth * 0.9)
+            .frame(width: UIScreen.screenWidth * 0.9)
             .background(buttonColor)
             .cornerRadius(7)
         })
@@ -64,7 +63,6 @@ struct RegularButtonView: View {
 }
 
 struct CustomTextFieldView: View {
-    var spacing: AppSpacing = AppSpacing()
     @Binding var content: String
     var placeholder: String
     var type: FieldType
@@ -89,7 +87,7 @@ struct CustomTextFieldView: View {
                 .padding()
                 .background(Color(#colorLiteral(red: 0.768627451, green: 0.768627451, blue: 0.768627451, alpha: 1)).opacity(0.40))
                 .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.black.opacity(0.6)))
-                .frame(width: width == 0 ? spacing.screenWidth * 0.9 : width)
+                .frame(width: width == 0 ? UIScreen.screenWidth * 0.9 : width)
             
         }
         else if type == .secure {
@@ -97,7 +95,7 @@ struct CustomTextFieldView: View {
                 .padding()
                 .background(Color(#colorLiteral(red: 0.768627451, green: 0.768627451, blue: 0.768627451, alpha: 1)).opacity(0.40))
                 .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.black.opacity(0.6)))
-                .frame(width: width == 0 ? spacing.screenWidth * 0.9 : width)
+                .frame(width: width == 0 ? UIScreen.screenWidth * 0.9 : width)
         }
         
     }

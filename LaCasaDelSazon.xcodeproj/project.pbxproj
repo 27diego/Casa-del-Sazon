@@ -15,10 +15,10 @@
 		8B0DCFE52577473000A8A013 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DCFE42577473000A8A013 /* Persistence.swift */; };
 		8B0DCFE82577473000A8A013 /* LaCasaDelSazon.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DCFE62577473000A8A013 /* LaCasaDelSazon.xcdatamodeld */; };
 		8B0DCFF12577474F00A8A013 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DCFF02577474F00A8A013 /* LoginView.swift */; };
-		8B0DCFF72577480E00A8A013 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DCFF62577480E00A8A013 /* Spacing.swift */; };
-		8B55E92F25C50387003A4861 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B55E92E25C50387003A4861 /* LoginViewModel.swift */; };
+		8B55E92F25C50387003A4861 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B55E92E25C50387003A4861 /* AuthenticationViewModel.swift */; };
 		8B55E93425C887D8003A4861 /* GoogleSignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B55E93325C887D8003A4861 /* GoogleSignInButton.swift */; };
 		8B55E93B25C88B53003A4861 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B55E93A25C88B53003A4861 /* User+CoreDataClass.swift */; };
+		8B55E94125C8A8D7003A4861 /* UIScreenExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B55E94025C8A8D7003A4861 /* UIScreenExtension.swift */; };
 		8B8AE283257849E50095D334 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE282257849E50095D334 /* Enums.swift */; };
 		8B8AE28825784D730095D334 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE28725784D730095D334 /* SignUpView.swift */; };
 		8B8AE28D257851F60095D334 /* LocationChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE28C257851F60095D334 /* LocationChooserView.swift */; };
@@ -40,10 +40,10 @@
 		8B0DCFE72577473000A8A013 /* LaCasaDelSazon.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LaCasaDelSazon.xcdatamodel; sourceTree = "<group>"; };
 		8B0DCFE92577473000A8A013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B0DCFF02577474F00A8A013 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		8B0DCFF62577480E00A8A013 /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
-		8B55E92E25C50387003A4861 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		8B55E92E25C50387003A4861 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		8B55E93325C887D8003A4861 /* GoogleSignInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInButton.swift; sourceTree = "<group>"; };
 		8B55E93A25C88B53003A4861 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "User+CoreDataClass.swift"; path = "/Users/developer/Documents/Developer/iOS/LaCasaDelSazon/LaCasaDelSazon/CoreData/User+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		8B55E94025C8A8D7003A4861 /* UIScreenExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScreenExtension.swift; sourceTree = "<group>"; };
 		8B8AE282257849E50095D334 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		8B8AE28725784D730095D334 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		8B8AE28C257851F60095D334 /* LocationChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationChooserView.swift; sourceTree = "<group>"; };
@@ -134,7 +134,6 @@
 		8B0DCFF5257747FD00A8A013 /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				8B0DCFF62577480E00A8A013 /* Spacing.swift */,
 			);
 			path = Configurations;
 			sourceTree = "<group>";
@@ -150,7 +149,7 @@
 		8B55E92D25C50373003A4861 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				8B55E92E25C50387003A4861 /* LoginViewModel.swift */,
+				8B55E92E25C50387003A4861 /* AuthenticationViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -184,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				8B8AE282257849E50095D334 /* Enums.swift */,
+				8B55E94025C8A8D7003A4861 /* UIScreenExtension.swift */,
 			);
 			path = "Enums & Extensions";
 			sourceTree = "<group>";
@@ -335,13 +335,13 @@
 				8B8AE291257853FE0095D334 /* FetchImageView.swift in Sources */,
 				8B0DCFF12577474F00A8A013 /* LoginView.swift in Sources */,
 				8B55E93B25C88B53003A4861 /* User+CoreDataClass.swift in Sources */,
+				8B55E94125C8A8D7003A4861 /* UIScreenExtension.swift in Sources */,
 				8B8AE28D257851F60095D334 /* LocationChooserView.swift in Sources */,
 				8B0DCFDC2577472F00A8A013 /* LaCasaDelSazonApp.swift in Sources */,
-				8B55E92F25C50387003A4861 /* LoginViewModel.swift in Sources */,
+				8B55E92F25C50387003A4861 /* AuthenticationViewModel.swift in Sources */,
 				8B8AE283257849E50095D334 /* Enums.swift in Sources */,
 				8B55E93425C887D8003A4861 /* GoogleSignInButton.swift in Sources */,
 				8B8AE28825784D730095D334 /* SignUpView.swift in Sources */,
-				8B0DCFF72577480E00A8A013 /* Spacing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

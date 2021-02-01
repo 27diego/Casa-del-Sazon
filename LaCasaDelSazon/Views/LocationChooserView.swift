@@ -9,7 +9,6 @@ import SwiftUI
 import MapKit
 
 struct LocationChooserView: View {
-    var spacing: AppSpacing = AppSpacing()
     @State var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 36.506900, longitude: -121.763223), span: MKCoordinateSpan(latitudeDelta: 0.4, longitudeDelta: 0.4))
     @State var selectedRestaurant: UUID = UUID()
     @GestureState var dragMenu: CGFloat = .zero
@@ -44,7 +43,7 @@ struct LocationChooserView: View {
                             }
                         }
                 }
-                .offset(y: menuPosition+dragMenu+spacing.screenHeight-(menuSize/5.5))
+                .offset(y: menuPosition+dragMenu+UIScreen.screenHeight-(menuSize/5.5))
                 .gesture(
                     DragGesture()
                         .updating($dragMenu, body: { (value, state, _) in
@@ -118,7 +117,6 @@ struct RestaurantMapView: View {
 
 
 struct RestaurantChooserView: View {
-    var spacing: AppSpacing = AppSpacing()
     @Binding var region: MKCoordinateRegion
     @Binding var menuPosition: CGFloat
     @Binding var selectedRestaurant: UUID
@@ -165,7 +163,7 @@ struct RestaurantChooserView: View {
                 .frame(height: 100)
         }
         .padding()
-        .frame(width: spacing.screenWidth)
+        .frame(width: UIScreen.screenWidth)
         .background(Color.white)
         .cornerRadius(20)
     }

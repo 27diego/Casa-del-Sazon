@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SignUpView: View {
-    var spacing: AppSpacing = AppSpacing()
     @State var name: String = ""
     @State var email: String = ""
     @State var password: String = ""
@@ -17,7 +16,7 @@ struct SignUpView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Spacer()
-                .frame(height: spacing.screenHeight * 0.02)
+                .frame(height: UIScreen.screenHeight * 0.02)
             Text("Sign Up!")
                 .font(.title)
                 .bold()
@@ -34,12 +33,12 @@ struct SignUpView: View {
                 CustomTextFieldView(content: $phone, placeholder: "Phone Number", type: .nonSecure)
             }
             Spacer()
-                .frame(height: spacing.screenHeight * 0.02)
+                .frame(height: UIScreen.screenHeight * 0.02)
             RegularButtonView(text: "Sign Up", textColor: .white, buttonColor: .red) {}
             Spacer()
-                .frame(height: spacing.screenHeight * 0.02)
+                .frame(height: UIScreen.screenHeight * 0.02)
         }
-        .padding(spacing.padding)
+        .padding(UIScreen.padding)
     }
 }
 

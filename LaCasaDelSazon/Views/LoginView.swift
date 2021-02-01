@@ -12,7 +12,6 @@ struct LoginView: View {
     @State private var password: String = ""
     @State private var presentSignUpSheet: Bool = false
     
-    var spacing: AppSpacing = AppSpacing()
     
     var body: some View {
         NavigationView {
@@ -39,7 +38,7 @@ struct LoginView: View {
 //                RegularButtonView(image: Image("google"), text: "Continue with Google", textColor: .white, buttonColor: Color(#colorLiteral(red: 0.2588235294, green: 0.5215686275, blue: 0.9568627451, alpha: 1))) {}
                 
                 GoogleButton()
-                    .frame(width: spacing.screenWidth * 0.9)                
+                    .frame(width: UIScreen.screenWidth * 0.9)                
                 VStack {
                     HStack {
                         Text("Don't have an account?")
@@ -61,7 +60,7 @@ struct LoginView: View {
             .navigationTitle("")
             .navigationBarHidden(true)
         }
-        .padding(spacing.padding)
+        .padding(UIScreen.padding)
         .ignoresSafeArea()
     }
 }
