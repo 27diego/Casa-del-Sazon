@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/developer/Documents/Developer/iOS/LaCasaDelSazon/LaCasaDelSazon/CoreData/User+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
       location = "group:LaCasaDelSazon.xcodeproj">
    </FileRef>
    <FileRef
