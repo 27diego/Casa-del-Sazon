@@ -27,7 +27,7 @@ class AuthenticationViewModel: ObservableObject {
     let cancellables = Set<AnyCancellable>()
     let context = PersistenceController.shared.container.viewContext
     
-    // TODO: find way to cancel a cancellable
+    // TODO: find way to cancel a cancellable within set
     
     private func createUserPublishers() {
         //listen to the 4 publishers
