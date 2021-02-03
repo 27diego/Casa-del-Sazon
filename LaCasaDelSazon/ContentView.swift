@@ -9,14 +9,13 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
+    @EnvironmentObject var authentication: AuthenticationViewModel
     var body: some View {
-        LoginView()
-    }
-}
-
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+        if authentication.isSignedIn {
+            LocationChooserView()
+        }
+        else {
+            LoginView()
+        }
     }
 }

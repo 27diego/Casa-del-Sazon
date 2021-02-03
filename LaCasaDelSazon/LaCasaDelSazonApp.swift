@@ -14,6 +14,8 @@ struct LaCasaDelSazonApp: App {
     let persistenceController: PersistenceController
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
+    let authenticationVM = AuthenticationViewModel.shared
+    
     init() {
         persistenceController = PersistenceController.shared
     }
@@ -22,8 +24,11 @@ struct LaCasaDelSazonApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            NavigationView {
+                ContentView()
+                    .environmentObject(authenticationVM)
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            }
         }
     }
 }
@@ -59,10 +64,10 @@ class AppDelegate: NSObject, UIApplicationDelegate, GIDSignInDelegate {
                 return
             }
             
-//            res?.user.uid
-//            res?.user.displayName
-//            res?.user.email
-//            res?.user.phoneNumber
+            let authenticationVM = AuthenticationViewModel.shared
+            
+            authenticationVM.isSignedIn = true
+            User.saveLogedUser(email: res?.user.email, name: res?.user.displayName, identifier: (res?.user.uid)!, context: PersistenceController.shared.container.viewContext)
         }
     }
 
