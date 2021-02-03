@@ -34,7 +34,7 @@ class AuthenticationViewModel: ObservableObject {
     
     let context: NSManagedObjectContext
     
-    // TODO: find way to cancel a cancellable
+    // TODO: find way to cancel a cancellable within set
     
     init() {
         context = PersistenceController.shared.container.viewContext
