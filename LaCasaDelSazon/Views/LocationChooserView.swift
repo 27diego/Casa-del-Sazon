@@ -9,6 +9,7 @@ import SwiftUI
 import MapKit
 
 struct LocationChooserView: View {
+    @EnvironmentObject var authentication: AuthenticationViewModel
     @State var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 36.506900, longitude: -121.763223), span: MKCoordinateSpan(latitudeDelta: 0.4, longitudeDelta: 0.4))
     @State var selectedRestaurant: UUID = UUID()
     @GestureState var dragMenu: CGFloat = .zero
@@ -29,6 +30,13 @@ struct LocationChooserView: View {
     var body: some View {
         NavigationView {
             ZStack {
+                VStack{
+                    Button("Sign Out"){
+                        authentication.signOut()
+                    }
+                }
+                .zIndex(100)
+                
                 RestaurantMapView(region: $region, selectedRestaurant: $selectedRestaurant)
                     .navigationTitle("")
                     .navigationBarHidden(true)

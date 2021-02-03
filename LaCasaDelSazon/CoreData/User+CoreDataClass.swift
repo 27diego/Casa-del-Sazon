@@ -58,6 +58,7 @@ extension User {
                 try context.save()
             }
             catch {
+                context.rollback()
                 print(error.localizedDescription)
             }
         }

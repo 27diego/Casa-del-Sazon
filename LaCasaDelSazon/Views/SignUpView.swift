@@ -8,10 +8,7 @@
 import SwiftUI
 
 struct SignUpView: View {
-    @State var name: String = ""
-    @State var email: String = ""
-    @State var password: String = ""
-    @State var phone: String = ""
+    @EnvironmentObject var authentication: AuthenticationViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -24,19 +21,25 @@ struct SignUpView: View {
             Spacer()
             Group {
                 Text("Name")
-                CustomTextFieldView(content: $name, placeholder: "Name", type: .nonSecure)
+                CustomTextFieldView(content: $authentication.createName, placeholder: "Name", type: .nonSecure)
                 Text("Email")
-                CustomTextFieldView(content: $email, placeholder: "Email", type: .nonSecure)
+                CustomTextFieldView(content: $authentication.createEmail, placeholder: "Email", type: .nonSecure)
                 Text("Password")
-                CustomTextFieldView(content: $password, placeholder: "Password", type: .secure)
+                CustomTextFieldView(content: $authentication.createPassword, placeholder: "Password", type: .secure)
                 Text("Phone")
-                CustomTextFieldView(content: $phone, placeholder: "Phone Number", type: .nonSecure)
+                CustomTextFieldView(content: $authentication.createPhone, placeholder: "Phone Number", type: .nonSecure)
             }
             Spacer()
                 .frame(height: UIScreen.screenHeight * 0.02)
-            RegularButtonView(text: "Sign Up", textColor: .white, buttonColor: .red) {}
+            RegularButtonView(text: "Sign Up", textColor: .white, buttonColor: authentication.registerButton ? .gray : .red) {
+                authentication.createUser()
+            }
+                .disabled(authentication.registerButton)
             Spacer()
                 .frame(height: UIScreen.screenHeight * 0.02)
+        }
+        .onAppear {
+            authentication.createUserPublishers()
         }
         .padding(UIScreen.padding)
     }

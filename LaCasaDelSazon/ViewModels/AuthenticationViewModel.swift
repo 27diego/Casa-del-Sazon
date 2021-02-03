@@ -15,14 +15,19 @@ class AuthenticationViewModel: ObservableObject {
     static let shared = AuthenticationViewModel()
     
     // MARK: - Create User published variables
-    @Published var email: String = ""
-    @Published var name: String = ""
-    @Published var password: String = ""
-    @Published var phone: String = ""
+    @Published var createEmail: String = ""
+    @Published var createName: String = ""
+    @Published var createPassword: String = ""
+    @Published var createPhone: String = ""
     var id = ""
     
+    // MARK: - Sign In published variables
+    @Published var signInEmail: String = ""
+    @Published var signInPassword: String = ""
+    
     // MARK: - UI Publishers
-    @Published var button: Bool = false
+    @Published var registerButton: Bool = false
+    @Published var signInButton: Bool = false
     
     // MARK: - Signed in state
     @Published var isSignedIn: Bool = false
@@ -36,30 +41,30 @@ class AuthenticationViewModel: ObservableObject {
         checkSignIn()
     }
     
-    private func createUserPublishers() {
-        Publishers.CombineLatest4($email, $name, $password, $phone)
+    func createUserPublishers() {
+        Publishers.CombineLatest4($createEmail, $createName, $createPassword, $createPhone)
             .map { email, name, password, phone -> Bool in
                 if self.verifyEmail(email) && self.verifyName(name) && self.verifyPassword(password) && self.verifyPhone(phone){
-                    return true
+                    return false
                 }
-                return false
+                return true
             }
-            .assign(to: &$button)
+            .assign(to: &$registerButton)
     }
     
-    private func signInPublishers() {
-        Publishers.CombineLatest($email, $password)
+    func signInPublishers() {
+        Publishers.CombineLatest($signInEmail, $signInPassword)
             .map { email, password -> Bool in
                 if self.verifyEmail(email) && self.verifyPassword(password) {
-                    return true
+                    return false
                 }
-                return false
+                return true
             }
-            .assign(to: &$button)
+            .assign(to: &$signInButton)
     }
     
     func signIn(){
-        Auth.auth().signIn(withEmail: email, password: password) {[weak self] authResult, error in
+        Auth.auth().signIn(withEmail: signInEmail, password: signInPassword) {[weak self] authResult, error in
             guard let strongSelf = self else { return }
             
             if let error = error {
@@ -73,26 +78,7 @@ class AuthenticationViewModel: ObservableObject {
         }
     }
     
-    // TODO: - create user with name and phone number
-    func createUser() {
-        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            User.saveLogedUser(email: authResult?.user.email, name: self.name, phone: self.phone, identifier: (authResult?.user.uid)!, context: self.context)
-        }
-    }
-    
-    private func checkSignIn() {
-        let request: NSFetchRequest<User> = User.fetchRequest()
-        if let user = try? context.fetch(request).first {
-            id = user.identifier
-            isSignedIn = true
-        }
-    }
-    
-    private func signOut() {
+    func signOut() {
         let request = User.fetchUser(withId: id)
         if let user = try? context.fetch(request).first {
             do {
@@ -102,6 +88,25 @@ class AuthenticationViewModel: ObservableObject {
             catch {
                 print(error.localizedDescription)
             }
+        }
+    }
+    
+    // TODO: - create user with name and phone number
+    func createUser() {
+        Auth.auth().createUser(withEmail: createEmail, password: createPassword) { authResult, error in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            User.saveLogedUser(email: authResult?.user.email, name: self.createName, phone: self.createPhone, identifier: (authResult?.user.uid)!, context: self.context)
+        }
+    }
+    
+    private func checkSignIn() {
+        let request: NSFetchRequest<User> = User.fetchRequest()
+        if let user = try? context.fetch(request).first {
+            id = user.identifier
+            isSignedIn = true
         }
     }
 }
