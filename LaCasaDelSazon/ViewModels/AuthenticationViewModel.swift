@@ -10,6 +10,7 @@ import Firebase
 import Combine
 import CoreData
 
+
 class AuthenticationViewModel: ObservableObject {
     
     static let shared = AuthenticationViewModel()
@@ -28,7 +29,10 @@ class AuthenticationViewModel: ObservableObject {
     // MARK: - UI Publishers
     @Published var registerButton: Bool = false
     @Published var signInButton: Bool = false
-    @Published var inProgress: Bool = true
+    @Published var inProgress: Bool = false
+    @Published var error: String = ""
+    @Published var showError: Bool = false
+    
     
     // MARK: - Signed in state
     @Published var isSignedIn: Bool = false
@@ -69,12 +73,13 @@ class AuthenticationViewModel: ObservableObject {
             guard let strongSelf = self else { return }
             
             if let error = error {
-                print("Could not sign in \(error.localizedDescription)")
+                strongSelf.handleFirebaseErrr(error: error as NSError)
                 return
             }
-            // TODO: - Save user with saveUser()
+            
             if let results = authResult {
                 User.saveLogedUser(email: results.user.email ?? nil, name: results.user.displayName ?? nil, identifier: results.user.uid, context: strongSelf.context)
+                strongSelf.inProgress = false
                 strongSelf.isSignedIn = true
             }
         }
@@ -88,17 +93,17 @@ class AuthenticationViewModel: ObservableObject {
             try context.execute(deleteRequest)
             isSignedIn = false
         } catch {
+            self.error = error.localizedDescription
+            self.triggerError()
             print(error.localizedDescription)
         }        
     }
     
     // TODO: - create user with name and phone number
     func createUser() {
-        self.inProgress = true
         Auth.auth().createUser(withEmail: createEmail, password: createPassword) { authResult, error in
             if let error = error {
-                print(error.localizedDescription)
-                self.inProgress = false
+                self.handleFirebaseErrr(error: error as NSError)
                 return
             }
             
@@ -147,5 +152,51 @@ extension AuthenticationViewModel {
             return true
         }
         return false
+    }
+}
+
+
+extension AuthenticationViewModel {
+    private func triggerError() {
+        showError = true
+        DispatchQueue.main.asyncAfter(deadline: .now()+5) {
+            self.showError = false
+        }
+        
+        self.error = ""
+    }
+    
+    func handleFirebaseErrr(error: NSError) {
+        print(error.debugDescription)
+        if let errorCode = AuthErrorCode(rawValue: error.code) {
+            switch(errorCode){
+            case .invalidEmail:
+                print("Invalid Email")
+                self.error = "Invalid Email"
+                break
+            case .wrongPassword:
+                print("Wrong Password")
+                self.error = "Wrong Password"
+                break
+            case .userDisabled:
+                print("User Disabled")
+                self.error = "User Disabled"
+                break
+            case .emailAlreadyInUse:
+                print("Email already in use")
+                self.error = "Email already in use"
+                break
+            case .weakPassword:
+                print("Weak Password")
+                self.error = "Weak Passwors"
+                break
+            default:
+                print("some other code")
+                return
+            }
+            
+            self.inProgress = false
+            triggerError()
+        }
     }
 }

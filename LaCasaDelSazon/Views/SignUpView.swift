@@ -33,6 +33,9 @@ struct SignUpView: View {
             Spacer()
                 .frame(height: UIScreen.screenHeight * 0.02)
             RegularButtonView(text: "Sign Up", textColor: .white, buttonColor: authentication.registerButton ? .gray : .red) {
+                withAnimation(.spring()) {
+                    authentication.inProgress = true
+                }
                 authentication.createUser()
                 // TODO: - FIX THIS, need to dismiss only on success of creation
                 presentSignUpSheet = false

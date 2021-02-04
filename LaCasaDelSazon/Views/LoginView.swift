@@ -11,16 +11,21 @@ struct LoginView: View {
     @EnvironmentObject var authentication: AuthenticationViewModel
     @State private var presentSignUpSheet: Bool = false
     
-    
     var body: some View {
         NavigationView {
             ZStack {
                 if authentication.inProgress {
-                    Group {
-                        VisualEffectView(uiVisualEffect: UIBlurEffect(style: .light))
-                            .edgesIgnoringSafeArea(.all)
-                        ProgressView()
+                    ProgressView()
+                        .zIndex(50)
+                }
+                
+                if authentication.showError {
+                    VStack{
+                        Spacer()
+                        NotificationBanner(text: authentication.error)
                     }
+                    .transition(.scale)
+                    .animation(.easeIn)
                     .zIndex(100)
                 }
                 
@@ -44,6 +49,9 @@ struct LoginView: View {
                     CustomTextFieldView(content: $authentication.signInPassword, placeholder: "Password", type: .secure)
                     RegularButtonView(text: "Login", textColor: .white, buttonColor: authentication.signInButton ? .gray : .red) {
                         authentication.signIn()
+                        withAnimation(.spring()) {
+                            authentication.inProgress = true
+                        }
                     }
                     .disabled(authentication.signInButton)
                     RegularButtonView(symbolImage: "applelogo", text: "Continue with apple", textColor: .white, buttonColor: .black) {}
@@ -71,6 +79,8 @@ struct LoginView: View {
                     }
                     .font(.subheadline)
                 }
+                .padding(UIScreen.padding)
+                .blur(radius: authentication.inProgress ? 30 : 0)
             }
             .navigationTitle("")
             .navigationBarHidden(true)
@@ -78,7 +88,6 @@ struct LoginView: View {
         .onAppear{
             authentication.signInPublishers()
         }
-        .padding(UIScreen.padding)
         .ignoresSafeArea()
     }
 }
