@@ -23,6 +23,7 @@
 		8B8AE28825784D730095D334 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE28725784D730095D334 /* SignUpView.swift */; };
 		8B8AE28D257851F60095D334 /* LocationChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE28C257851F60095D334 /* LocationChooserView.swift */; };
 		8B8AE291257853FE0095D334 /* FetchImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE290257853FE0095D334 /* FetchImageView.swift */; };
+		8BA33F5425CB7B4F009B41D6 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA33F5325CB7B4F009B41D6 /* VisualEffectView.swift */; };
 		8BDADB92257749780000DBB4 /* ReusableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDADB91257749780000DBB4 /* ReusableViews.swift */; };
 		F673CE26DB7D0A1A504EFAEB /* Pods_LaCasaDelSazon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4090288FE11ADB4648C29C9D /* Pods_LaCasaDelSazon.framework */; };
 /* End PBXBuildFile section */
@@ -48,6 +49,7 @@
 		8B8AE28725784D730095D334 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		8B8AE28C257851F60095D334 /* LocationChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationChooserView.swift; sourceTree = "<group>"; };
 		8B8AE290257853FE0095D334 /* FetchImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchImageView.swift; sourceTree = "<group>"; };
+		8BA33F5325CB7B4F009B41D6 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		8BDADB91257749780000DBB4 /* ReusableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableViews.swift; sourceTree = "<group>"; };
 		9DAFEAC4B0281172CE573CE7 /* Pods-LaCasaDelSazon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LaCasaDelSazon.debug.xcconfig"; path = "Target Support Files/Pods-LaCasaDelSazon/Pods-LaCasaDelSazon.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -158,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				8B55E93325C887D8003A4861 /* GoogleSignInButton.swift */,
+				8BA33F5325CB7B4F009B41D6 /* VisualEffectView.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				8B0DCFE52577473000A8A013 /* Persistence.swift in Sources */,
 				8B0DCFDE2577472F00A8A013 /* ContentView.swift in Sources */,
 				8B8AE291257853FE0095D334 /* FetchImageView.swift in Sources */,
+				8BA33F5425CB7B4F009B41D6 /* VisualEffectView.swift in Sources */,
 				8B0DCFF12577474F00A8A013 /* LoginView.swift in Sources */,
 				8B55E93B25C88B53003A4861 /* User+CoreDataClass.swift in Sources */,
 				8B55E94125C8A8D7003A4861 /* UIScreenExtension.swift in Sources */,

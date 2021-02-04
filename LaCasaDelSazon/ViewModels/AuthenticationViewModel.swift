@@ -28,6 +28,7 @@ class AuthenticationViewModel: ObservableObject {
     // MARK: - UI Publishers
     @Published var registerButton: Bool = false
     @Published var signInButton: Bool = false
+    @Published var inProgress: Bool = true
     
     // MARK: - Signed in state
     @Published var isSignedIn: Bool = false
@@ -74,31 +75,37 @@ class AuthenticationViewModel: ObservableObject {
             // TODO: - Save user with saveUser()
             if let results = authResult {
                 User.saveLogedUser(email: results.user.email ?? nil, name: results.user.displayName ?? nil, identifier: results.user.uid, context: strongSelf.context)
+                strongSelf.isSignedIn = true
             }
         }
     }
     
     func signOut() {
-        let request = User.fetchUser(withId: id)
-        if let user = try? context.fetch(request).first {
-            do {
-                context.delete(user)
-                try context.save()
-            }
-            catch {
-                print(error.localizedDescription)
-            }
-        }
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "User")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try context.execute(deleteRequest)
+            isSignedIn = false
+        } catch {
+            print(error.localizedDescription)
+        }        
     }
     
     // TODO: - create user with name and phone number
     func createUser() {
+        self.inProgress = true
         Auth.auth().createUser(withEmail: createEmail, password: createPassword) { authResult, error in
             if let error = error {
                 print(error.localizedDescription)
+                self.inProgress = false
                 return
             }
+            
             User.saveLogedUser(email: authResult?.user.email, name: self.createName, phone: self.createPhone, identifier: (authResult?.user.uid)!, context: self.context)
+            
+            self.isSignedIn = true
+            self.inProgress = false
         }
     }
     
@@ -136,7 +143,7 @@ extension AuthenticationViewModel {
     }
     
     private func verifyPhone(_ phone: String) -> Bool {
-        if phone.count >= 10 {
+        if phone.count >= 10 && Int(phone) != nil {
             return true
         }
         return false

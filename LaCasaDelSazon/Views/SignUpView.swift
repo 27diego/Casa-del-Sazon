@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SignUpView: View {
     @EnvironmentObject var authentication: AuthenticationViewModel
+    @Binding var presentSignUpSheet: Bool
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -33,8 +34,10 @@ struct SignUpView: View {
                 .frame(height: UIScreen.screenHeight * 0.02)
             RegularButtonView(text: "Sign Up", textColor: .white, buttonColor: authentication.registerButton ? .gray : .red) {
                 authentication.createUser()
+                // TODO: - FIX THIS, need to dismiss only on success of creation
+                presentSignUpSheet = false
             }
-                .disabled(authentication.registerButton)
+            .disabled(authentication.registerButton)
             Spacer()
                 .frame(height: UIScreen.screenHeight * 0.02)
         }
@@ -42,11 +45,5 @@ struct SignUpView: View {
             authentication.createUserPublishers()
         }
         .padding(UIScreen.padding)
-    }
-}
-
-struct SignUpView_Previews: PreviewProvider {
-    static var previews: some View {
-        SignUpView()
     }
 }
