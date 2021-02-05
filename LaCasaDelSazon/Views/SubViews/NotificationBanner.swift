@@ -12,16 +12,19 @@ struct NotificationBanner: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 10)
             .frame(height: 60)
-            .foregroundColor(Color(#colorLiteral(red: 0.09019607843, green: 0.1137254902, blue: 0.1333333333, alpha: 1)))
+            .foregroundColor(Color(#colorLiteral(red: 0.09019607843, green: 0.1137254902, blue: 0.1333333333, alpha: 1)).opacity(0.8))
             .overlay(
                 HStack {
-                    Image(systemName: "exclamationmark.triangle")
+                    Image(systemName: "exclamationmark.circle")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 23, height:23)
                         .foregroundColor(.white)
+                    Spacer()
+                        .frame(width: 13)
                     Text(text)
                         .foregroundColor(.white)
+                    Spacer()
                 }
                 .padding()
             )
@@ -31,6 +34,6 @@ struct NotificationBanner: View {
 
 struct NavigationView_Previews: PreviewProvider {
     static var previews: some View {
-        NotificationBanner(text: "This user already exists, please use another user")
+        NotificationBanner(text: "To many requests, please try again later")
     }
 }
