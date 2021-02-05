@@ -13,7 +13,7 @@ struct LoginView: View {
     
     var body: some View {
         NavigationView {
-            ZStack {
+            ZStack{
                 if authentication.inProgress {
                     ProgressView()
                         .zIndex(50)
@@ -66,16 +66,16 @@ struct LoginView: View {
                                 .onTapGesture {
                                     presentSignUpSheet.toggle()
                                 }
-                                .sheet(isPresented: $presentSignUpSheet) {
-                                    SignUpView(presentSignUpSheet: $presentSignUpSheet)
-                                        .environmentObject(authentication)
-                                }
                         }
                         Text("OR")
                         Text("Continue as guest")
                             .foregroundColor(.red)
                     }
                     .font(.subheadline)
+                }
+                .sheet(isPresented: $presentSignUpSheet) {
+                    SignUpView(presentSignUpSheet: $presentSignUpSheet)
+                        .environmentObject(authentication)
                 }
                 .padding(UIScreen.padding)
                 .blur(radius: authentication.inProgress ? 30 : 0)

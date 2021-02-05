@@ -20,6 +20,7 @@ class AuthenticationViewModel: ObservableObject {
     @Published var createEmail: String = ""
     @Published var createName: String = ""
     @Published var createPassword: String = ""
+    @Published var createPasswordVerification: String = ""
     @Published var createPhone: String = ""
     var id = ""
     
@@ -56,9 +57,11 @@ class AuthenticationViewModel: ObservableObject {
     }
     
     func createUserPublishers() {
-        Publishers.CombineLatest4($createEmail, $createName, $createPassword, $createPhone)
-            .map { email, name, password, phone -> Bool in
-                if self.verifyEmail(email) && self.verifyName(name) && self.verifyPassword(password) && self.verifyPhone(phone){
+        //due to combineLatest limitations, nested a publisher to adhere to 4 publisher zips
+        let passwordsPublisher = Publishers.CombineLatest($createPassword, $createPasswordVerification)
+        Publishers.CombineLatest4($createEmail, $createName, passwordsPublisher, $createPhone)
+            .map { email, name, passwords, phone -> Bool in
+                if self.verifyEmail(email) && self.verifyName(name) && self.verifyPasswords(passwords.0, with: passwords.1) && self.verifyPhone(phone){
                     return false
                 }
                 return true
@@ -69,7 +72,7 @@ class AuthenticationViewModel: ObservableObject {
     func signInPublishers() {
         Publishers.CombineLatest($signInEmail, $signInPassword)
             .map { email, password -> Bool in
-                if self.verifyEmail(email) && self.verifyPassword(password) {
+                if self.verifyEmail(email) && self.verifyPasswords(password, with: password) {
                     return false
                 }
                 return true
@@ -141,8 +144,8 @@ extension AuthenticationViewModel {
     }
     
     // TODO: - make password check stronger
-    private func verifyPassword(_ password: String) -> Bool {
-        if password.count > 5 {
+    private func verifyPasswords(_ password: String, with verification: String) -> Bool {
+        if password.count > 5 && password == verification {
             return true
         }
         return false

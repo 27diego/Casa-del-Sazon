@@ -88,6 +88,7 @@ struct CustomTextFieldView: View {
                 .background(Color(#colorLiteral(red: 0.768627451, green: 0.768627451, blue: 0.768627451, alpha: 1)).opacity(0.40))
                 .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.black.opacity(0.6)))
                 .frame(width: width == 0 ? UIScreen.screenWidth * 0.9 : width)
+                .clipShape(RoundedRectangle(cornerRadius: 5))
             
         }
         else if type == .secure {
@@ -96,6 +97,7 @@ struct CustomTextFieldView: View {
                 .background(Color(#colorLiteral(red: 0.768627451, green: 0.768627451, blue: 0.768627451, alpha: 1)).opacity(0.40))
                 .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.black.opacity(0.6)))
                 .frame(width: width == 0 ? UIScreen.screenWidth * 0.9 : width)
+                .clipShape(RoundedRectangle(cornerRadius: 5))
         }
         
     }
