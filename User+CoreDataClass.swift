@@ -2,7 +2,7 @@
 //  User+CoreDataClass.swift
 //  
 //
-//  Created by Developer on 2/1/21.
+//  Created by Developer on 2/4/21.
 //
 //
 

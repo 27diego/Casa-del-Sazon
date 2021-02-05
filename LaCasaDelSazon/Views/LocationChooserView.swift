@@ -11,7 +11,7 @@ import MapKit
 struct LocationChooserView: View {
     @EnvironmentObject var authentication: AuthenticationViewModel
     @State var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 36.506900, longitude: -121.763223), span: MKCoordinateSpan(latitudeDelta: 0.4, longitudeDelta: 0.4))
-    @State var selectedRestaurant: UUID = UUID()
+    @State var selectedRestaurant: String = ""
     @GestureState var dragMenu: CGFloat = .zero
     @State var menuSize: CGFloat = .zero
     @State var menuPosition: CGFloat = .zero
@@ -21,60 +21,51 @@ struct LocationChooserView: View {
                 withAnimation {
                     region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 36.506900, longitude: -121.763223), span: MKCoordinateSpan(latitudeDelta: 0.4, longitudeDelta: 0.4))
                     
-                    selectedRestaurant = UUID()
+                    selectedRestaurant = ""
                 }
             }
         }
     }
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                VStack{
-                    Button("Sign Out"){
-                        authentication.signOut()
+        ZStack {
+            RestaurantMapView(region: $region, selectedRestaurant: $selectedRestaurant,  menuPosition: $menuPosition)
+                .navigationTitle("")
+                .navigationBarHidden(true)
+                .ignoresSafeArea()
+            
+            
+            GeometryReader { geo in
+                RestaurantChooserView(region: $region, menuPosition: $menuPosition, selectedRestaurant: $selectedRestaurant)
+                    .onAppear {
+                        DispatchQueue.main.async {
+                            menuSize = geo.frame(in: .global).height
+                        }
                     }
-                }
-                .zIndex(100)
-                
-                RestaurantMapView(region: $region, selectedRestaurant: $selectedRestaurant)
-                    .navigationTitle("")
-                    .navigationBarHidden(true)
-                    .ignoresSafeArea()
-                
-                
-                GeometryReader { geo in
-                    RestaurantChooserView(region: $region, menuPosition: $menuPosition, selectedRestaurant: $selectedRestaurant)
-                        .onAppear {
-                            DispatchQueue.main.async {
-                                menuSize = geo.frame(in: .global).height
-                            }
-                        }
-                }
-                .offset(y: menuPosition+dragMenu+UIScreen.screenHeight-(menuSize/5.5))
-                .gesture(
-                    DragGesture()
-                        .updating($dragMenu, body: { (value, state, _) in
-                            state = value.translation.height
-                            if menuPosition + state < -310 {
-                                menuPosition = -310
-                                state = value.translation.height*0.1
-                            }
-                        })
-                        .onEnded { value in
-                            if value.translation.height+menuPosition < -75 {
-                                menuPosition = -310
-                                expandedMenu = true
-                            }
-                            else {
-                                menuPosition = .zero
-                                expandedMenu = false
-                            }
-                        }
-                )
-                .animation(.spring(response: 0.6, dampingFraction: 0.6, blendDuration: 0.25))
-                
             }
+            .offset(y: menuPosition+dragMenu+UIScreen.screenHeight-(menuSize/5.5))
+            .gesture(
+                DragGesture()
+                    .updating($dragMenu, body: { (value, state, _) in
+                        state = value.translation.height
+                        if menuPosition + state < -310 {
+                            menuPosition = -310
+                            state = value.translation.height*0.1
+                        }
+                    })
+                    .onEnded { value in
+                        if value.translation.height+menuPosition < -75 {
+                            menuPosition = -310
+                            expandedMenu = true
+                        }
+                        else {
+                            menuPosition = .zero
+                            expandedMenu = false
+                        }
+                    }
+            )
+            .animation(.spring(response: 0.6, dampingFraction: 0.6, blendDuration: 0.25))
+            
         }
         .ignoresSafeArea()
     }
@@ -82,26 +73,25 @@ struct LocationChooserView: View {
 
 struct RestaurantMapView: View {
     @Binding var region: MKCoordinateRegion
-    @Binding var selectedRestaurant: UUID
-    
+    @Binding var selectedRestaurant: String
+    @Binding var menuPosition: CGFloat
     
     var body: some View {
         Map(coordinateRegion: $region, interactionModes: .all, showsUserLocation: true, annotationItems: restaurants) { restaurant in
-            
-            // MARK: Tap on MapAnnotation is not possible yet -- workaround??
-            // MARK: Cannot make the button interactable either smh
-            
             MapAnnotation(coordinate: restaurant.coordinate) {
                 VStack {
-                    if restaurant.id == selectedRestaurant {
-                        Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                    NavigationLink(destination: HomeView().environmentObject(Restaurant(id: self.selectedRestaurant))) {
                             Text("Go!")
                                 .padding(10)
                                 .padding(.horizontal)
                                 .background(Color.white)
                                 .clipShape(RoundedRectangle(cornerRadius: 30))
-                        })
-                    }
+                        }
+                        .disabled(!(restaurant.id == selectedRestaurant))
+                        .opacity(restaurant.id == selectedRestaurant ? 1 : 0)
+                        .transition(.opacity)
+                        .animation(.default)
+
                     Image(restaurant.image)
                         .resizable()
                         .scaledToFit()
@@ -116,7 +106,11 @@ struct RestaurantMapView: View {
                         .font(.caption)
                 }
                 .onTapGesture {
-                    selectedRestaurant = restaurant.id
+                    withAnimation(.linear) {
+                        region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: restaurant.coordinate.latitude, longitude: restaurant.coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001))
+                        menuPosition = .zero
+                        selectedRestaurant = restaurant.id
+                    }
                 }
             }
         }
@@ -127,7 +121,7 @@ struct RestaurantMapView: View {
 struct RestaurantChooserView: View {
     @Binding var region: MKCoordinateRegion
     @Binding var menuPosition: CGFloat
-    @Binding var selectedRestaurant: UUID
+    @Binding var selectedRestaurant: String
     
     var body: some View {
         VStack {
@@ -185,8 +179,8 @@ struct LocationChooserView_Previews: PreviewProvider {
 
 
 
-struct Restaurant: Identifiable {
-    let id = UUID()
+struct RestaurantModel: Identifiable {
+    let id: String
     let coordinate: CLLocationCoordinate2D
     let image: String
     let name: String
@@ -195,8 +189,8 @@ struct Restaurant: Identifiable {
     let closingTime: String
 }
 
-var restaurants: [Restaurant] = [
-    Restaurant(coordinate: .init(latitude: 36.67086, longitude: -121.65594), image: "SazonLogo", name: "La Casa Del Sazon 2", address: "438 Salinas St, Salinas, CA", openingTime: "11", closingTime: "9pm"),
-    Restaurant(coordinate: .init(latitude: 36.66314, longitude: -121.65870), image: "SazonLogo", name: "La Casa Del Sazon", address: "22 W Romie Ln, Salinas, CA", openingTime: "11", closingTime: "8pm"),
-    Restaurant(coordinate: .init(latitude: 36.59892, longitude: -121.89333), image: "SazonExpressLogo", name: "Sazon Express", address: "431 Tyler St, Monterey, CA", openingTime: "4", closingTime: "9pm")
+var restaurants: [RestaurantModel] = [
+    RestaurantModel(id: "Sazon438", coordinate: .init(latitude: 36.67086, longitude: -121.65594), image: "SazonLogo", name: "La Casa Del Sazon 2", address: "438 Salinas St, Salinas, CA", openingTime: "11", closingTime: "9pm"),
+    RestaurantModel(id: "Sazon22", coordinate: .init(latitude: 36.66314, longitude: -121.65870), image: "SazonLogo", name: "La Casa Del Sazon", address: "22 W Romie Ln, Salinas, CA", openingTime: "11", closingTime: "8pm"),
+    RestaurantModel(id: "Sazon431", coordinate: .init(latitude: 36.59892, longitude: -121.89333), image: "SazonExpressLogo", name: "Sazon Express", address: "431 Tyler St, Monterey, CA", openingTime: "4", closingTime: "9pm")
 ]

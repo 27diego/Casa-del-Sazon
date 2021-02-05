@@ -27,9 +27,9 @@ struct LaCasaDelSazonApp: App {
         WindowGroup {
             NavigationView {
                 ContentView()
-                    .environmentObject(authenticationVM)
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
+            .environmentObject(authenticationVM)
+            .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }

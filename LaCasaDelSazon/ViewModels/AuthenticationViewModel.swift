@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 import Combine
 import CoreData
+import SwiftUI
 
 
 class AuthenticationViewModel: ObservableObject {
@@ -44,6 +45,14 @@ class AuthenticationViewModel: ObservableObject {
     init() {
         context = PersistenceController.shared.container.viewContext
         checkSignIn()
+    }
+    
+    private func checkSignIn() {
+        let request: NSFetchRequest<User> = User.fetchRequest()
+        if let user = try? context.fetch(request).first {
+            id = user.identifier
+            isSignedIn = true
+        }
     }
     
     func createUserPublishers() {
@@ -113,14 +122,6 @@ class AuthenticationViewModel: ObservableObject {
             self.inProgress = false
         }
     }
-    
-    private func checkSignIn() {
-        let request: NSFetchRequest<User> = User.fetchRequest()
-        if let user = try? context.fetch(request).first {
-            id = user.identifier
-            isSignedIn = true
-        }
-    }
 }
 
 
@@ -158,12 +159,16 @@ extension AuthenticationViewModel {
 
 extension AuthenticationViewModel {
     private func triggerError() {
-        showError = true
-        DispatchQueue.main.asyncAfter(deadline: .now()+5) {
-            self.showError = false
+        withAnimation(.easeInOut){
+            showError = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now()+3) {
+            withAnimation(.easeInOut){
+                self.showError = false
+            }
+            self.error = ""
         }
         
-        self.error = ""
     }
     
     func handleFirebaseErrr(error: NSError) {
@@ -190,8 +195,17 @@ extension AuthenticationViewModel {
                 print("Weak Password")
                 self.error = "Weak Passwors"
                 break
+            case.userNotFound:
+                print("User Not Found")
+                self.error = "User not found"
+                break
+            case .tooManyRequests:
+                print("Too many requests")
+                self.error = "Access disabled, try again later"
+                break
             default:
                 print("some other code")
+                self.inProgress = false
                 return
             }
             

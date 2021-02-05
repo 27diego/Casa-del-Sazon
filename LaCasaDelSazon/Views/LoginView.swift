@@ -24,8 +24,6 @@ struct LoginView: View {
                         Spacer()
                         NotificationBanner(text: authentication.error)
                     }
-                    .transition(.scale)
-                    .animation(.easeIn)
                     .zIndex(100)
                 }
                 
