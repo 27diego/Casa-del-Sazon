@@ -152,7 +152,9 @@ extension AuthenticationViewModel {
     }
     
     private func verifyPhone(_ phone: String) -> Bool {
-        if phone.count >= 10 && Int(phone) != nil {
+        let strippedPhone = phone.removeByAll(characters: [" ", "(", ")", "-"])
+        print(strippedPhone)
+        if strippedPhone.count >= 10 && Int(strippedPhone) != nil {
             return true
         }
         return false
@@ -215,5 +217,16 @@ extension AuthenticationViewModel {
             self.inProgress = false
             triggerError()
         }
+    }
+}
+
+
+extension AuthenticationViewModel {
+    func clearFields() {
+        createEmail = ""
+        createName = ""
+        createPassword = ""
+        createPasswordVerification = ""
+        createPhone = ""
     }
 }

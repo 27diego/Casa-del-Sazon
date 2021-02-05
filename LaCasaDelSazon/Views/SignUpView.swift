@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import iPhoneNumberField
 
 struct SignUpView: View {
     @EnvironmentObject var authentication: AuthenticationViewModel
@@ -32,7 +33,16 @@ struct SignUpView: View {
                     Text("Verify Password")
                     CustomTextFieldView(content: $authentication.createPasswordVerification, placeholder: "Password", type: .secure)
                     Text("Phone")
-                    CustomTextFieldView(content: $authentication.createPhone, placeholder: "Phone Number", type: .nonSecure)
+//                    CustomTextFieldView(content: $authentication.createPhone, placeholder: "Phone Number", type: .nonSecure)
+//                        .keyboardType(.phonePad)
+                    
+                    iPhoneNumberField(text: $authentication.createPhone)
+                        .maximumDigits(10)
+                        .padding()
+                        .background(Color(#colorLiteral(red: 0.768627451, green: 0.768627451, blue: 0.768627451, alpha: 1)).opacity(0.40))
+                        .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.black.opacity(0.6)))
+                        .frame(width: UIScreen.screenWidth * 0.9)
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
                         .keyboardType(.phonePad)
                 }
                 Spacer()
@@ -44,6 +54,7 @@ struct SignUpView: View {
                     authentication.createUser()
                     // TODO: - FIX THIS, need to dismiss only on success of creation
                     presentSignUpSheet = false
+                    authentication.clearFields()
                 }
                 .disabled(authentication.registerButton)
                 Spacer()

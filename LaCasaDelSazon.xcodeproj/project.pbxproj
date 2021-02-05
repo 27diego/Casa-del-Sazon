@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -30,6 +30,8 @@
 		8B8AE291257853FE0095D334 /* FetchImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE290257853FE0095D334 /* FetchImageView.swift */; };
 		8BA33F5425CB7B4F009B41D6 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA33F5325CB7B4F009B41D6 /* VisualEffectView.swift */; };
 		8BDADB92257749780000DBB4 /* ReusableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDADB91257749780000DBB4 /* ReusableViews.swift */; };
+		8BF16D4925CE086C007AC481 /* iPhoneNumberField in Frameworks */ = {isa = PBXBuildFile; productRef = 8BF16D4825CE086C007AC481 /* iPhoneNumberField */; };
+		8BF16D4C25CE0BEC007AC481 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF16D4B25CE0BEC007AC481 /* StringExtensions.swift */; };
 		F673CE26DB7D0A1A504EFAEB /* Pods_LaCasaDelSazon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4090288FE11ADB4648C29C9D /* Pods_LaCasaDelSazon.framework */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +63,7 @@
 		8B8AE290257853FE0095D334 /* FetchImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchImageView.swift; sourceTree = "<group>"; };
 		8BA33F5325CB7B4F009B41D6 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		8BDADB91257749780000DBB4 /* ReusableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableViews.swift; sourceTree = "<group>"; };
+		8BF16D4B25CE0BEC007AC481 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		9DAFEAC4B0281172CE573CE7 /* Pods-LaCasaDelSazon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LaCasaDelSazon.debug.xcconfig"; path = "Target Support Files/Pods-LaCasaDelSazon/Pods-LaCasaDelSazon.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -70,6 +73,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F673CE26DB7D0A1A504EFAEB /* Pods_LaCasaDelSazon.framework in Frameworks */,
+				8BF16D4925CE086C007AC481 /* iPhoneNumberField in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +206,7 @@
 			children = (
 				8B8AE282257849E50095D334 /* Enums.swift */,
 				8B55E94025C8A8D7003A4861 /* UIScreenExtension.swift */,
+				8BF16D4B25CE0BEC007AC481 /* StringExtensions.swift */,
 			);
 			path = "Enums & Extensions";
 			sourceTree = "<group>";
@@ -233,6 +238,9 @@
 			dependencies = (
 			);
 			name = LaCasaDelSazon;
+			packageProductDependencies = (
+				8BF16D4825CE086C007AC481 /* iPhoneNumberField */,
+			);
 			productName = LaCasaDelSazon;
 			productReference = 8B0DCFD82577472F00A8A013 /* LaCasaDelSazon.app */;
 			productType = "com.apple.product-type.application";
@@ -260,6 +268,9 @@
 				Base,
 			);
 			mainGroup = 8B0DCFCF2577472F00A8A013;
+			packageReferences = (
+				8BF16D4725CE086C007AC481 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */,
+			);
 			productRefGroup = 8B0DCFD92577472F00A8A013 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -349,6 +360,7 @@
 				8BDADB92257749780000DBB4 /* ReusableViews.swift in Sources */,
 				8B0DCFE82577473000A8A013 /* LaCasaDelSazon.xcdatamodeld in Sources */,
 				8B0DCFE52577473000A8A013 /* Persistence.swift in Sources */,
+				8BF16D4C25CE0BEC007AC481 /* StringExtensions.swift in Sources */,
 				8B0DCFDE2577472F00A8A013 /* ContentView.swift in Sources */,
 				8B8AE291257853FE0095D334 /* FetchImageView.swift in Sources */,
 				8BA33F5425CB7B4F009B41D6 /* VisualEffectView.swift in Sources */,
@@ -556,6 +568,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8BF16D4725CE086C007AC481 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MojtabaHs/iPhoneNumberField.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8BF16D4825CE086C007AC481 /* iPhoneNumberField */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8BF16D4725CE086C007AC481 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */;
+			productName = iPhoneNumberField;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		8B0DCFE62577473000A8A013 /* LaCasaDelSazon.xcdatamodeld */ = {
