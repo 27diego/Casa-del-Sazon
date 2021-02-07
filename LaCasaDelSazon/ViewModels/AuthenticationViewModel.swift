@@ -38,11 +38,10 @@ class AuthenticationViewModel: ObservableObject {
     
     // MARK: - Signed in state
     @Published var isSignedIn: Bool = false
+    var signedInAnonymously: Bool = false
     
     let context: NSManagedObjectContext
-    
-    // TODO: find way to cancel a cancellable within set
-    
+        
     init() {
         context = PersistenceController.shared.container.viewContext
         checkSignIn()
@@ -80,6 +79,11 @@ class AuthenticationViewModel: ObservableObject {
             .assign(to: &$signInButton)
     }
     
+    func signInAnonymously() {
+        signedInAnonymously = true
+        isSignedIn = true
+    }
+    
     func signIn(){
         Auth.auth().signIn(withEmail: signInEmail, password: signInPassword) {[weak self] authResult, error in
             guard let strongSelf = self else { return }
@@ -112,7 +116,7 @@ class AuthenticationViewModel: ObservableObject {
     }
     
     // TODO: - create user with name and phone number
-    func createUser() {
+    func createUser(completion: @escaping (_ isSignedIn: Bool) -> Void) {
         Auth.auth().createUser(withEmail: createEmail, password: createPassword) { authResult, error in
             if let error = error {
                 self.handleFirebaseErrr(error: error as NSError)
@@ -123,6 +127,8 @@ class AuthenticationViewModel: ObservableObject {
             
             self.isSignedIn = true
             self.inProgress = false
+            
+            completion(self.isSignedIn)
         }
     }
 }
@@ -153,7 +159,6 @@ extension AuthenticationViewModel {
     
     private func verifyPhone(_ phone: String) -> Bool {
         let strippedPhone = phone.removeByAll(characters: [" ", "(", ")", "-"])
-        print(strippedPhone)
         if strippedPhone.count >= 10 && Int(strippedPhone) != nil {
             return true
         }
