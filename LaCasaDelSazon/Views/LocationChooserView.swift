@@ -28,10 +28,6 @@ struct LocationChooserView: View {
     
     var body: some View {
         ZStack {
-            
-            Text("Menu Size: \(menuSize) \n Menu Position: \(menuPosition) \n Screen Size: \(UIScreen.screenHeight)")
-                .zIndex(100)
-            
             RestaurantMapView(region: $region, selectedRestaurant: $selectedRestaurant,  menuPosition: $menuPosition)
                 .navigationTitle("")
                 .navigationBarHidden(true)
