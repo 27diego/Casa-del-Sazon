@@ -9,7 +9,6 @@ import SwiftUI
 import MapKit
 
 struct LocationChooserView: View {
-    @EnvironmentObject var authentication: AuthenticationViewModel
     @State var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 36.506900, longitude: -121.763223), span: MKCoordinateSpan(latitudeDelta: 0.4, longitudeDelta: 0.4))
     @State var selectedRestaurant: String = ""
     @GestureState var dragMenu: CGFloat = .zero
@@ -29,42 +28,46 @@ struct LocationChooserView: View {
     
     var body: some View {
         ZStack {
+            
+            Text("Menu Size: \(menuSize) \n Menu Position: \(menuPosition) \n Screen Size: \(UIScreen.screenHeight)")
+                .zIndex(100)
+            
             RestaurantMapView(region: $region, selectedRestaurant: $selectedRestaurant,  menuPosition: $menuPosition)
                 .navigationTitle("")
                 .navigationBarHidden(true)
                 .ignoresSafeArea()
             
             
-            GeometryReader { geo in
-                RestaurantChooserView(region: $region, menuPosition: $menuPosition, selectedRestaurant: $selectedRestaurant)
-                    .onAppear {
-                        DispatchQueue.main.async {
-                            menuSize = geo.frame(in: .global).height
+            RestaurantChooserView(region: $region, menuPosition: $menuPosition, selectedRestaurant: $selectedRestaurant)
+                .background(GeometryReader { geo in
+                    Color.clear
+                        .onAppear {
+                            menuSize = geo.size.height
                         }
-                    }
-            }
-            .offset(y: menuPosition+dragMenu+UIScreen.screenHeight-(menuSize/5.5))
-            .gesture(
-                DragGesture()
-                    .updating($dragMenu, body: { (value, state, _) in
-                        state = value.translation.height
-                        if menuPosition + state < -310 {
-                            menuPosition = -310
-                            state = value.translation.height*0.1
+                })
+                .position(x: UIScreen.screenWidth/2, y: UIScreen.screenHeight+(menuSize/3.2))
+                .offset(y: menuPosition+dragMenu)
+                .gesture(
+                    DragGesture()
+                        .updating($dragMenu, body: { (value, state, _) in
+                            state = value.translation.height
+                            if menuPosition + state < -(menuSize-(menuSize/3.2)) {
+                                menuPosition = -(menuSize-(menuSize/3.2))
+                                state = value.translation.height*0.05
+                            }
+                        })
+                        .onEnded { value in
+                            if value.translation.height+menuPosition < -75 {
+                                menuPosition = -(menuSize-(menuSize/3.2))
+                                expandedMenu = true
+                            }
+                            else {
+                                menuPosition = .zero
+                                expandedMenu = false
+                            }
                         }
-                    })
-                    .onEnded { value in
-                        if value.translation.height+menuPosition < -75 {
-                            menuPosition = -310
-                            expandedMenu = true
-                        }
-                        else {
-                            menuPosition = .zero
-                            expandedMenu = false
-                        }
-                    }
-            )
-            .animation(.spring(response: 0.6, dampingFraction: 0.6, blendDuration: 0.25))
+                )
+                .animation(.spring(response: 0.6, dampingFraction: 0.6, blendDuration: 0.25))
             
         }
         .ignoresSafeArea()
@@ -81,17 +84,17 @@ struct RestaurantMapView: View {
             MapAnnotation(coordinate: restaurant.coordinate) {
                 VStack {
                     NavigationLink(destination: HomeView().environmentObject(Restaurant(id: self.selectedRestaurant))) {
-                            Text("Go!")
-                                .padding(10)
-                                .padding(.horizontal)
-                                .background(Color.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 30))
-                        }
-                        .disabled(!(restaurant.id == selectedRestaurant))
-                        .opacity(restaurant.id == selectedRestaurant ? 1 : 0)
-                        .transition(.opacity)
-                        .animation(.default)
-
+                        Text("Go!")
+                            .padding(10)
+                            .padding(.horizontal)
+                            .background(Color.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 30))
+                    }
+                    .disabled(!(restaurant.id == selectedRestaurant))
+                    .opacity(restaurant.id == selectedRestaurant ? 1 : 0)
+                    .transition(.opacity)
+                    .animation(.default)
+                    
                     Image(restaurant.image)
                         .resizable()
                         .scaledToFit()
