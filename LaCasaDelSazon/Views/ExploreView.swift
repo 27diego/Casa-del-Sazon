@@ -6,10 +6,19 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ExploreView: View {
+    @FetchRequest(entity: Category.entity(), sortDescriptors: []) var categories: FetchedResults<Category>
+    
     var body: some View {
-        Text("ExploreView")
+        ScrollView(.horizontal, showsIndicators: false){
+            HStack {
+                ForEach(categories, id: \.self) { category in
+                    Text(category.category)
+                }
+            }
+        }
     }
 }
 

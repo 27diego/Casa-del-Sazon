@@ -8,11 +8,13 @@
 import Foundation
 import Firebase
 import FirebaseFirestore
+import CoreData
 
 class FirestoreService {
     static var shared = FirestoreService()
     let settings: FirestoreSettings
     let db: Firestore
+    let context: NSManagedObjectContext
     
     init(){
         FirebaseApp.configure()
@@ -20,6 +22,8 @@ class FirestoreService {
         settings.isPersistenceEnabled = false
         self.db = Firestore.firestore()
         db.settings = self.settings
+        
+        context = PersistenceController.shared.container.viewContext
     }
     
     
@@ -36,6 +40,18 @@ class FirestoreService {
             }
             else {
                 print("Success!")
+            }
+        }
+    }
+    
+    func setCategories(for restaurant: String) {
+        db.collection("Restaurants").document("\(restaurant)").collection("Categories").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting categories from firestore: \(err.localizedDescription)")
+            } else {
+                for doc in querySnapshot!.documents {
+                    Category.findOrInsert(name: doc["category"] as! String, context: self.context)
+                }
             }
         }
     }

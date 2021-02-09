@@ -13,12 +13,10 @@ struct ContentView: View {
     @State var isSheetOpen = false
     var body: some View {
 //        if authentication.isSignedIn && isSheetOpen == false {
-//            LocationChooserView()
+            LocationChooserView()
 //        }
 //        else {
 //            LoginView(isSheetOpen: $isSheetOpen)
 //        }
-        
-        ExploreView()
     }
 }

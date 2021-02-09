@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct HomeView: View {
-    @EnvironmentObject var RestaurantVM: Restaurant
+    @ObservedObject var restaurant: Restaurant
+    init(id: String) {
+        restaurant = Restaurant(id: id)
+
+    }
     var body: some View {
         TabView {
             ExploreView()
@@ -22,11 +26,12 @@ struct HomeView: View {
                 }
         }
         .navigationBarBackButtonHidden(true)
+        .environmentObject(restaurant)
     }
 }
 
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
-    }
-}
+//struct HomeView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        HomeView()
+//    }
+//}

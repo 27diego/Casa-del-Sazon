@@ -79,7 +79,7 @@ struct RestaurantMapView: View {
         Map(coordinateRegion: $region, interactionModes: .all, showsUserLocation: true, annotationItems: restaurants) { restaurant in
             MapAnnotation(coordinate: restaurant.coordinate) {
                 VStack {
-                    NavigationLink(destination: HomeView().environmentObject(Restaurant(id: self.selectedRestaurant))) {
+                    NavigationLink(destination: NavigationLazyView(HomeView(id: selectedRestaurant))) {
                         Text("Go!")
                             .padding(10)
                             .padding(.horizontal)
