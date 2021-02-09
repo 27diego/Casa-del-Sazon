@@ -30,6 +30,9 @@ struct SignUpView: View {
                         .font(.title)
                         .bold()
                     Text("Sign up to make ordering, reserving and collecting order history easier.")
+                        .fixedSize(horizontal: false, vertical: true)
+                    Spacer()
+                        .frame(height: UIScreen.screenHeight*0.10)
                     Group {
                         Text("Name")
                         CustomTextFieldView(content: $authentication.createName, placeholder: "Name", type: .nonSecure)

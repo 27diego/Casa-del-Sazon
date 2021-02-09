@@ -15,6 +15,7 @@ import SwiftUI
 class AuthenticationViewModel: ObservableObject {
     
     static let shared = AuthenticationViewModel()
+    let firestoreService = FirestoreService.shared
     
     // MARK: - Create User published variables
     @Published var createEmail: String = ""
@@ -123,7 +124,11 @@ class AuthenticationViewModel: ObservableObject {
                 return
             }
             
-            User.saveLogedUser(email: authResult?.user.email, name: self.createName, phone: self.createPhone, identifier: (authResult?.user.uid)!, context: self.context)
+            guard let authResult = authResult, error == nil else { return }
+            
+            User.saveLogedUser(email: authResult.user.email, name: self.createName, phone: self.createPhone, identifier: authResult.user.uid, context: self.context)
+            
+            self.firestoreService.addUser(name: self.createName, phone: self.createPhone, UID: authResult.user.uid)
             
             self.isSignedIn = true
             self.inProgress = false

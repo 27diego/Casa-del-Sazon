@@ -14,29 +14,29 @@ import SwiftUI
 struct LaCasaDelSazonApp: App {
     let persistenceController: PersistenceController
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    
-    let authenticationVM = AuthenticationViewModel.shared
+    let AuthenticationVM = AuthenticationViewModel.shared
     
     init() {
         persistenceController = PersistenceController.shared
     }
-    
-    
     
     var body: some Scene {
         WindowGroup {
             NavigationView {
                 ContentView()
             }
-            .environmentObject(authenticationVM)
+            .environmentObject(AuthenticationVM)
             .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate, GIDSignInDelegate {
+    let AuthenticationVM = AuthenticationViewModel.shared
+    let firestoreService = FirestoreService.shared
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        FirebaseApp.configure()
+//        FirebaseApp.configure()
         
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
@@ -51,15 +51,13 @@ class AppDelegate: NSObject, UIApplicationDelegate, GIDSignInDelegate {
     }
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
-        let authenticationVM = AuthenticationViewModel.shared
-        
-        
+    
         withAnimation(.spring()) {
-            authenticationVM.inProgress = true
+            AuthenticationVM.inProgress = true
         }
         
         if let error = error {
-            authenticationVM.handleFirebaseErrr(error: error as NSError)
+            AuthenticationVM.handleFirebaseErrr(error: error as NSError)
             return
         }
         
@@ -68,15 +66,14 @@ class AppDelegate: NSObject, UIApplicationDelegate, GIDSignInDelegate {
                                                        accessToken: authentication.accessToken)
         Auth.auth().signIn(with: credential) { (res, err) in
             if let error = error {
-                authenticationVM.handleFirebaseErrr(error: error as NSError)
+                self.AuthenticationVM.handleFirebaseErrr(error: error as NSError)
                 return
             }
             
-            
-            
-            authenticationVM.isSignedIn = true
+            self.AuthenticationVM.isSignedIn = true
             User.saveLogedUser(email: res?.user.email, name: res?.user.displayName, identifier: (res?.user.uid)!, context: PersistenceController.shared.container.viewContext)
-            authenticationVM.inProgress = false
+            self.firestoreService.addUser(name: (res?.user.displayName)!, phone: "", UID: (res?.user.uid)!)
+            self.AuthenticationVM.inProgress = false
         }
     }
     

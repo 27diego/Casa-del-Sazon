@@ -30,6 +30,7 @@
 		8B8AE291257853FE0095D334 /* FetchImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE290257853FE0095D334 /* FetchImageView.swift */; };
 		8BA33F5425CB7B4F009B41D6 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA33F5325CB7B4F009B41D6 /* VisualEffectView.swift */; };
 		8BDADB92257749780000DBB4 /* ReusableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDADB91257749780000DBB4 /* ReusableViews.swift */; };
+		8BEE9B5425D209B9007CF9E9 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEE9B5325D209B9007CF9E9 /* FirestoreService.swift */; };
 		8BF16D4925CE086C007AC481 /* iPhoneNumberField in Frameworks */ = {isa = PBXBuildFile; productRef = 8BF16D4825CE086C007AC481 /* iPhoneNumberField */; };
 		8BF16D4C25CE0BEC007AC481 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF16D4B25CE0BEC007AC481 /* StringExtensions.swift */; };
 		F673CE26DB7D0A1A504EFAEB /* Pods_LaCasaDelSazon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4090288FE11ADB4648C29C9D /* Pods_LaCasaDelSazon.framework */; };
@@ -63,6 +64,7 @@
 		8B8AE290257853FE0095D334 /* FetchImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchImageView.swift; sourceTree = "<group>"; };
 		8BA33F5325CB7B4F009B41D6 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		8BDADB91257749780000DBB4 /* ReusableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableViews.swift; sourceTree = "<group>"; };
+		8BEE9B5325D209B9007CF9E9 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		8BF16D4B25CE0BEC007AC481 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		9DAFEAC4B0281172CE573CE7 /* Pods-LaCasaDelSazon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LaCasaDelSazon.debug.xcconfig"; path = "Target Support Files/Pods-LaCasaDelSazon/Pods-LaCasaDelSazon.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -110,11 +112,11 @@
 		8B0DCFDA2577472F00A8A013 /* LaCasaDelSazon */ = {
 			isa = PBXGroup;
 			children = (
+				8BEE9B5225D20992007CF9E9 /* Services */,
 				8B55E93925C88B4A003A4861 /* CoreData */,
 				8B55E93225C887C9003A4861 /* UIKit */,
 				8B55E92D25C50373003A4861 /* ViewModels */,
 				8B8AE281257849D50095D334 /* Enums & Extensions */,
-				8B0DCFF5257747FD00A8A013 /* Configurations */,
 				8B0DCFF32577477E00A8A013 /* Views */,
 				8B0DCFDB2577472F00A8A013 /* LaCasaDelSazonApp.swift */,
 				8B0DCFDD2577472F00A8A013 /* ContentView.swift */,
@@ -142,19 +144,11 @@
 				8B0DCFF02577474F00A8A013 /* LoginView.swift */,
 				8B8AE28725784D730095D334 /* SignUpView.swift */,
 				8B8AE28C257851F60095D334 /* LocationChooserView.swift */,
-				8B8AE290257853FE0095D334 /* FetchImageView.swift */,
 				8B47467225CCCF5900F4E269 /* ExploreView.swift */,
 				8B47467825CCD40900F4E269 /* SettingsView.swift */,
 				8B47467B25CCD53600F4E269 /* HomeView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		8B0DCFF5257747FD00A8A013 /* Configurations */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Configurations;
 			sourceTree = "<group>";
 		};
 		8B2ED06625C3BB8C005A0DFA /* SubViews */ = {
@@ -169,7 +163,6 @@
 		8B55E92D25C50373003A4861 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				8B55E92E25C50387003A4861 /* AuthenticationViewModel.swift */,
 				8B47467525CCD27B00F4E269 /* RestaurantViewModel.swift */,
 			);
 			path = ViewModels;
@@ -209,6 +202,16 @@
 				8BF16D4B25CE0BEC007AC481 /* StringExtensions.swift */,
 			);
 			path = "Enums & Extensions";
+			sourceTree = "<group>";
+		};
+		8BEE9B5225D20992007CF9E9 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				8B8AE290257853FE0095D334 /* FetchImageView.swift */,
+				8B55E92E25C50387003A4861 /* AuthenticationViewModel.swift */,
+				8BEE9B5325D209B9007CF9E9 /* FirestoreService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		EB5147DC4DB6ADAA9E99C386 /* Frameworks */ = {
@@ -360,6 +363,7 @@
 				8BDADB92257749780000DBB4 /* ReusableViews.swift in Sources */,
 				8B0DCFE82577473000A8A013 /* LaCasaDelSazon.xcdatamodeld in Sources */,
 				8B0DCFE52577473000A8A013 /* Persistence.swift in Sources */,
+				8BEE9B5425D209B9007CF9E9 /* FirestoreService.swift in Sources */,
 				8BF16D4C25CE0BEC007AC481 /* StringExtensions.swift in Sources */,
 				8B0DCFDE2577472F00A8A013 /* ContentView.swift in Sources */,
 				8B8AE291257853FE0095D334 /* FetchImageView.swift in Sources */,
