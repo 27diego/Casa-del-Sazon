@@ -10,13 +10,11 @@ import SwiftUI
 struct LoginView: View {
     @EnvironmentObject var authentication: AuthenticationViewModel
     @State private var presentSignUpSheet: Bool = false
-    @Binding var isSheetOpen: Bool
     
     @ObservedObject var Login: LoginViewModel
     
-    init(login: LoginViewModel, isSheetOpen: Binding<Bool>){
+    init(login: LoginViewModel){
         Login = login
-        _isSheetOpen = isSheetOpen
     }
     
     var body: some View {
@@ -84,10 +82,8 @@ struct LoginView: View {
             }
             .navigationTitle("")
             .navigationBarHidden(true)
-            .sheet(isPresented: $presentSignUpSheet, onDismiss: {
-                isSheetOpen = false
-            }) {
-                SignUpView(SignUp: SignUpViewModel(), presentSignUpSheet: $presentSignUpSheet, isSheetOpen: $isSheetOpen)
+            .sheet(isPresented: $presentSignUpSheet) {
+                SignUpView(SignUp: SignUpViewModel(), presentSignUpSheet: $presentSignUpSheet)
                     .environmentObject(authentication)
             }
             .padding([.leading, .trailing], UIScreen.padding)

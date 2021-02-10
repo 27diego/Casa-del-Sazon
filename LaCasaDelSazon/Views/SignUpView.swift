@@ -11,14 +11,12 @@ import iPhoneNumberField
 struct SignUpView: View {
     @EnvironmentObject var authentication: AuthenticationViewModel
     @Binding var presentSignUpSheet: Bool
-    @Binding var isSheetOpen: Bool
     
     @ObservedObject var SignUp: SignUpViewModel
     
-    init(SignUp: SignUpViewModel, presentSignUpSheet: Binding<Bool>, isSheetOpen: Binding<Bool>){
+    init(SignUp: SignUpViewModel, presentSignUpSheet: Binding<Bool>){
         self.SignUp = SignUp
         self._presentSignUpSheet = presentSignUpSheet
-        self._isSheetOpen = isSheetOpen
     }
     
     var body: some View {
@@ -79,9 +77,6 @@ struct SignUpView: View {
                         .frame(height: UIScreen.screenHeight * 0.02)
                 }
             }
-        }
-        .onAppear {
-            isSheetOpen = true
         }
         .padding([.leading, .trailing], UIScreen.padding)
     }
