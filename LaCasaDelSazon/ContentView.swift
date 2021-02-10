@@ -12,11 +12,11 @@ struct ContentView: View {
     @EnvironmentObject var authentication: AuthenticationViewModel
     @State var isSheetOpen = false
     var body: some View {
-//        if authentication.isSignedIn && isSheetOpen == false {
+        if authentication.isSignedIn && isSheetOpen == false {
             LocationChooserView()
-//        }
-//        else {
-//            LoginView(isSheetOpen: $isSheetOpen)
-//        }
+        }
+        else {
+            LoginView(login: LoginViewModel(), isSheetOpen: $isSheetOpen)
+        }
     }
 }

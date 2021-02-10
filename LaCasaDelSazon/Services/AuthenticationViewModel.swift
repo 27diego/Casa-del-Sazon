@@ -17,21 +17,7 @@ class AuthenticationViewModel: ObservableObject {
     static let shared = AuthenticationViewModel()
     let firestoreService = FirestoreService.shared
     
-    // MARK: - Create User published variables
-    @Published var createEmail: String = ""
-    @Published var createName: String = ""
-    @Published var createPassword: String = ""
-    @Published var createPasswordVerification: String = ""
-    @Published var createPhone: String = ""
-    var id = ""
-    
-    // MARK: - Sign In published variables
-    @Published var signInEmail: String = ""
-    @Published var signInPassword: String = ""
-    
     // MARK: - UI Publishers
-    @Published var registerButton: Bool = false
-    @Published var signInButton: Bool = false
     @Published var inProgress: Bool = false
     @Published var error: String = ""
     @Published var showError: Bool = false
@@ -50,43 +36,20 @@ class AuthenticationViewModel: ObservableObject {
     
     private func checkSignIn() {
         let request: NSFetchRequest<User> = User.fetchRequest()
-        if let user = try? context.fetch(request).first {
-            id = user.identifier
+        if let _ = try? context.fetch(request).first {
             isSignedIn = true
         }
     }
     
-    func createUserPublishers() {
-        //due to combineLatest limitations, nested a publisher to adhere to 4 publisher zips
-        let passwordsPublisher = Publishers.CombineLatest($createPassword, $createPasswordVerification)
-        Publishers.CombineLatest4($createEmail, $createName, passwordsPublisher, $createPhone)
-            .map { email, name, passwords, phone -> Bool in
-                if self.verifyEmail(email) && self.verifyName(name) && self.verifyPasswords(passwords.0, with: passwords.1) && self.verifyPhone(phone){
-                    return false
-                }
-                return true
-            }
-            .assign(to: &$registerButton)
-    }
     
-    func signInPublishers() {
-        Publishers.CombineLatest($signInEmail, $signInPassword)
-            .map { email, password -> Bool in
-                if self.verifyEmail(email) && self.verifyPasswords(password, with: password) {
-                    return false
-                }
-                return true
-            }
-            .assign(to: &$signInButton)
-    }
     
     func signInAnonymously() {
         signedInAnonymously = true
         isSignedIn = true
     }
     
-    func signIn(){
-        Auth.auth().signIn(withEmail: signInEmail, password: signInPassword) {[weak self] authResult, error in
+    func signIn(email: String, password: String){
+        Auth.auth().signIn(withEmail: email, password: password) {[weak self] authResult, error in
             guard let strongSelf = self else { return }
             
             if let error = error {
@@ -117,8 +80,8 @@ class AuthenticationViewModel: ObservableObject {
     }
     
     // TODO: - create user with name and phone number
-    func createUser(completion: @escaping (_ isSignedIn: Bool) -> Void) {
-        Auth.auth().createUser(withEmail: createEmail, password: createPassword) { authResult, error in
+    func createUser(name: String, email: String, password: String, phone: String, completion: @escaping (_ isSignedIn: Bool) -> Void) {
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 self.handleFirebaseErrr(error: error as NSError)
                 return
@@ -126,48 +89,15 @@ class AuthenticationViewModel: ObservableObject {
             
             guard let authResult = authResult, error == nil else { return }
             
-            User.saveLogedUser(email: authResult.user.email, name: self.createName, phone: self.createPhone, identifier: authResult.user.uid, context: self.context)
+            User.saveLogedUser(email: authResult.user.email, name: name, phone: phone, identifier: authResult.user.uid, context: self.context)
             
-            self.firestoreService.addUser(name: self.createName, phone: self.createPhone, UID: authResult.user.uid)
+            self.firestoreService.addUser(name: email, phone: phone, UID: authResult.user.uid)
             
             self.isSignedIn = true
             self.inProgress = false
             
             completion(self.isSignedIn)
         }
-    }
-}
-
-
-extension AuthenticationViewModel {
-    private func verifyEmail(_ email: String) -> Bool {
-        if email.count > 0 && email.contains("@") && email.contains(".") {
-            return true
-        }
-        return false
-    }
-    
-    private func verifyName(_ name: String) -> Bool {
-        if name.count > 2 {
-            return true
-        }
-        return false
-    }
-    
-    // TODO: - make password check stronger
-    private func verifyPasswords(_ password: String, with verification: String) -> Bool {
-        if password.count > 5 && password == verification {
-            return true
-        }
-        return false
-    }
-    
-    private func verifyPhone(_ phone: String) -> Bool {
-        let strippedPhone = phone.removeByAll(characters: [" ", "(", ")", "-"])
-        if strippedPhone.count >= 10 && Int(strippedPhone) != nil {
-            return true
-        }
-        return false
     }
 }
 
@@ -227,16 +157,5 @@ extension AuthenticationViewModel {
             self.inProgress = false
             triggerError()
         }
-    }
-}
-
-
-extension AuthenticationViewModel {
-    func clearFields() {
-        createEmail = ""
-        createName = ""
-        createPassword = ""
-        createPasswordVerification = ""
-        createPhone = ""
     }
 }

@@ -13,6 +13,14 @@ struct SignUpView: View {
     @Binding var presentSignUpSheet: Bool
     @Binding var isSheetOpen: Bool
     
+    @ObservedObject var SignUp: SignUpViewModel
+    
+    init(SignUp: SignUpViewModel, presentSignUpSheet: Binding<Bool>, isSheetOpen: Binding<Bool>){
+        self.SignUp = SignUp
+        self._presentSignUpSheet = presentSignUpSheet
+        self._isSheetOpen = isSheetOpen
+    }
+    
     var body: some View {
         ZStack{
             if authentication.showError {
@@ -35,17 +43,17 @@ struct SignUpView: View {
                         .frame(height: UIScreen.screenHeight*0.10)
                     Group {
                         Text("Name")
-                        CustomTextFieldView(content: $authentication.createName, placeholder: "Name", type: .nonSecure)
+                        CustomTextFieldView(content: $SignUp.name, placeholder: "Name", type: .nonSecure)
                         Text("Email")
-                        CustomTextFieldView(content: $authentication.createEmail, placeholder: "Email", type: .nonSecure)
+                        CustomTextFieldView(content: $SignUp.email, placeholder: "Email", type: .nonSecure)
                             .keyboardType(.emailAddress)
                         Text("Password")
-                        CustomTextFieldView(content: $authentication.createPassword, placeholder: "Password", type: .secure)
+                        CustomTextFieldView(content: $SignUp.password, placeholder: "Password", type: .secure)
                         Text("Verify Password")
-                        CustomTextFieldView(content: $authentication.createPasswordVerification, placeholder: "Password", type: .secure)
+                        CustomTextFieldView(content: $SignUp.passwordVerification, placeholder: "Password", type: .secure)
                         Text("Phone")
                         
-                        iPhoneNumberField(text: $authentication.createPhone)
+                        iPhoneNumberField(text: $SignUp.phone)
                             .maximumDigits(10)
                             .padding()
                             .background(Color(#colorLiteral(red: 0.768627451, green: 0.768627451, blue: 0.768627451, alpha: 1)).opacity(0.40))
@@ -56,25 +64,23 @@ struct SignUpView: View {
                     }
                     Spacer()
                         .frame(height: UIScreen.screenHeight * 0.02)
-                    RegularButtonView(text: "Sign Up", textColor: .white, buttonColor: authentication.registerButton ? .gray : .red) {
+                    RegularButtonView(text: "Sign Up", textColor: .white, buttonColor: SignUp.registerButton ? .gray : .red) {
                         withAnimation(.spring()) {
                             authentication.inProgress = true
                         }
-                        authentication.createUser() { isSignedIn in
+                        SignUp.createUser() { isSignedIn in
                             if isSignedIn == true {
                                 presentSignUpSheet = false
-                                authentication.clearFields()
                             }
                         }
                     }
-                    .disabled(authentication.registerButton)
+                    .disabled(SignUp.registerButton)
                     Spacer()
                         .frame(height: UIScreen.screenHeight * 0.02)
                 }
             }
         }
         .onAppear {
-            authentication.createUserPublishers()
             isSheetOpen = true
         }
         .padding([.leading, .trailing], UIScreen.padding)

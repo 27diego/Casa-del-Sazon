@@ -17,6 +17,9 @@
 		8B0DCFE52577473000A8A013 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DCFE42577473000A8A013 /* Persistence.swift */; };
 		8B0DCFE82577473000A8A013 /* LaCasaDelSazon.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DCFE62577473000A8A013 /* LaCasaDelSazon.xcdatamodeld */; };
 		8B0DCFF12577474F00A8A013 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DCFF02577474F00A8A013 /* LoginView.swift */; };
+		8B15C1BB25D46AC5007B57C1 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15C1BA25D46AC5007B57C1 /* LoginViewModel.swift */; };
+		8B15C1BE25D46BD2007B57C1 /* VerifyInputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15C1BD25D46BD2007B57C1 /* VerifyInputs.swift */; };
+		8B15C1C125D46D43007B57C1 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15C1C025D46D43007B57C1 /* SignupViewModel.swift */; };
 		8B47467025CCAC8100F4E269 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B47466F25CCAC8100F4E269 /* User+CoreDataClass.swift */; };
 		8B47467325CCCF5900F4E269 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B47467225CCCF5900F4E269 /* ExploreView.swift */; };
 		8B47467625CCD27B00F4E269 /* RestaurantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B47467525CCD27B00F4E269 /* RestaurantViewModel.swift */; };
@@ -53,6 +56,9 @@
 		8B0DCFE72577473000A8A013 /* LaCasaDelSazon.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LaCasaDelSazon.xcdatamodel; sourceTree = "<group>"; };
 		8B0DCFE92577473000A8A013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B0DCFF02577474F00A8A013 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		8B15C1BA25D46AC5007B57C1 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		8B15C1BD25D46BD2007B57C1 /* VerifyInputs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyInputs.swift; sourceTree = "<group>"; };
+		8B15C1C025D46D43007B57C1 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		8B47466F25CCAC8100F4E269 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		8B47467225CCCF5900F4E269 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		8B47467525CCD27B00F4E269 /* RestaurantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantViewModel.swift; sourceTree = "<group>"; };
@@ -168,6 +174,8 @@
 			isa = PBXGroup;
 			children = (
 				8B47467525CCD27B00F4E269 /* RestaurantViewModel.swift */,
+				8B15C1BA25D46AC5007B57C1 /* LoginViewModel.swift */,
+				8B15C1C025D46D43007B57C1 /* SignupViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -216,6 +224,7 @@
 				8B55E92E25C50387003A4861 /* AuthenticationViewModel.swift */,
 				8BEE9B5325D209B9007CF9E9 /* FirestoreService.swift */,
 				8B047E0925D22DCC005AB133 /* NavigationLazyView.swift */,
+				8B15C1BD25D46BD2007B57C1 /* VerifyInputs.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -366,6 +375,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B15C1C125D46D43007B57C1 /* SignupViewModel.swift in Sources */,
 				8BDADB92257749780000DBB4 /* ReusableViews.swift in Sources */,
 				8B0DCFE82577473000A8A013 /* LaCasaDelSazon.xcdatamodeld in Sources */,
 				8B0DCFE52577473000A8A013 /* Persistence.swift in Sources */,
@@ -379,9 +389,11 @@
 				8B47467025CCAC8100F4E269 /* User+CoreDataClass.swift in Sources */,
 				8B0DCFF12577474F00A8A013 /* LoginView.swift in Sources */,
 				8B55E94125C8A8D7003A4861 /* UIScreenExtension.swift in Sources */,
+				8B15C1BB25D46AC5007B57C1 /* LoginViewModel.swift in Sources */,
 				8B8AE28D257851F60095D334 /* LocationChooserView.swift in Sources */,
 				8B047E0A25D22DCD005AB133 /* NavigationLazyView.swift in Sources */,
 				8B4FF27325CC799C003F8863 /* NotificationBanner.swift in Sources */,
+				8B15C1BE25D46BD2007B57C1 /* VerifyInputs.swift in Sources */,
 				8B0DCFDC2577472F00A8A013 /* LaCasaDelSazonApp.swift in Sources */,
 				8B47467C25CCD53600F4E269 /* HomeView.swift in Sources */,
 				8B47467325CCCF5900F4E269 /* ExploreView.swift in Sources */,
