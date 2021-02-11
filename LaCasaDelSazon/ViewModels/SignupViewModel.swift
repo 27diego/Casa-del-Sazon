@@ -10,7 +10,7 @@ import Combine
 
 class SignUpViewModel: ObservableObject {
     
-    let Session = AuthenticationViewModel.shared
+    let Session = SessionService.shared
     
     // MARK: - Create User published variables
     @Published var email: String = ""

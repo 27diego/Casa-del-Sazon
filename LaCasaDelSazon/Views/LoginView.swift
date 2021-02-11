@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    @EnvironmentObject var authentication: AuthenticationViewModel
+    @EnvironmentObject var Session: SessionService
     @State private var presentSignUpSheet: Bool = false
     
     @ObservedObject var Login: LoginViewModel
@@ -19,15 +19,16 @@ struct LoginView: View {
     
     var body: some View {
         ZStack{
-            if authentication.inProgress {
+            NavigationLink("", destination: LocationChooserView(), isActive: $Session.isSignedIn)
+            if Session.inProgress {
                 ProgressView()
                     .zIndex(50)
             }
             
-            if authentication.showError {
+            if Session.showError {
                 VStack{
                     Spacer()
-                    NotificationBanner(text: authentication.error)
+                    NotificationBanner(text: Session.error)
                 }
                 .zIndex(100)
             }
@@ -53,7 +54,7 @@ struct LoginView: View {
                 RegularButtonView(text: "Login", textColor: .white, buttonColor: Login.signInButton ? .gray : .red) {
                     Login.signIn()
                     withAnimation(.spring()) {
-                        authentication.inProgress = true
+                        Session.inProgress = true
                     }
                 }
                 .disabled(Login.signInButton)
@@ -75,7 +76,7 @@ struct LoginView: View {
                     Text("Continue as guest")
                         .foregroundColor(.red)
                         .onTapGesture {
-                            authentication.signInAnonymously()
+                            Session.signInAnonymously()
                         }
                 }
                 .font(.subheadline)
@@ -84,10 +85,10 @@ struct LoginView: View {
             .navigationBarHidden(true)
             .sheet(isPresented: $presentSignUpSheet) {
                 SignUpView(SignUp: SignUpViewModel(), presentSignUpSheet: $presentSignUpSheet)
-                    .environmentObject(authentication)
+                    .environmentObject(Session)
             }
             .padding([.leading, .trailing], UIScreen.padding)
-            .blur(radius: authentication.inProgress ? 30 : 0)
+            .blur(radius: Session.inProgress ? 30 : 0)
         }
     }
 }

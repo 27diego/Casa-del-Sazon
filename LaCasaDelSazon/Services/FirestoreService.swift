@@ -56,3 +56,26 @@ class FirestoreService {
         }
     }
 }
+
+extension AuthErrorCode {
+    var errorMessage: String {
+        switch(self){
+        case .invalidEmail:
+            return "Invalid Email"
+        case .wrongPassword:
+            return "Wrong Password"
+        case .userDisabled:
+            return "User Disabled"
+        case .emailAlreadyInUse:
+            return "Email already in use"
+        case .weakPassword:
+            return "Weak Passwors"
+        case.userNotFound:
+            return "User not found"
+        case .tooManyRequests:
+            return "Access disabled, try again later"
+        default:
+            return "Unknown error occurred"
+        }
+    }
+}

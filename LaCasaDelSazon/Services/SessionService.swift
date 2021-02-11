@@ -12,9 +12,9 @@ import CoreData
 import SwiftUI
 
 
-class AuthenticationViewModel: ObservableObject {
+class SessionService: ObservableObject {
     
-    static let shared = AuthenticationViewModel()
+    static let shared = SessionService()
     let firestoreService = FirestoreService.shared
     
     // MARK: - UI Publishers
@@ -53,7 +53,7 @@ class AuthenticationViewModel: ObservableObject {
             guard let strongSelf = self else { return }
             
             if let error = error {
-                strongSelf.handleFirebaseErrr(error: error as NSError)
+                strongSelf.handleFirebaseErr(error: error as NSError)
                 return
             }
             
@@ -72,6 +72,7 @@ class AuthenticationViewModel: ObservableObject {
         do {
             try context.execute(deleteRequest)
             isSignedIn = false
+            signedInAnonymously = false
         } catch {
             self.error = error.localizedDescription
             self.triggerError()
@@ -83,7 +84,7 @@ class AuthenticationViewModel: ObservableObject {
     func createUser(name: String, email: String, password: String, phone: String, completion: @escaping (_ isSignedIn: Bool) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
-                self.handleFirebaseErrr(error: error as NSError)
+                self.handleFirebaseErr(error: error as NSError)
                 return
             }
             
@@ -102,7 +103,9 @@ class AuthenticationViewModel: ObservableObject {
 }
 
 
-extension AuthenticationViewModel {
+
+
+extension SessionService {
     private func triggerError() {
         withAnimation(.easeInOut){
             showError = true
@@ -113,46 +116,12 @@ extension AuthenticationViewModel {
             }
             self.error = ""
         }
-        
     }
     
-    func handleFirebaseErrr(error: NSError) {
+    func handleFirebaseErr(error: NSError) {
         print(error.debugDescription)
         if let errorCode = AuthErrorCode(rawValue: error.code) {
-            switch(errorCode){
-            case .invalidEmail:
-                print("Invalid Email")
-                self.error = "Invalid Email"
-                break
-            case .wrongPassword:
-                print("Wrong Password")
-                self.error = "Wrong Password"
-                break
-            case .userDisabled:
-                print("User Disabled")
-                self.error = "User Disabled"
-                break
-            case .emailAlreadyInUse:
-                print("Email already in use")
-                self.error = "Email already in use"
-                break
-            case .weakPassword:
-                print("Weak Password")
-                self.error = "Weak Passwors"
-                break
-            case.userNotFound:
-                print("User Not Found")
-                self.error = "User not found"
-                break
-            case .tooManyRequests:
-                print("Too many requests")
-                self.error = "Access disabled, try again later"
-                break
-            default:
-                print("some other code")
-                self.inProgress = false
-                return
-            }
+            self.error = errorCode.errorMessage
             
             self.inProgress = false
             triggerError()

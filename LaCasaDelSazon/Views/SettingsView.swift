@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @EnvironmentObject var Authentication: AuthenticationViewModel
+    @EnvironmentObject var Session: SessionService
     var body: some View {
         Form {
             Section {
                 Button("Sign Out") {
-                    Authentication.signOut()
+                    Session.signOut()
                 }
             }
         }

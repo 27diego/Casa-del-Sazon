@@ -10,7 +10,7 @@ import Combine
 
 class LoginViewModel: ObservableObject {
     
-    var session = AuthenticationViewModel.shared
+    var session = SessionService.shared
     
     // MARK: - UI published variables
     @Published var email: String = ""

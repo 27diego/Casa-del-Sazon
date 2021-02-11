@@ -9,7 +9,7 @@ import SwiftUI
 import iPhoneNumberField
 
 struct SignUpView: View {
-    @EnvironmentObject var authentication: AuthenticationViewModel
+    @EnvironmentObject var authentication: SessionService
     @Binding var presentSignUpSheet: Bool
     
     @ObservedObject var SignUp: SignUpViewModel

@@ -9,14 +9,8 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @EnvironmentObject var authentication: AuthenticationViewModel
-    @State var isSheetOpen = false
+    @EnvironmentObject var Session: SessionService
     var body: some View {
-        if authentication.isSignedIn {
-            LocationChooserView()
-        }
-        else {
-            LoginView(login: LoginViewModel())
-        }
+        LoginView(login: LoginViewModel())
     }
 }

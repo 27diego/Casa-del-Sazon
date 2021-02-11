@@ -14,7 +14,7 @@ import SwiftUI
 struct LaCasaDelSazonApp: App {
     let persistenceController: PersistenceController
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    let AuthenticationVM = AuthenticationViewModel.shared
+    let AuthenticationVM = SessionService.shared
     
     init() {
         persistenceController = PersistenceController.shared
@@ -32,7 +32,7 @@ struct LaCasaDelSazonApp: App {
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate, GIDSignInDelegate {
-    let AuthenticationVM = AuthenticationViewModel.shared
+    let AuthenticationVM = SessionService.shared
     let firestoreService = FirestoreService.shared
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -57,7 +57,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, GIDSignInDelegate {
         }
         
         if let error = error {
-            AuthenticationVM.handleFirebaseErrr(error: error as NSError)
+            AuthenticationVM.handleFirebaseErr(error: error as NSError)
             return
         }
         
@@ -66,7 +66,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, GIDSignInDelegate {
                                                        accessToken: authentication.accessToken)
         Auth.auth().signIn(with: credential) { (res, err) in
             if let error = error {
-                self.AuthenticationVM.handleFirebaseErrr(error: error as NSError)
+                self.AuthenticationVM.handleFirebaseErr(error: error as NSError)
                 return
             }
             
