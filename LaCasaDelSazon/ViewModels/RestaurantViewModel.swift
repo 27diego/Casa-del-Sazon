@@ -7,17 +7,21 @@
 
 import Foundation
 
-class Restaurant: ObservableObject {
+class RestaurantViewModel: ObservableObject {
     let firestoreService: FirestoreService
     private var restaurantId: String
+    
+    var categories: [Categories] = .init()
     
     init(id: String){
         firestoreService = FirestoreService.shared
         self.restaurantId = id
-//        setUpCategories()
+        
+        setUpCategories()
     }
     
     private func setUpCategories(){
-        firestoreService.setCategories(for: restaurantId)
+        categories = firestoreService.setCategories(for: restaurantId)
+        print("Calling here")
     }
 }

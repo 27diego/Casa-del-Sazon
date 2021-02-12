@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct HomeView: View {
-    @ObservedObject var restaurant: Restaurant
-    init(restaurant: Restaurant) {
+    @ObservedObject var restaurant: RestaurantViewModel
+    init(restaurant: RestaurantViewModel) {
         self.restaurant = restaurant
     }
     var body: some View {

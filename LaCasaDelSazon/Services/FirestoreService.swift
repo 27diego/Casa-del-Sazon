@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 import CoreData
 
 class FirestoreService {
@@ -18,6 +19,7 @@ class FirestoreService {
     
     init(){
         FirebaseApp.configure()
+        FirebaseConfiguration.shared.setLoggerLevel(.min)
         self.settings = FirestoreSettings()
         settings.isPersistenceEnabled = false
         self.db = Firestore.firestore()
@@ -44,16 +46,31 @@ class FirestoreService {
         }
     }
     
-    func setCategories(for restaurant: String) {
-        db.collection("Restaurants").document("\(restaurant)").collection("Categories").getDocuments() { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting categories from firestore: \(err.localizedDescription)")
-            } else {
-                for doc in querySnapshot!.documents {
-                    Category.findOrInsert(name: doc["category"] as! String, context: self.context)
-                }
+    func setCategories(for restaurant: String) -> [Categories] {
+        var categories = [Categories]()
+        db.collection("Restaurants").document("\(restaurant)").collection("Categories").getDocuments { (querySnapshot, error) in
+            
+            if let error = error {
+                print("There was an error retrieving categories: \(error.localizedDescription)")
+                return
             }
+            
+            guard let documents = querySnapshot?.documents else {
+                print("No Categories pulled")
+                return
+            }
+            
+            categories = documents.compactMap({ queryDocumentSnapshot -> Categories? in
+                do {
+                    return try queryDocumentSnapshot.data(as: Categories.self)
+                }
+                catch {
+                    print("There was an error \(error.localizedDescription)")
+                    return nil
+                }
+            })
         }
+        return categories
     }
 }
 

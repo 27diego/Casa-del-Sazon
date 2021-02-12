@@ -10,5 +10,6 @@ target 'LaCasaDelSazon' do
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'GoogleSignIn'
+  pod 'FirebaseFirestoreSwift'
 
 end
