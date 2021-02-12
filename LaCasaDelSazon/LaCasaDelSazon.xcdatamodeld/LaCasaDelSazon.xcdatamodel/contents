@@ -13,9 +13,10 @@
         <attribute name="identifier" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="phone" optional="YES" attributeType="String"/>
+        <attribute name="restaurantId" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="103"/>
         <element name="Category" positionX="-54" positionY="27" width="128" height="44"/>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="104"/>
     </elements>
 </model>

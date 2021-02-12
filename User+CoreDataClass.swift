@@ -23,6 +23,7 @@ extension User {
     @NSManaged public var name: String?
     @NSManaged public var identifier: String
     @NSManaged public var phone: String?
+    @NSManaged public var restaurantId: String?
 }
 
 extension User {

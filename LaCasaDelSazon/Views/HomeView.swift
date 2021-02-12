@@ -9,9 +9,8 @@ import SwiftUI
 
 struct HomeView: View {
     @ObservedObject var restaurant: Restaurant
-    init(id: String) {
-        restaurant = Restaurant(id: id)
-
+    init(restaurant: Restaurant) {
+        self.restaurant = restaurant
     }
     var body: some View {
         TabView {

@@ -14,7 +14,7 @@ class Restaurant: ObservableObject {
     init(id: String){
         firestoreService = FirestoreService.shared
         self.restaurantId = id
-        setUpCategories()
+//        setUpCategories()
     }
     
     private func setUpCategories(){

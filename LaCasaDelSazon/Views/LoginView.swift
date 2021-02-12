@@ -19,7 +19,7 @@ struct LoginView: View {
     
     var body: some View {
         ZStack{
-            NavigationLink("", destination: LocationChooserView(), isActive: $Session.isSignedIn)
+            NavigationLink("", destination: NavigationLazyView(LocationChooserView(LocationChooser: LocationChooserViewModel())), isActive: $Session.isSignedIn)
             if Session.inProgress {
                 ProgressView()
                     .zIndex(50)

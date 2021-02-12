@@ -33,6 +33,8 @@
 		8B8AE28825784D730095D334 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE28725784D730095D334 /* SignUpView.swift */; };
 		8B8AE28D257851F60095D334 /* LocationChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE28C257851F60095D334 /* LocationChooserView.swift */; };
 		8B8AE291257853FE0095D334 /* FetchImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE290257853FE0095D334 /* FetchImageView.swift */; };
+		8B983E7E25D4DAC6001F59CD /* LocationChooserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B983E7D25D4DAC6001F59CD /* LocationChooserViewModel.swift */; };
+		8B983E8225D4DB49001F59CD /* RestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B983E8125D4DB49001F59CD /* RestaurantModel.swift */; };
 		8BA33F5425CB7B4F009B41D6 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA33F5325CB7B4F009B41D6 /* VisualEffectView.swift */; };
 		8BDADB92257749780000DBB4 /* ReusableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDADB91257749780000DBB4 /* ReusableViews.swift */; };
 		8BEE9B5425D209B9007CF9E9 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEE9B5325D209B9007CF9E9 /* FirestoreService.swift */; };
@@ -72,6 +74,8 @@
 		8B8AE28725784D730095D334 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		8B8AE28C257851F60095D334 /* LocationChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationChooserView.swift; sourceTree = "<group>"; };
 		8B8AE290257853FE0095D334 /* FetchImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchImageView.swift; sourceTree = "<group>"; };
+		8B983E7D25D4DAC6001F59CD /* LocationChooserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationChooserViewModel.swift; sourceTree = "<group>"; };
+		8B983E8125D4DB49001F59CD /* RestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantModel.swift; sourceTree = "<group>"; };
 		8BA33F5325CB7B4F009B41D6 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		8BDADB91257749780000DBB4 /* ReusableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableViews.swift; sourceTree = "<group>"; };
 		8BEE9B5325D209B9007CF9E9 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
@@ -122,6 +126,7 @@
 		8B0DCFDA2577472F00A8A013 /* LaCasaDelSazon */ = {
 			isa = PBXGroup;
 			children = (
+				8B983E8025D4DB35001F59CD /* Model */,
 				8BEE9B5225D20992007CF9E9 /* Services */,
 				8B55E93925C88B4A003A4861 /* CoreData */,
 				8B55E93225C887C9003A4861 /* UIKit */,
@@ -176,6 +181,7 @@
 				8B47467525CCD27B00F4E269 /* RestaurantViewModel.swift */,
 				8B15C1BA25D46AC5007B57C1 /* LoginViewModel.swift */,
 				8B15C1C025D46D43007B57C1 /* SignupViewModel.swift */,
+				8B983E7D25D4DAC6001F59CD /* LocationChooserViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -215,6 +221,14 @@
 				8BF16D4B25CE0BEC007AC481 /* StringExtensions.swift */,
 			);
 			path = "Enums & Extensions";
+			sourceTree = "<group>";
+		};
+		8B983E8025D4DB35001F59CD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8B983E8125D4DB49001F59CD /* RestaurantModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		8BEE9B5225D20992007CF9E9 /* Services */ = {
@@ -381,9 +395,11 @@
 				8B0DCFE52577473000A8A013 /* Persistence.swift in Sources */,
 				8BEE9B5425D209B9007CF9E9 /* FirestoreService.swift in Sources */,
 				8BF16D4C25CE0BEC007AC481 /* StringExtensions.swift in Sources */,
+				8B983E8225D4DB49001F59CD /* RestaurantModel.swift in Sources */,
 				8B0DCFDE2577472F00A8A013 /* ContentView.swift in Sources */,
 				8B047E0525D21A34005AB133 /* Category+CoreDataClass.swift in Sources */,
 				8B8AE291257853FE0095D334 /* FetchImageView.swift in Sources */,
+				8B983E7E25D4DAC6001F59CD /* LocationChooserViewModel.swift in Sources */,
 				8BA33F5425CB7B4F009B41D6 /* VisualEffectView.swift in Sources */,
 				8B47467625CCD27B00F4E269 /* RestaurantViewModel.swift in Sources */,
 				8B47467025CCAC8100F4E269 /* User+CoreDataClass.swift in Sources */,
