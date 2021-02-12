@@ -13,7 +13,6 @@ struct MenuCategoriesView: View {
     @Binding var selectedCategory: String
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false){
-            Text("\(Restaurant.categories.count)")
             HStack(spacing: 10) {
                 ForEach(categories, id: \.self) { category in
                     Button(action: {
@@ -42,13 +41,14 @@ struct MenuCategoriesView: View {
 
 struct MenuView: View {
     @State var selectedCategory: String = "all"
+    @ObservedObject var firestore = FirestoreService.shared
     var body: some View {
         MenuCategoriesView(selectedCategory: $selectedCategory)
         
         ScrollView {
             VStack {
-                ForEach(0..<10) { _ in
-                    Text("Some Notification")
+                ForEach(firestore.menuItems){ item in
+                    Text(item.id ?? "No Id")
                 }
             }
         }

@@ -11,7 +11,7 @@ class RestaurantViewModel: ObservableObject {
     let firestoreService: FirestoreService
     private var restaurantId: String
     
-    var categories: [Categories] = .init()
+    @Published var categories: [FSCategories] = .init()
     
     init(id: String){
         firestoreService = FirestoreService.shared
@@ -21,7 +21,8 @@ class RestaurantViewModel: ObservableObject {
     }
     
     private func setUpCategories(){
-        categories = firestoreService.setCategories(for: restaurantId)
-        print("Calling here")
+        firestoreService.setCategories(for: restaurantId){ categories in
+            self.categories = categories
+        }
     }
 }

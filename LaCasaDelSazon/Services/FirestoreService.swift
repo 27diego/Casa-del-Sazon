@@ -11,11 +11,13 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import CoreData
 
-class FirestoreService {
+class FirestoreService: ObservableObject {
     static var shared = FirestoreService()
     let settings: FirestoreSettings
     let db: Firestore
     let context: NSManagedObjectContext
+    @Published var categories = [FSCategories]()
+    @Published var menuItems = [FSMenuItem]()
     
     init(){
         FirebaseApp.configure()
@@ -26,6 +28,8 @@ class FirestoreService {
         db.settings = self.settings
         
         context = PersistenceController.shared.container.viewContext
+        
+        getMenuItems()
     }
     
     
@@ -46,8 +50,7 @@ class FirestoreService {
         }
     }
     
-    func setCategories(for restaurant: String) -> [Categories] {
-        var categories = [Categories]()
+    func setCategories(for restaurant: String, completion: @escaping (_ result: [FSCategories]) -> Void) {
         db.collection("Restaurants").document("\(restaurant)").collection("Categories").getDocuments { (querySnapshot, error) in
             
             if let error = error {
@@ -60,9 +63,34 @@ class FirestoreService {
                 return
             }
             
-            categories = documents.compactMap({ queryDocumentSnapshot -> Categories? in
+            self.categories = documents.compactMap({ queryDocumentSnapshot -> FSCategories? in
                 do {
-                    return try queryDocumentSnapshot.data(as: Categories.self)
+                    return try queryDocumentSnapshot.data(as: FSCategories.self)
+                }
+                catch {
+                    print("There was an error with casting the data as FSCategories \(error.localizedDescription)")
+                    return nil
+                }
+            })
+            completion(self.categories)
+        }
+    }
+    
+    
+    func getMenuItems(){
+        db.collection("Restaurants").document("Sazon431").collection("MenuItems").getDocuments { (querySnapShot, error) in
+            if let error = error {
+                print("Error retrieving MenuItems: \(error.localizedDescription)")
+            }
+            
+            guard let documents = querySnapShot?.documents else {
+                print("No Documents pulled")
+                return
+            }
+            
+            self.menuItems = documents.compactMap({ (queryDocumentSnapshot) -> FSMenuItem? in
+                do {
+                    return try queryDocumentSnapshot.data(as: FSMenuItem.self)
                 }
                 catch {
                     print("There was an error \(error.localizedDescription)")
@@ -70,7 +98,6 @@ class FirestoreService {
                 }
             })
         }
-        return categories
     }
 }
 

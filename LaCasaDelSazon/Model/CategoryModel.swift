@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct Categories: Codable, Identifiable {
+struct FSCategories: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var category: String
     var restaurant: [String]

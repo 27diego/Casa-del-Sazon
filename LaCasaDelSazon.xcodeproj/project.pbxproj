@@ -41,6 +41,8 @@
 		8BA33F5425CB7B4F009B41D6 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA33F5325CB7B4F009B41D6 /* VisualEffectView.swift */; };
 		8BDADB92257749780000DBB4 /* ReusableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDADB91257749780000DBB4 /* ReusableViews.swift */; };
 		8BEE9B5425D209B9007CF9E9 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEE9B5325D209B9007CF9E9 /* FirestoreService.swift */; };
+		8BF0510825D72A5F00673299 /* DrinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF0510725D72A5F00673299 /* DrinkModel.swift */; };
+		8BF0510B25D72BD300673299 /* MenuItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF0510A25D72BD300673299 /* MenuItemModel.swift */; };
 		8BF16D4925CE086C007AC481 /* iPhoneNumberField in Frameworks */ = {isa = PBXBuildFile; productRef = 8BF16D4825CE086C007AC481 /* iPhoneNumberField */; };
 		8BF16D4C25CE0BEC007AC481 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF16D4B25CE0BEC007AC481 /* StringExtensions.swift */; };
 		F673CE26DB7D0A1A504EFAEB /* Pods_LaCasaDelSazon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4090288FE11ADB4648C29C9D /* Pods_LaCasaDelSazon.framework */; };
@@ -85,6 +87,8 @@
 		8BA33F5325CB7B4F009B41D6 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		8BDADB91257749780000DBB4 /* ReusableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableViews.swift; sourceTree = "<group>"; };
 		8BEE9B5325D209B9007CF9E9 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
+		8BF0510725D72A5F00673299 /* DrinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkModel.swift; sourceTree = "<group>"; };
+		8BF0510A25D72BD300673299 /* MenuItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemModel.swift; sourceTree = "<group>"; };
 		8BF16D4B25CE0BEC007AC481 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		9DAFEAC4B0281172CE573CE7 /* Pods-LaCasaDelSazon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LaCasaDelSazon.debug.xcconfig"; path = "Target Support Files/Pods-LaCasaDelSazon/Pods-LaCasaDelSazon.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -236,6 +240,8 @@
 			children = (
 				8B983E8125D4DB49001F59CD /* RestaurantModel.swift */,
 				8B8D365025D6E77300A19814 /* CategoryModel.swift */,
+				8BF0510725D72A5F00673299 /* DrinkModel.swift */,
+				8BF0510A25D72BD300673299 /* MenuItemModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -415,10 +421,12 @@
 				8B8D365125D6E77300A19814 /* CategoryModel.swift in Sources */,
 				8B47467025CCAC8100F4E269 /* User+CoreDataClass.swift in Sources */,
 				8B0DCFF12577474F00A8A013 /* LoginView.swift in Sources */,
+				8BF0510825D72A5F00673299 /* DrinkModel.swift in Sources */,
 				8B55E94125C8A8D7003A4861 /* UIScreenExtension.swift in Sources */,
 				8B15C1BB25D46AC5007B57C1 /* LoginViewModel.swift in Sources */,
 				8B8AE28D257851F60095D334 /* LocationChooserView.swift in Sources */,
 				8B047E0A25D22DCD005AB133 /* NavigationLazyView.swift in Sources */,
+				8BF0510B25D72BD300673299 /* MenuItemModel.swift in Sources */,
 				8B4FF27325CC799C003F8863 /* NotificationBanner.swift in Sources */,
 				8B15C1BE25D46BD2007B57C1 /* VerifyInputs.swift in Sources */,
 				8B0DCFDC2577472F00A8A013 /* LaCasaDelSazonApp.swift in Sources */,
