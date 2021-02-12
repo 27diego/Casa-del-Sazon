@@ -9,11 +9,16 @@ import SwiftUI
 import CoreData
 
 struct ExploreView: View {
+    @EnvironmentObject var LocationChooser: LocationChooserViewModel
+    
     @State var selectedCategory: String = "all"
     @State var menuSelection: String = "Menu"
     
     var body: some View {
         VStack {
+            Button("Go Back"){
+                LocationChooser.restaurantIsSelected = false
+            }
             HStack {
                 Text("Menu")
                     .bold()

@@ -18,7 +18,7 @@ struct LocationChooserView: View {
     
     var body: some View {
         ZStack {
-            NavigationLink("", destination: HomeView(restaurant: Restaurant(id: LocationChooser.selectedRestaurant)), isActive: $LocationChooser.restaurantIsSelected)
+            NavigationLink("", destination: HomeView(restaurant: Restaurant(id: LocationChooser.selectedRestaurant)).environmentObject(LocationChooser), isActive: $LocationChooser.restaurantIsSelected)
             
             
             RestaurantMapView()
@@ -55,7 +55,6 @@ struct LocationChooserView: View {
                             }
                         }
                 )
-                .animation(.spring(response: 0.6, dampingFraction: 0.6, blendDuration: 0.25))
         }
         .environmentObject(LocationChooser)
         .ignoresSafeArea()
