@@ -30,7 +30,9 @@ struct LocationChooserView: View {
                 .background(GeometryReader { geo in
                     Color.clear
                         .onAppear {
-                            LocationChooser.menuSize = geo.size.height
+                            if LocationChooser.restaurantIsSelected == false {
+                                LocationChooser.menuSize = geo.size.height
+                            }
                         }
                 })
                 .position(x: UIScreen.screenWidth/2, y: UIScreen.screenHeight+(LocationChooser.menuSize/3.2))
@@ -55,6 +57,7 @@ struct LocationChooserView: View {
                             }
                         }
                 )
+                .animation(.spring())
         }
         .environmentObject(LocationChooser)
         .ignoresSafeArea()

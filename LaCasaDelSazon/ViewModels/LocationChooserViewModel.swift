@@ -17,11 +17,7 @@ class LocationChooserViewModel: ObservableObject {
     @Published var menuSize: CGFloat = .zero
     @Published var menuPosition: CGFloat = .zero
     @Published var expandedMenu: Bool = false
-    @Published var restaurantIsSelected: Bool = false {
-        didSet {
-            print("How many times?? \(oldValue)")
-        }
-    }
+    @Published var restaurantIsSelected: Bool = false
     
     private var cancellable: AnyCancellable?
     
