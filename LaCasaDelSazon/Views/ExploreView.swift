@@ -10,21 +10,18 @@ import CoreData
 
 struct ExploreView: View {
     @EnvironmentObject var LocationChooser: LocationChooserViewModel
-    
-    @State var selectedCategory: String = "all"
     @State var menuSelection: String = "Menu"
     
     var body: some View {
         VStack {
-            Button("Go Back"){
-                LocationChooser.restaurantIsSelected = false
-            }
             HStack {
                 Text("Menu")
                     .bold()
                     .opacity(menuSelection == "Menu" ? 1 : 0.4)
                     .onTapGesture {
-                        menuSelection = "Menu"
+                        withAnimation(.default){
+                            menuSelection = "Menu"
+                        }
                     }
                 
                 Spacer()
@@ -33,15 +30,26 @@ struct ExploreView: View {
                     .bold()
                     .opacity(menuSelection == "Reservations" ? 1 : 0.4)
                     .onTapGesture {
-                        menuSelection = "Reservations"
+                        withAnimation(.default){
+                            menuSelection = "Reservations"
+                        }
                     }
             }
             .font(.largeTitle)
             .padding([.leading, .trailing], UIScreen.padding)
             
-            MenuCategoriesView(selectedCategory: $selectedCategory)
+            Group {
+                if menuSelection == "Menu" {
+                    MenuView()
+                }
+                else {
+                    ReservationView()
+                }
+            }
+            .transition(.slide)
         }
-        .animation(.default)
+        .navigationTitle("")
+        .navigationBarHidden(true)
     }
 }
 
@@ -73,6 +81,29 @@ struct MenuCategoriesView: View {
                 }
             }
             .padding([.leading, .trailing], UIScreen.padding)
+        }
+    }
+}
+
+struct MenuView: View {
+    @State var selectedCategory: String = "all"
+    var body: some View {
+        MenuCategoriesView(selectedCategory: $selectedCategory)
+        
+        ScrollView {
+            VStack {
+                ForEach(0..<10) { _ in
+                    Text("Some Notification")
+                }
+            }
+        }
+    }
+}
+
+struct ReservationView: View {
+    var body: some View {
+        ScrollView {
+            Text("Reservations")
         }
     }
 }

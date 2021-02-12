@@ -73,6 +73,9 @@ class SessionService: ObservableObject {
             try context.execute(deleteRequest)
             isSignedIn = false
             signedInAnonymously = false
+            
+            // MARK: - Handle this error
+            try? Auth.auth().signOut()
         } catch {
             self.error = error.localizedDescription
             self.triggerError()
