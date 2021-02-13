@@ -51,7 +51,7 @@ struct LoginView: View {
                 CustomTextFieldView(content: $Login.email, placeholder: "Email", type: .nonSecure)
                     .keyboardType(.emailAddress)
                 CustomTextFieldView(content: $Login.password, placeholder: "Password", type: .secure)
-                RegularButtonView(text: "Login", textColor: .white, buttonColor: Login.signInButton ? .gray : .red) {
+                RegularButtonView(text: "Login", textColor: .white, buttonColor: Login.signInButton ? Color.red.opacity(0.5) : .red) {
                     Login.signIn()
                     withAnimation(.spring()) {
                         Session.inProgress = true

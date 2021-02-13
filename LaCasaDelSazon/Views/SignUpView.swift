@@ -62,7 +62,7 @@ struct SignUpView: View {
                     }
                     Spacer()
                         .frame(height: UIScreen.screenHeight * 0.02)
-                    RegularButtonView(text: "Sign Up", textColor: .white, buttonColor: SignUp.registerButton ? .gray : .red) {
+                    RegularButtonView(text: "Sign Up", textColor: .white, buttonColor: SignUp.registerButton ? Color.red.opacity(0.5) : .red) {
                         withAnimation(.spring()) {
                             authentication.inProgress = true
                         }

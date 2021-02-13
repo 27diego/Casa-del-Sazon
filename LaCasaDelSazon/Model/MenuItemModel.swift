@@ -29,11 +29,11 @@ struct FSMenuItemPrerequisites: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var allowedPrerequisites: Int
     var forItems: [String]
-    var prerequisites: [ItemPrerequisite]
+    var prerequisites: [FSItemPrerequisite]
     var title: String
 }
 
-struct ItemPrerequisite: Codable, Identifiable, Hashable {
+struct FSItemPrerequisite: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var description: String
     var price: Double
@@ -45,11 +45,11 @@ struct FSMenuItemOptions: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var allowedOptions: Int
     var forItems: [String]
-    var options: [ItemOptions]
+    var options: [FSItemOptions]
     var title: String
 }
 
-struct ItemOptions: Codable, Identifiable, Hashable {
+struct FSItemOptions: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var description: String
     var price: Double
