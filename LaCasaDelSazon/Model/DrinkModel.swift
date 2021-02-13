@@ -23,11 +23,11 @@ struct FSDrinkPrerequisites: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var allowedPrerequisites: Int
     var forItems: [String]
-    var prerequisites: [FSDrinkPrerequisite]
+    var prerequisites: [DrinkPrerequisite]
     var title: String
 }
 
-struct FSDrinkPrerequisite: Codable, Identifiable, Hashable {
+ struct DrinkPrerequisite: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var description: String
     var price: Double

@@ -21,7 +21,7 @@ class RestaurantViewModel: ObservableObject {
     }
     
     private func setUpCategories(){
-        firestoreService.setCategories(for: restaurantId){ categories in
+        firestoreService.getCategories(for: restaurantId){ categories in
             self.categories = categories
         }
     }

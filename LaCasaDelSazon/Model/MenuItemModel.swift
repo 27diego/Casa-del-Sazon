@@ -25,7 +25,7 @@ struct FSMenuItem: Codable, Identifiable, Hashable {
     var type: String
 }
 
-struct FSMenuItemPrerequisite: Codable, Identifiable, Hashable {
+struct FSMenuItemPrerequisites: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var allowedPrerequisites: Int
     var forItems: [String]

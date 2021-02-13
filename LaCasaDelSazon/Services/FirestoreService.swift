@@ -13,11 +13,17 @@ import CoreData
 
 class FirestoreService: ObservableObject {
     static var shared = FirestoreService()
-    let settings: FirestoreSettings
-    let db: Firestore
-    let context: NSManagedObjectContext
+    private let settings: FirestoreSettings
+    private let db: Firestore
+    private let context: NSManagedObjectContext
     @Published var categories = [FSCategories]()
+    
     @Published var menuItems = [FSMenuItem]()
+    @Published var menuItemPrerequisites = [FSMenuItemPrerequisites]()
+    @Published var menuItemOptions = [FSMenuItemOptions]()
+    
+    @Published var drinks = [FSDrink]()
+    @Published var drinkPrerequisites = [FSDrinkPrerequisites]()
     
     init(){
         FirebaseApp.configure()
@@ -30,6 +36,7 @@ class FirestoreService: ObservableObject {
         context = PersistenceController.shared.container.viewContext
         
         getMenuItems()
+        getMenuItemOptions()
     }
     
     
@@ -50,55 +57,79 @@ class FirestoreService: ObservableObject {
         }
     }
     
-    func setCategories(for restaurant: String, completion: @escaping (_ result: [FSCategories]) -> Void) {
-        db.collection("Restaurants").document("\(restaurant)").collection("Categories").getDocuments { (querySnapshot, error) in
-            
-            if let error = error {
-                print("There was an error retrieving categories: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let documents = querySnapshot?.documents else {
-                print("No Categories pulled")
-                return
-            }
-            
-            self.categories = documents.compactMap({ queryDocumentSnapshot -> FSCategories? in
-                do {
-                    return try queryDocumentSnapshot.data(as: FSCategories.self)
-                }
-                catch {
-                    print("There was an error with casting the data as FSCategories \(error.localizedDescription)")
-                    return nil
-                }
-            })
-            completion(self.categories)
+    func getCategories(for restaurant: String, completion: @escaping (_ result: [FSCategories]) -> Void) {
+        getDocuments(for: .categories, from: FSCategories.self) { res in
+            self.categories = res
         }
     }
     
     
     func getMenuItems(){
-        db.collection("Restaurants").document("Sazon431").collection("MenuItems").getDocuments { (querySnapShot, error) in
+        getDocuments(for: .menuItems, from: FSMenuItem.self) { res in
+            self.menuItems = res
+        }
+    }
+    
+    func getDrinks() {
+        getDocuments(for: .drinks, from: FSDrink.self) { res in
+            self.drinks = res
+        }
+    }
+    
+    func getDrinkPrerequisites() {
+        getDocuments(for: .drinkPrerequisites, from: FSDrinkPrerequisites.self) { res in
+            self.drinkPrerequisites = res
+        }
+    }
+    
+    func getMenuItemPrerequisites() {
+        getDocuments(for: .menuItemPrerequisites, from: FSMenuItemPrerequisites.self) { res in
+            self.menuItemPrerequisites = res
+        }
+    }
+    
+    func getMenuItemOptions() {
+        getDocuments(for: .menuItemOptions, from: FSMenuItemOptions.self) { res in
+            self.menuItemOptions = res
+        }
+    }
+}
+
+extension FirestoreService {
+    func getDocuments<T:Codable>(for type: Collections, from data: T.Type = T.self, completion: @escaping (_ res: [T]) -> Void){
+        var results: [T] = .init()
+        
+        db.collection("Restaurants").document("Sazon431").collection(type.rawValue).getDocuments { (querySnapShot, error) in
             if let error = error {
-                print("Error retrieving MenuItems: \(error.localizedDescription)")
+                print("Error retrieving \(type.rawValue): \(error.localizedDescription)")
             }
             
             guard let documents = querySnapShot?.documents else {
-                print("No Documents pulled")
+                print("No documents pulled")
                 return
             }
             
-            self.menuItems = documents.compactMap({ (queryDocumentSnapshot) -> FSMenuItem? in
+            results = documents.compactMap({ queryDocumentSnapShot -> T? in
                 do {
-                    return try queryDocumentSnapshot.data(as: FSMenuItem.self)
+                    return try queryDocumentSnapShot.data(as: T.self)
                 }
                 catch {
-                    print("There was an error \(error.localizedDescription)")
+                    print("There was an error in decoding the data: \(error.localizedDescription)")
                     return nil
                 }
             })
+            completion(results)
         }
     }
+}
+
+enum Collections: String {
+    case menuItems = "MenuItems"
+    case menuItemOptions = "MenuItemOptions"
+    case menuItemPrerequisites = "MenuItemPrerequisites"
+    case drinks = "Drinks"
+    case drinkPrerequisites = "DrinkPrerequisites"
+    case categories = "Categories"
 }
 
 extension AuthErrorCode {
