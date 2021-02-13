@@ -33,4 +33,15 @@ struct PersistenceController {
             }
         })
     }
+    
+    static func saveContext(context: NSManagedObjectContext) {
+        do {
+            try context.save()
+        } catch {
+            print("Could not save context, will roll back: \(error.localizedDescription)")
+            if context.hasChanges {
+                context.rollback()
+            }
+        }
+    }
 }
