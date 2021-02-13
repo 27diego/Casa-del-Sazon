@@ -25,6 +25,8 @@ class FirestoreService: ObservableObject {
     @Published var drinks = [FSDrink]()
     @Published var drinkPrerequisites = [FSDrinkPrerequisites]()
     
+    @Published var restaurants = [FSRestaurant]()
+    
     init(){
         FirebaseApp.configure()
         FirebaseConfiguration.shared.setLoggerLevel(.min)
@@ -60,6 +62,12 @@ class FirestoreService: ObservableObject {
     func getCategories(for restaurant: String, completion: @escaping (_ result: [FSCategories]) -> Void) {
         getDocuments(for: .categories, from: FSCategories.self) { res in
             self.categories = res
+        }
+    }
+    
+    func getRestaurants() {
+        getDocuments(for: .restaurants, from: FSRestaurant.self) { res in
+            self.restaurants = res
         }
     }
     
@@ -130,6 +138,7 @@ enum Collections: String {
     case drinks = "Drinks"
     case drinkPrerequisites = "DrinkPrerequisites"
     case categories = "Categories"
+    case restaurants = "Restaurants"
 }
 
 extension AuthErrorCode {
