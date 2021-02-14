@@ -17,22 +17,36 @@ class LocationChooserViewModel: ObservableObject {
     @Published var menuSize: CGFloat = .zero
     @Published var menuPosition: CGFloat = .zero
     @Published var expandedMenu: Bool = false
-    @Published var restaurantIsSelected: Bool = false
+    @Published var restaurantIsSelected: Bool = false {
+        didSet {
+            if restaurantIsSelected == false {
+                checkList()
+            }
+        }
+    }
     
     private var cancellable: AnyCancellable?
     
     private var user: User?
     private var context = PersistenceController.shared.container.viewContext
     
-    // MARK: - Current active restaurants
-    var restaurants: [RestaurantModel] = [
-        RestaurantModel(id: "Sazon438", coordinate: .init(latitude: 36.67086, longitude: -121.65594), image: "SazonLogo", name: "La Casa Del Sazon 2", address: "438 Salinas St, Salinas, CA", openingTime: "11", closingTime: "9pm"),
-        RestaurantModel(id: "Sazon22", coordinate: .init(latitude: 36.66314, longitude: -121.65870), image: "SazonLogo", name: "La Casa Del Sazon", address: "22 W Romie Ln, Salinas, CA", openingTime: "11", closingTime: "8pm"),
-        RestaurantModel(id: "Sazon431", coordinate: .init(latitude: 36.59892, longitude: -121.89333), image: "SazonExpressLogo", name: "Sazon Express", address: "431 Tyler St, Monterey, CA", openingTime: "4", closingTime: "9pm")
-    ]
-    
     init(){
         checkRestaurant()
+    }
+    
+    private func checkList() {
+        let request: NSFetchRequest<Restaurant> = Restaurant.fetchRequest()
+        
+        if let results = try? context.fetch(request) {
+            if results.count == 0 {
+                FirestoreService.shared.updateRestaurants()
+                print("Updating with Firestore, \(results.count)")
+            } else {
+                results.forEach { res in
+                    print(res)
+                }
+            }
+        }
     }
     
     private func setupPublisher() {
@@ -63,6 +77,7 @@ class LocationChooserViewModel: ObservableObject {
             }
         }
         setupPublisher()
+        checkList()
     }
     
     func confirmRestaurant(){

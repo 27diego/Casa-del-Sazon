@@ -2,7 +2,7 @@
 //  DrinkPrerequisite+CoreDataClass.swift
 //  
 //
-//  Created by Developer on 2/13/21.
+//  Created by Developer on 2/14/21.
 //
 //
 
@@ -20,10 +20,10 @@ extension DrinkPrerequisite {
         return NSFetchRequest<DrinkPrerequisite>(entityName: "DrinkPrerequisite")
     }
 
+    @NSManaged public var identifier: String?
     @NSManaged public var overview: String?
     @NSManaged public var price: Double
     @NSManaged public var title: String?
-    @NSManaged public var identifier: String?
     @NSManaged public var drinkCollection: DrinkPrerequisiteCollection?
 
 }

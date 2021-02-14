@@ -2,7 +2,7 @@
 //  DrinksCategory+CoreDataClass.swift
 //  
 //
-//  Created by Developer on 2/13/21.
+//  Created by Developer on 2/14/21.
 //
 //
 
@@ -23,6 +23,7 @@ extension DrinksCategory {
     @NSManaged public var category: String?
     @NSManaged public var identifier: String?
     @NSManaged public var drinks: NSSet?
+    @NSManaged public var restaurants: NSSet?
 
 }
 
@@ -40,5 +41,22 @@ extension DrinksCategory {
 
     @objc(removeDrinks:)
     @NSManaged public func removeFromDrinks(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for restaurants
+extension DrinksCategory {
+
+    @objc(addRestaurantsObject:)
+    @NSManaged public func addToRestaurants(_ value: Restaurant)
+
+    @objc(removeRestaurantsObject:)
+    @NSManaged public func removeFromRestaurants(_ value: Restaurant)
+
+    @objc(addRestaurants:)
+    @NSManaged public func addToRestaurants(_ values: NSSet)
+
+    @objc(removeRestaurants:)
+    @NSManaged public func removeFromRestaurants(_ values: NSSet)
 
 }

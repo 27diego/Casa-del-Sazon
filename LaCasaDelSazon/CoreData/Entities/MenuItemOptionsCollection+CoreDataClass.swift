@@ -2,7 +2,7 @@
 //  MenuItemOptionsCollection+CoreDataClass.swift
 //  
 //
-//  Created by Developer on 2/13/21.
+//  Created by Developer on 2/14/21.
 //
 //
 
@@ -21,8 +21,8 @@ extension MenuItemOptionsCollection {
     }
 
     @NSManaged public var allowedOptions: Int64
-    @NSManaged public var title: String?
     @NSManaged public var identifier: String?
+    @NSManaged public var title: String?
     @NSManaged public var menuItems: NSSet?
     @NSManaged public var options: NSSet?
 

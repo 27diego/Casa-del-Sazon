@@ -11,6 +11,7 @@ import MapKit
 struct LocationChooserView: View {
     @ObservedObject var LocationChooser: LocationChooserViewModel
     @GestureState var dragMenu: CGFloat = .zero
+    @FetchRequest(entity: Restaurant.entity(), sortDescriptors: [ NSSortDescriptor(keyPath: \Restaurant.name, ascending: true) ]) var restaurants: FetchedResults<Restaurant>
     
     init(LocationChooser: LocationChooserViewModel) {
         self.LocationChooser = LocationChooser
@@ -22,17 +23,19 @@ struct LocationChooserView: View {
             NavigationLink("", destination: NavigationLazyView(HomeView(restaurant: RestaurantViewModel(id: "Sazon431")).environmentObject(LocationChooser)), isActive: $LocationChooser.restaurantIsSelected)
             
             
-            RestaurantMapView()
+            RestaurantMapView(restaurants: restaurants)
                 .navigationTitle("")
                 .navigationBarHidden(true)
                 .ignoresSafeArea()
             
-            RestaurantChooserView()
+            RestaurantChooserView(restaurants: restaurants)
                 .background(GeometryReader { geo in
                     Color.clear
                         .onAppear {
-                            if LocationChooser.restaurantIsSelected == false {
-                                LocationChooser.menuSize = geo.size.height
+                            DispatchQueue.main.async {
+                                if LocationChooser.restaurantIsSelected == false && restaurants.count > 0 {
+                                    LocationChooser.menuSize = geo.size.height
+                                }
                             }
                         }
                 })
@@ -73,10 +76,11 @@ struct Dummy: View {
 
 struct RestaurantMapView: View {
     @EnvironmentObject var LocationChooser: LocationChooserViewModel
+    var restaurants: FetchedResults<Restaurant>
     
     var body: some View {
-        Map(coordinateRegion: $LocationChooser.region, interactionModes: .all, showsUserLocation: true, annotationItems: LocationChooser.restaurants) { restaurant in
-            MapAnnotation(coordinate: restaurant.coordinate) {
+        Map(coordinateRegion: $LocationChooser.region, interactionModes: .all, showsUserLocation: true, annotationItems: restaurants) { restaurant in
+            MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(restaurant.address.latitude), longitude: CLLocationDegrees(restaurant.address.longitude))) {
                 VStack {
                     Button("Go!"){
                         LocationChooser.confirmRestaurant()
@@ -85,8 +89,8 @@ struct RestaurantMapView: View {
                     .padding(.horizontal)
                     .background(Color.white)
                     .clipShape(RoundedRectangle(cornerRadius: 30))
-                    .disabled(!(restaurant.id == LocationChooser.selectedRestaurant))
-                    .opacity(restaurant.id == LocationChooser.selectedRestaurant ? 1 : 0)
+                    .disabled(!(restaurant.identifier ?? "No Identifier" == LocationChooser.selectedRestaurant))
+                    .opacity(restaurant.identifier ?? "No Identifier" == LocationChooser.selectedRestaurant ? 1 : 0)
                     .transition(.opacity)
                     .animation(.default)
                     
@@ -105,9 +109,9 @@ struct RestaurantMapView: View {
                 }
                 .onTapGesture {
                     withAnimation(.linear) {
-                        LocationChooser.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: restaurant.coordinate.latitude, longitude: restaurant.coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001))
+                        LocationChooser.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: CLLocationDegrees(restaurant.address.latitude), longitude: CLLocationDegrees(restaurant.address.longitude)), span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001))
                         LocationChooser.menuPosition = .zero
-                        LocationChooser.selectedRestaurant = restaurant.id
+                        LocationChooser.selectedRestaurant = restaurant.identifier ?? ""
                     }
                 }
             }
@@ -118,13 +122,14 @@ struct RestaurantMapView: View {
 
 struct RestaurantChooserView: View {
     @EnvironmentObject var LocationChooser: LocationChooserViewModel
+    var restaurants: FetchedResults<Restaurant>
     
     var body: some View {
         VStack {
             DragIndicatorView()
                 .padding()
             Text("Choose your favorite spot")
-            ForEach(LocationChooser.restaurants) { restaurant in
+            ForEach(restaurants) { restaurant in
                 HStack(alignment: .center) {
                     Image(restaurant.image)
                         .resizable()
@@ -133,12 +138,12 @@ struct RestaurantChooserView: View {
                     
                     VStack(alignment: .leading, spacing: 10){
                         Text(restaurant.name)
-                        Text(restaurant.address)
+                        Text(restaurant.address.formattedAddress)
                     }
                     .font(.system(size: 14))
                     
                     VStack(spacing: 20){
-                        Text("\(restaurant.openingTime) - \(restaurant.closingTime)")
+                        Text("\(restaurant.schedule.openingTime) - \(restaurant.schedule.closingTime)")
                             .font(.caption)
                             .foregroundColor(.green)
                         Spacer()
@@ -150,9 +155,9 @@ struct RestaurantChooserView: View {
                 .cornerRadius(7)
                 .onTapGesture{
                     withAnimation(.linear) {
-                        LocationChooser.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: restaurant.coordinate.latitude, longitude: restaurant.coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001))
+                        LocationChooser.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: CLLocationDegrees(restaurant.address.latitude), longitude: CLLocationDegrees(restaurant.address.longitude)), span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001))
                         
-                        LocationChooser.selectedRestaurant = restaurant.id
+                        LocationChooser.selectedRestaurant = restaurant.identifier ?? "No ID"
                         LocationChooser.menuPosition = .zero
                     }
                 }

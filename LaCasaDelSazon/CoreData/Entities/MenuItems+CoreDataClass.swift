@@ -2,7 +2,7 @@
 //  MenuItems+CoreDataClass.swift
 //  
 //
-//  Created by Developer on 2/13/21.
+//  Created by Developer on 2/14/21.
 //
 //
 
@@ -14,21 +14,20 @@ public class MenuItems: NSManagedObject {
 
 }
 
-
 extension MenuItems {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<MenuItems> {
         return NSFetchRequest<MenuItems>(entityName: "MenuItems")
     }
 
-    @NSManaged public var overview: String?
     @NSManaged public var hasOptions: Bool
     @NSManaged public var hasPrerequisites: Bool
+    @NSManaged public var identifier: String?
+    @NSManaged public var overview: String?
     @NSManaged public var price: Double
     @NSManaged public var timeForCompletion: Double
     @NSManaged public var title: String?
     @NSManaged public var type: String?
-    @NSManaged public var identifier: String?
     @NSManaged public var categories: NSSet?
     @NSManaged public var options: NSSet?
     @NSManaged public var prerequisites: NSSet?
@@ -91,10 +90,10 @@ extension MenuItems {
 extension MenuItems {
 
     @objc(addRestaurantObject:)
-    @NSManaged public func addToRestaurant(_ value: Restaurants)
+    @NSManaged public func addToRestaurant(_ value: Restaurant)
 
     @objc(removeRestaurantObject:)
-    @NSManaged public func removeFromRestaurant(_ value: Restaurants)
+    @NSManaged public func removeFromRestaurant(_ value: Restaurant)
 
     @objc(addRestaurant:)
     @NSManaged public func addToRestaurant(_ values: NSSet)

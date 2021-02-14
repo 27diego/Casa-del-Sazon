@@ -2,7 +2,7 @@
 //  DrinkPrerequisiteCollection+CoreDataClass.swift
 //  
 //
-//  Created by Developer on 2/13/21.
+//  Created by Developer on 2/14/21.
 //
 //
 
@@ -21,8 +21,8 @@ extension DrinkPrerequisiteCollection {
     }
 
     @NSManaged public var allowedPrerequisites: Int64
-    @NSManaged public var title: String?
     @NSManaged public var identifier: String?
+    @NSManaged public var title: String?
     @NSManaged public var drinks: NSSet?
     @NSManaged public var prerequisites: NSSet?
 

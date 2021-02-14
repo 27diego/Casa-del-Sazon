@@ -9,20 +9,11 @@ import Foundation
 import MapKit
 import FirebaseFirestoreSwift
 
-struct RestaurantModel: Identifiable {
-    let id: String
-    let coordinate: CLLocationCoordinate2D
-    let image: String
-    let name: String
-    let address: String
-    let openingTime: String
-    let closingTime: String
-}
-
 struct FSRestaurant: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var name: String
     var phone: String
+    var image: String
     var address: FSAddress
     var schedule: FSSchedule
 }
@@ -33,8 +24,8 @@ struct FSAddress: Codable, Identifiable, Hashable {
     var state: String
     var street: String
     var zip: String
-    var longitude: Int
-    var latitude: Int
+    var longitude: Double
+    var latitude: Double
 }
 
 struct FSSchedule: Codable, Identifiable, Hashable {

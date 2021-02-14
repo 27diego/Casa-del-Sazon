@@ -24,9 +24,7 @@ class FirestoreService: ObservableObject {
     
     @Published var drinks = [FSDrink]()
     @Published var drinkPrerequisites = [FSDrinkPrerequisites]()
-    
-    @Published var restaurants = [FSRestaurant]()
-    
+        
     init(){
         FirebaseApp.configure()
         FirebaseConfiguration.shared.setLoggerLevel(.min)
@@ -65,9 +63,27 @@ class FirestoreService: ObservableObject {
         }
     }
     
-    func getRestaurants() {
+    func updateRestaurants() {
         getDocuments(for: .restaurants, from: FSRestaurant.self) { res in
-            self.restaurants = res
+            res.forEach { restaurant in
+                let coreRestaurant = Restaurant.findOrInsert(id: restaurant.id ?? "No ID", context: self.context)
+                coreRestaurant.name = restaurant.name
+                coreRestaurant.phone = restaurant.phone
+                coreRestaurant.image = restaurant.image
+                
+                let restaurantSchedule = restaurant.schedule
+                let coreSchedule = Schedule.findOrInsert(id: restaurantSchedule.id ?? "No ID", context: self.context)
+                Schedule.saveFromFSSchedule(coreSchedule: coreSchedule, fsSchedule: restaurantSchedule)
+                
+                let restaurantAddress = restaurant.address
+                let coreAddress = Address.findOrInsert(id: restaurantAddress.id ?? "No ID", context: self.context)
+                Address.saveFromFSAddress(coreAddress: coreAddress, fsAddress: restaurantAddress)
+                
+                coreRestaurant.address = coreAddress
+                coreRestaurant.schedule = coreSchedule
+                
+                PersistenceController.saveContext(context: self.context)
+            }
         }
     }
     
