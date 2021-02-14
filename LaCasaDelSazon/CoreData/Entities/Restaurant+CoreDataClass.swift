@@ -1,5 +1,5 @@
 //
-//  Restaurants+CoreDataClass.swift
+//  Restaurant+CoreDataClass.swift
 //  
 //
 //  Created by Developer on 2/14/21.
@@ -25,10 +25,11 @@ extension Restaurant: Identifiable {
     @NSManaged public var phone: String
     @NSManaged public var image: String
     @NSManaged public var address: Address
-    @NSManaged public var menuItems: NSSet?
+    @NSManaged public var menuItems: Set<MenuItems>?
     @NSManaged public var schedule: Schedule
-    @NSManaged public var drinkCategories: NSSet?
-    @NSManaged public var drinks: NSSet?
+    @NSManaged public var drinkCategories: Set<DrinksCategory>?
+    @NSManaged public var drinks: Set<Drinks>?
+    @NSManaged public var menuItemCategories: Set<MenuItemCategory>?
 
 }
 
@@ -80,6 +81,23 @@ extension Restaurant {
 
     @objc(removeDrinks:)
     @NSManaged public func removeFromDrinks(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for menuItemCategories
+extension Restaurant {
+
+    @objc(addMenuItemCategoriesObject:)
+    @NSManaged public func addToMenuItemCategories(_ value: MenuItemCategory)
+
+    @objc(removeMenuItemCategoriesObject:)
+    @NSManaged public func removeFromMenuItemCategories(_ value: MenuItemCategory)
+
+    @objc(addMenuItemCategories:)
+    @NSManaged public func addToMenuItemCategories(_ values: NSSet)
+
+    @objc(removeMenuItemCategories:)
+    @NSManaged public func removeFromMenuItemCategories(_ values: NSSet)
 
 }
 

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8B047E0525D21A34005AB133 /* Category+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B047E0425D21A34005AB133 /* Category+CoreDataClass.swift */; };
 		8B047E0A25D22DCD005AB133 /* NavigationLazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B047E0925D22DCC005AB133 /* NavigationLazyView.swift */; };
 		8B093F1025C4C0F400E82884 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B093F0F25C4C0F400E82884 /* GoogleService-Info.plist */; };
 		8B0DCFDC2577472F00A8A013 /* LaCasaDelSazonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DCFDB2577472F00A8A013 /* LaCasaDelSazonApp.swift */; };
@@ -37,10 +36,11 @@
 		8B74CA5525D9A34000668788 /* Schedule+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74CA4725D9A33F00668788 /* Schedule+CoreDataClass.swift */; };
 		8B74CA5625D9A34000668788 /* MenuItems+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74CA4E25D9A34000668788 /* MenuItems+CoreDataClass.swift */; };
 		8B74CA5725D9A34000668788 /* MenuItemPrerequisite+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74CA4525D9A33F00668788 /* MenuItemPrerequisite+CoreDataClass.swift */; };
-		8B74CA5825D9A34000668788 /* Restaurants+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74CA4F25D9A34000668788 /* Restaurants+CoreDataClass.swift */; };
 		8B74CA5925D9A34000668788 /* Drinks+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74CA4A25D9A33F00668788 /* Drinks+CoreDataClass.swift */; };
 		8B74CA5A25D9A34000668788 /* MenuItemPrerequisiteCollection+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74CA4D25D9A34000668788 /* MenuItemPrerequisiteCollection+CoreDataClass.swift */; };
 		8B74CA5B25D9A34000668788 /* DrinksCategory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74CA4925D9A33F00668788 /* DrinksCategory+CoreDataClass.swift */; };
+		8B74CA6425D9E14F00668788 /* Restaurant+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74CA6225D9E14F00668788 /* Restaurant+CoreDataClass.swift */; };
+		8B74CA6525D9E14F00668788 /* MenuItemCategory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74CA6325D9E14F00668788 /* MenuItemCategory+CoreDataClass.swift */; };
 		8B8AE283257849E50095D334 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE282257849E50095D334 /* Enums.swift */; };
 		8B8AE28825784D730095D334 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE28725784D730095D334 /* SignUpView.swift */; };
 		8B8AE28D257851F60095D334 /* LocationChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8AE28C257851F60095D334 /* LocationChooserView.swift */; };
@@ -63,7 +63,6 @@
 /* Begin PBXFileReference section */
 		4090288FE11ADB4648C29C9D /* Pods_LaCasaDelSazon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LaCasaDelSazon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CAE001D921E08A793F895B0 /* Pods-LaCasaDelSazon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LaCasaDelSazon.release.xcconfig"; path = "Target Support Files/Pods-LaCasaDelSazon/Pods-LaCasaDelSazon.release.xcconfig"; sourceTree = "<group>"; };
-		8B047E0425D21A34005AB133 /* Category+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Category+CoreDataClass.swift"; path = "/Users/developer/Documents/Developer/iOS/LaCasaDelSazon/LaCasaDelSazon/CoreData/Category+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		8B047E0925D22DCC005AB133 /* NavigationLazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLazyView.swift; sourceTree = "<group>"; };
 		8B093F0F25C4C0F400E82884 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8B0DCFD82577472F00A8A013 /* LaCasaDelSazon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LaCasaDelSazon.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,7 +97,8 @@
 		8B74CA4C25D9A34000668788 /* MenuItemOption+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MenuItemOption+CoreDataClass.swift"; path = "/Users/developer/Documents/Developer/iOS/LaCasaDelSazon/LaCasaDelSazon/CoreData/Entities/MenuItemOption+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		8B74CA4D25D9A34000668788 /* MenuItemPrerequisiteCollection+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MenuItemPrerequisiteCollection+CoreDataClass.swift"; path = "/Users/developer/Documents/Developer/iOS/LaCasaDelSazon/LaCasaDelSazon/CoreData/Entities/MenuItemPrerequisiteCollection+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		8B74CA4E25D9A34000668788 /* MenuItems+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MenuItems+CoreDataClass.swift"; path = "/Users/developer/Documents/Developer/iOS/LaCasaDelSazon/LaCasaDelSazon/CoreData/Entities/MenuItems+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		8B74CA4F25D9A34000668788 /* Restaurants+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Restaurants+CoreDataClass.swift"; path = "/Users/developer/Documents/Developer/iOS/LaCasaDelSazon/LaCasaDelSazon/CoreData/Entities/Restaurants+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		8B74CA6225D9E14F00668788 /* Restaurant+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Restaurant+CoreDataClass.swift"; path = "/Users/developer/Documents/Developer/iOS/LaCasaDelSazon/LaCasaDelSazon/CoreData/Entities/Restaurant+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		8B74CA6325D9E14F00668788 /* MenuItemCategory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MenuItemCategory+CoreDataClass.swift"; path = "/Users/developer/Documents/Developer/iOS/LaCasaDelSazon/LaCasaDelSazon/CoreData/Entities/MenuItemCategory+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		8B8AE282257849E50095D334 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		8B8AE28725784D730095D334 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		8B8AE28C257851F60095D334 /* LocationChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationChooserView.swift; sourceTree = "<group>"; };
@@ -243,8 +243,9 @@
 		8B55E93D25C88B55003A4861 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				8B74CA6325D9E14F00668788 /* MenuItemCategory+CoreDataClass.swift */,
+				8B74CA6225D9E14F00668788 /* Restaurant+CoreDataClass.swift */,
 				8B74CA4E25D9A34000668788 /* MenuItems+CoreDataClass.swift */,
-				8B74CA4F25D9A34000668788 /* Restaurants+CoreDataClass.swift */,
 				8B74CA4825D9A33F00668788 /* MenuItemOptionsCollection+CoreDataClass.swift */,
 				8B74CA4725D9A33F00668788 /* Schedule+CoreDataClass.swift */,
 				8B74CA4525D9A33F00668788 /* MenuItemPrerequisite+CoreDataClass.swift */,
@@ -255,7 +256,6 @@
 				8B74CA4A25D9A33F00668788 /* Drinks+CoreDataClass.swift */,
 				8B74CA4D25D9A34000668788 /* MenuItemPrerequisiteCollection+CoreDataClass.swift */,
 				8B74CA4625D9A33F00668788 /* DrinkPrerequisiteCollection+CoreDataClass.swift */,
-				8B047E0425D21A34005AB133 /* Category+CoreDataClass.swift */,
 				8B47466F25CCAC8100F4E269 /* User+CoreDataClass.swift */,
 			);
 			path = Entities;
@@ -449,8 +449,6 @@
 				8BF16D4C25CE0BEC007AC481 /* StringExtensions.swift in Sources */,
 				8B983E8225D4DB49001F59CD /* RestaurantModel.swift in Sources */,
 				8B0DCFDE2577472F00A8A013 /* ContentView.swift in Sources */,
-				8B74CA5825D9A34000668788 /* Restaurants+CoreDataClass.swift in Sources */,
-				8B047E0525D21A34005AB133 /* Category+CoreDataClass.swift in Sources */,
 				8B8AE291257853FE0095D334 /* FetchImageView.swift in Sources */,
 				8B983E7E25D4DAC6001F59CD /* LocationChooserViewModel.swift in Sources */,
 				8BA33F5425CB7B4F009B41D6 /* VisualEffectView.swift in Sources */,
@@ -459,6 +457,8 @@
 				8B74CA5625D9A34000668788 /* MenuItems+CoreDataClass.swift in Sources */,
 				8B47467025CCAC8100F4E269 /* User+CoreDataClass.swift in Sources */,
 				8B0DCFF12577474F00A8A013 /* LoginView.swift in Sources */,
+				8B74CA6525D9E14F00668788 /* MenuItemCategory+CoreDataClass.swift in Sources */,
+				8B74CA6425D9E14F00668788 /* Restaurant+CoreDataClass.swift in Sources */,
 				8BF0510825D72A5F00673299 /* DrinkModel.swift in Sources */,
 				8B55E94125C8A8D7003A4861 /* UIScreenExtension.swift in Sources */,
 				8B74CA5025D9A34000668788 /* DrinkPrerequisite+CoreDataClass.swift in Sources */,

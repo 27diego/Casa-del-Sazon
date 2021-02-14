@@ -6,12 +6,12 @@
 //
 
 import Foundation
+import CoreData
 
 class RestaurantViewModel: ObservableObject {
     let firestoreService: FirestoreService
-    private var restaurantId: String
-    
-    @Published var categories: [FSCategories] = .init()
+    var restaurantId: String
+    let context = PersistenceController.shared.container.viewContext
     
     init(id: String){
         firestoreService = FirestoreService.shared
@@ -21,8 +21,11 @@ class RestaurantViewModel: ObservableObject {
     }
     
     private func setUpCategories(){
-        firestoreService.getCategories(for: restaurantId){ categories in
-            self.categories = categories
+        let request = Restaurant.fetchByIdentifier(restaurantId)
+        if let restaurant = try? context.fetch(request).first {
+            if restaurant.menuItemCategories?.count ?? 0 < 0 {
+                firestoreService.updateCategories(for: self.restaurantId)
+            }
         }
     }
 }

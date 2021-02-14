@@ -41,10 +41,6 @@ class LocationChooserViewModel: ObservableObject {
             if results.count == 0 {
                 FirestoreService.shared.updateRestaurants()
                 print("Updating with Firestore, \(results.count)")
-            } else {
-                results.forEach { res in
-                    print(res)
-                }
             }
         }
     }

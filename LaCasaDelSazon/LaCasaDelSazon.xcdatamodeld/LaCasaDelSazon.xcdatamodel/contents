@@ -10,16 +10,6 @@
         <attribute name="zip" attributeType="String"/>
         <relationship name="restaurant" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Restaurant" inverseName="address" inverseEntity="Restaurant"/>
     </entity>
-    <entity name="Category" representedClassName="Category" syncable="YES">
-        <attribute name="category" attributeType="String"/>
-        <attribute name="identifier" optional="YES" attributeType="String"/>
-        <relationship name="menuItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MenuItems" inverseName="categories" inverseEntity="MenuItems"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="category"/>
-            </uniquenessConstraint>
-        </uniquenessConstraints>
-    </entity>
     <entity name="DrinkPrerequisite" representedClassName="DrinkPrerequisite" syncable="YES">
         <attribute name="identifier" optional="YES" attributeType="String"/>
         <attribute name="overview" attributeType="String"/>
@@ -68,6 +58,17 @@
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="identifier"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="MenuItemCategory" representedClassName="MenuItemCategory" syncable="YES">
+        <attribute name="category" attributeType="String"/>
+        <attribute name="identifier" optional="YES" attributeType="String"/>
+        <relationship name="menuItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MenuItems" inverseName="categories" inverseEntity="MenuItems"/>
+        <relationship name="restaurants" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Restaurant" inverseName="menuItemCategories" inverseEntity="Restaurant"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="category"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
@@ -128,7 +129,7 @@
         <attribute name="timeForCompletion" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="title" attributeType="String"/>
         <attribute name="type" attributeType="String"/>
-        <relationship name="categories" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="menuItems" inverseEntity="Category"/>
+        <relationship name="categories" toMany="YES" deletionRule="Nullify" destinationEntity="MenuItemCategory" inverseName="menuItems" inverseEntity="MenuItemCategory"/>
         <relationship name="options" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MenuItemOptionsCollection" inverseName="menuItems" inverseEntity="MenuItemOptionsCollection"/>
         <relationship name="prerequisites" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MenuItemPrerequisiteCollection" inverseName="menuItems" inverseEntity="MenuItemPrerequisiteCollection"/>
         <relationship name="restaurant" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Restaurant" inverseName="menuItems" inverseEntity="Restaurant"/>
@@ -146,6 +147,7 @@
         <relationship name="address" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Address" inverseName="restaurant" inverseEntity="Address"/>
         <relationship name="drinkCategories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DrinksCategory" inverseName="restaurants" inverseEntity="DrinksCategory"/>
         <relationship name="drinks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Drinks" inverseName="restaurants" inverseEntity="Drinks"/>
+        <relationship name="menuItemCategories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MenuItemCategory" inverseName="restaurants" inverseEntity="MenuItemCategory"/>
         <relationship name="menuItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MenuItems" inverseName="restaurant" inverseEntity="MenuItems"/>
         <relationship name="schedule" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Schedule" inverseName="restaurant" inverseEntity="Schedule"/>
         <uniquenessConstraints>
@@ -174,7 +176,7 @@
     </entity>
     <elements>
         <element name="Address" positionX="-398.7313842773438" positionY="-699.2324981689453" width="128" height="163"/>
-        <element name="Category" positionX="601.7867431640625" positionY="-181.3511199951172" width="128" height="88"/>
+        <element name="MenuItemCategory" positionX="601.7867431640625" positionY="-181.3511199951172" width="128" height="103"/>
         <element name="DrinkPrerequisite" positionX="104.3370361328125" positionY="-324.73828125" width="128" height="118"/>
         <element name="DrinkPrerequisiteCollection" positionX="104.9030151367188" positionY="-486.8913726806641" width="128" height="118"/>
         <element name="Drinks" positionX="272.5174560546875" positionY="-653.1224822998047" width="128" height="178"/>
@@ -184,7 +186,7 @@
         <element name="MenuItemPrerequisite" positionX="533.995361328125" positionY="134.6672973632812" width="128" height="118"/>
         <element name="MenuItemPrerequisiteCollection" positionX="542.5078125" positionY="-22.4368896484375" width="128" height="118"/>
         <element name="MenuItems" positionX="279.3762817382813" positionY="-249.9797210693359" width="128" height="223"/>
-        <element name="Restaurant" positionX="-234.924072265625" positionY="-493.7173919677734" width="128" height="178"/>
+        <element name="Restaurant" positionX="-234.924072265625" positionY="-493.7173919677734" width="128" height="193"/>
         <element name="Schedule" positionX="-571.5836181640625" positionY="-493.7478637695312" width="128" height="178"/>
         <element name="User" positionX="-330.100830078125" positionY="-276.4525756835938" width="128" height="118"/>
     </elements>

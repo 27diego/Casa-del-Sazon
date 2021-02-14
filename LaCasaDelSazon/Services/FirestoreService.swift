@@ -16,8 +16,7 @@ class FirestoreService: ObservableObject {
     private let settings: FirestoreSettings
     private let db: Firestore
     private let context: NSManagedObjectContext
-    @Published var categories = [FSCategories]()
-    
+
     @Published var menuItems = [FSMenuItem]()
     @Published var menuItemPrerequisites = [FSMenuItemPrerequisites]()
     @Published var menuItemOptions = [FSMenuItemOptions]()
@@ -57,9 +56,17 @@ class FirestoreService: ObservableObject {
         }
     }
     
-    func getCategories(for restaurant: String, completion: @escaping (_ result: [FSCategories]) -> Void) {
+    func updateCategories(for restaurant: String) {
         getDocuments(for: .categories, from: FSCategories.self) { res in
-            self.categories = res
+            res.forEach { result in
+                let category: MenuItemCategory = MenuItemCategory.findOrInsert(name: result.category, context: self.context)
+                category.identifier =  result.id
+                
+                let restaurant = Restaurant.findOrInsert(id: restaurant, context: self.context)
+                restaurant.addToMenuItemCategories(category)
+                
+                PersistenceController.saveContext(context: self.context)
+            }
         }
     }
     

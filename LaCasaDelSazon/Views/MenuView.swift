@@ -7,14 +7,36 @@
 
 import SwiftUI
 
+struct MenuView: View {
+    @EnvironmentObject var restaurant: RestaurantViewModel
+    @State var selectedCategory: String = "all"
+    @ObservedObject var firestore = FirestoreService.shared
+    var body: some View {
+        MenuCategoriesView(selectedCategory: $selectedCategory, id: restaurant.restaurantId)
+        
+        ScrollView {
+            VStack {
+                ForEach(firestore.menuItems){ item in
+                    Text(item.id ?? "No Id")
+                }
+            }
+        }
+    }
+}
+
 struct MenuCategoriesView: View {
-    @FetchRequest(entity: Category.entity(), sortDescriptors: []) var categories: FetchedResults<Category>
-    @EnvironmentObject var Restaurant: RestaurantViewModel
     @Binding var selectedCategory: String
+    @FetchRequest var restaurant: FetchedResults<Restaurant>
+    
+    init(selectedCategory: Binding<String>, id: String) {
+        self._selectedCategory = selectedCategory
+        self._restaurant = FetchRequest(fetchRequest: Restaurant.fetchByIdentifier(id))
+    }
+    
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false){
             HStack(spacing: 10) {
-                ForEach(categories, id: \.self) { category in
+                ForEach(Array(restaurant.menuItemCategories ?? Set<MenuItemCategory>())) { category in
                     Button(action: {
                         selectedCategory = selectedCategory == category.category ? "all" : category.category
                     }, label: {
@@ -35,22 +57,6 @@ struct MenuCategoriesView: View {
                 }
             }
             .padding([.leading, .trailing], UIScreen.padding)
-        }
-    }
-}
-
-struct MenuView: View {
-    @State var selectedCategory: String = "all"
-    @ObservedObject var firestore = FirestoreService.shared
-    var body: some View {
-        MenuCategoriesView(selectedCategory: $selectedCategory)
-        
-        ScrollView {
-            VStack {
-                ForEach(firestore.menuItems){ item in
-                    Text(item.id ?? "No Id")
-                }
-            }
         }
     }
 }

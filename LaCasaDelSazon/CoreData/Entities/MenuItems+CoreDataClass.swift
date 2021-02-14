@@ -39,10 +39,10 @@ extension MenuItems {
 extension MenuItems {
 
     @objc(addCategoriesObject:)
-    @NSManaged public func addToCategories(_ value: Category)
+    @NSManaged public func addToCategories(_ value: MenuItemCategory)
 
     @objc(removeCategoriesObject:)
-    @NSManaged public func removeFromCategories(_ value: Category)
+    @NSManaged public func removeFromCategories(_ value: MenuItemCategory)
 
     @objc(addCategories:)
     @NSManaged public func addToCategories(_ values: NSSet)
