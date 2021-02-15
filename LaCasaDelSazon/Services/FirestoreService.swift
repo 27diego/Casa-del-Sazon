@@ -64,7 +64,6 @@ class FirestoreService: ObservableObject {
                 
                 let restaurant = Restaurant.findOrInsert(id: restaurant, context: self.context)
                 restaurant.addToMenuItemCategories(category)
-                
                 PersistenceController.saveContext(context: self.context)
             }
         }

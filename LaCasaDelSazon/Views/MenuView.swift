@@ -12,12 +12,14 @@ struct MenuView: View {
     @State var selectedCategory: String = "all"
     @ObservedObject var firestore = FirestoreService.shared
     var body: some View {
-        MenuCategoriesView(selectedCategory: $selectedCategory, id: restaurant.restaurantId)
-        
-        ScrollView {
-            VStack {
-                ForEach(firestore.menuItems){ item in
-                    Text(item.id ?? "No Id")
+        VStack {
+            MenuCategoriesView(selectedCategory: $selectedCategory, id: restaurant.restaurantId)
+            
+            ScrollView {
+                VStack {
+                    ForEach(firestore.menuItems){ item in
+                        Text(item.id ?? "No Id")
+                    }
                 }
             }
         }
@@ -36,7 +38,7 @@ struct MenuCategoriesView: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false){
             HStack(spacing: 10) {
-                ForEach(Array(restaurant.menuItemCategories ?? Set<MenuItemCategory>())) { category in
+                ForEach(Array(restaurant.first?.menuItemCategories ?? Set<MenuItemCategory>())) { category in
                     Button(action: {
                         selectedCategory = selectedCategory == category.category ? "all" : category.category
                     }, label: {

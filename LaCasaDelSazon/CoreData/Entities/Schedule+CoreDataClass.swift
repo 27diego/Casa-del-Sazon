@@ -30,15 +30,6 @@ extension Schedule {
     @NSManaged public var wednesday: String
     @NSManaged public var restaurant: Restaurant?
     
-    var openingTime: String {
-        let schedule = tuesday.components(separatedBy: "-")
-        return schedule.first ?? ""
-    }
-    
-    var closingTime: String {
-        let schedule = tuesday.components(separatedBy: "-")
-        return schedule[1]
-    }
 
 }
 
@@ -55,6 +46,38 @@ extension Schedule {
 
 // MARK: - Static Member Functions
 extension Schedule {
+    func getTodaysSchedule() -> (String, String) {
+        var schedule = ""
+        switch Date.getTodaysDay() {
+        case "Monday":
+            schedule = monday
+            break
+        case "Tuesday":
+            schedule = tuesday
+            break
+        case "Wednesday":
+            schedule = wednesday
+            break
+        case "Thursday":
+            schedule = thursday
+            break
+        case "Friday":
+            schedule = friday
+            break
+        case "Saturday":
+            schedule = saturday
+            break
+        case "Sunday":
+            schedule = sunday
+            break
+        default:
+            schedule = "Closed"
+        }
+        
+        let tempSchedule = schedule.components(separatedBy: "-")
+        return (tempSchedule.first!, tempSchedule[1])
+    }
+    
     static func findOrInsert(id: String, context: NSManagedObjectContext) -> Schedule {
         let request = Schedule.fetchByIdentifier(id)
         
