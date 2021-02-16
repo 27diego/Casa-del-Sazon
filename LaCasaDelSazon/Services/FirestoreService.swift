@@ -69,7 +69,7 @@ class FirestoreService: ObservableObject {
                     restaurant.addToMenuItemCategories(category)
                 }
                 
-                PersistenceController.saveContext(context: self.context)
+                PersistenceController.saveContext(self.context)
             }
         }
     }
@@ -83,7 +83,7 @@ class FirestoreService: ObservableObject {
                 let restaurant = Restaurant.findOrInsert(id: restaurantId, context: self.context)
                 restaurant.addToMenuItemCategories(category)
                 
-                PersistenceController.saveContext(context: self.context)
+                PersistenceController.saveContext(self.context)
             }
         }
     }
@@ -107,7 +107,7 @@ class FirestoreService: ObservableObject {
                 coreRestaurant.address = coreAddress
                 coreRestaurant.schedule = coreSchedule
                 
-                PersistenceController.saveContext(context: self.context)
+                PersistenceController.saveContext(self.context)
             }
         }
     }
@@ -147,7 +147,7 @@ class FirestoreService: ObservableObject {
              */
         }
         
-        PersistenceController.saveContext(context: self.context)
+        PersistenceController.saveContext(self.context)
     }
     
     func getDrinks() {

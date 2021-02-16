@@ -43,14 +43,14 @@ extension User {
         user.phone = phone
         user.identifier = identifier
         
-        PersistenceController.saveContext(context: context)
+        PersistenceController.saveContext(context)
     }
     
     static func deleteLogedUser(id: String, context: NSManagedObjectContext) {
         let request = User.fetchUser(withId: id)
         if let user = try? context.fetch(request).first {
             context.delete(user)
-            PersistenceController.saveContext(context: context)
+            PersistenceController.saveContext(context)
         }
     }
 }

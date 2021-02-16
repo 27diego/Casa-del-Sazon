@@ -74,7 +74,7 @@ class SessionService: ObservableObject {
             }
         }
         
-        PersistenceController.saveContext(context: context)
+        PersistenceController.saveContext(context)
         
         
         

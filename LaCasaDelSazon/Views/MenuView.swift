@@ -11,12 +11,9 @@ struct MenuView: View {
     @EnvironmentObject var restaurant: RestaurantViewModel
     @State var selectedCategory: String = "all"
     @ObservedObject var firestore = FirestoreService.shared
-    
-    var restaurantId: String
     @FetchRequest var menuItems: FetchedResults<MenuItem>
     
     init(restaurantId: String) {
-        self.restaurantId = restaurantId
         self._menuItems = FetchRequest(fetchRequest: MenuItem.fetchByRestaurant(id: restaurantId))
     }
     

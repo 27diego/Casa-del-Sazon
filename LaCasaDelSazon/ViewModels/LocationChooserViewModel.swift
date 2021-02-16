@@ -74,7 +74,7 @@ class LocationChooserViewModel: ObservableObject {
     func confirmRestaurant(){
         if let user = self.user {
             user.restaurantId = selectedRestaurant
-            PersistenceController.saveContext(context: context)
+            PersistenceController.saveContext(context)
         }
         restaurantIsSelected = true
     }
