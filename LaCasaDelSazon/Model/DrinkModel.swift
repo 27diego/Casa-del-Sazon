@@ -33,3 +33,10 @@ struct FSDrinkPrerequisites: Codable, Identifiable, Hashable {
     var price: Double
     var title: String
 }
+
+
+struct FSDrinkCategories: Codable, Identifiable, Hashable {
+    @DocumentID var id: String?
+    var category: String
+    var restaurant: [String]
+}

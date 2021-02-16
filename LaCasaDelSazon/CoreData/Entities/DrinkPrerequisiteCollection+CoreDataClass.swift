@@ -20,7 +20,7 @@ extension DrinkPrerequisiteCollection {
         return NSFetchRequest<DrinkPrerequisiteCollection>(entityName: "DrinkPrerequisiteCollection")
     }
 
-    @NSManaged public var allowedPrerequisites: Int64
+    @NSManaged public var allowedPrerequisites: Int
     @NSManaged public var identifier: String?
     @NSManaged public var title: String?
     @NSManaged public var drinks: NSSet?

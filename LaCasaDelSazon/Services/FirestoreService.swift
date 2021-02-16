@@ -109,7 +109,7 @@ class FirestoreService: ObservableObject {
     
     func updateMenuItems(){
         getDocuments(for: .menuItems, from: FSMenuItem.self) { results in
-            self.saveMenuItems(results, restaurantId: nil)
+            self.saveMenuItems(results)
         }
     }
     
@@ -119,7 +119,7 @@ class FirestoreService: ObservableObject {
         }
     }
     
-    private func saveMenuItems(_ results: [FSMenuItem], restaurantId: String?) {
+    private func saveMenuItems(_ results: [FSMenuItem], restaurantId: String? = nil) {
         results.forEach { result in
             let menuItem = MenuItem.findOrInsert(withId: result.id ?? "No ID", context: self.context)
             MenuItem.saveMenuItem(from: result, to: menuItem)
@@ -134,30 +134,121 @@ class FirestoreService: ObservableObject {
                 let restaurant = Restaurant.findOrInsert(id: restaurantId, context: self.context)
                 menuItem.addToRestaurant(restaurant)
             }
-
-            /*
-             @NSManaged public var options: NSSet?
-             @NSManaged public var prerequisites: NSSet?
-             */
         }
         
         PersistenceController.saveContext(self.context)
     }
     
     func getDrinks() {
-        getDocuments(for: .drinks, from: FSDrink.self) { res in
-
+        getDocuments(for: .drinks, from: FSDrink.self) { results in
+            results.forEach { result in
+                let drink = Drink.findOrInsert(withId: result.id ?? "No ID", context: self.context)
+                drink.hasPrerequisites = result.hasPrerequisites
+                drink.overview = result.description
+                drink.price = result.price
+                drink.title = result.title
+                drink.type = result.type
+                
+                result.restaurant.forEach { restaurantFS in
+                    let restaurant = Restaurant.findOrInsert(id: restaurantFS, context: self.context)
+                    restaurant.addToDrinks(drink)
+                }
+                
+            }
         }
+        PersistenceController.saveContext(self.context)
+    }
+    
+    func getDrinks(for restaurantId: String) {
+        let restaurant = Restaurant.findOrInsert(id: restaurantId, context: self.context)
+        getDocuments(for: .drinks, from: FSDrink.self, whereField: "restaurant", contains: restaurantId) { results in
+            results.forEach { result in
+                let drink = Drink.findOrInsert(withId: result.id ?? "No ID", context: self.context)
+                drink.hasPrerequisites = result.hasPrerequisites
+                drink.overview = result.description
+                drink.price = result.price
+                drink.title = result.title
+                drink.type = result.type
+                
+                restaurant.addToDrinks(drink)
+            }
+        }
+        PersistenceController.saveContext(self.context)
     }
     
     func getDrinkPrerequisites() {
-        getDocuments(for: .drinkPrerequisites, from: FSDrinkPrerequisites.self) { res in
-
+        getDocuments(for: .drinkPrerequisites, from: FSDrinkPrerequisites.self) { results in
+            results.map { result in
+                let collection = DrinkPrerequisiteCollection.findOrInsert(withId: result.id ?? "No ID", context: self.context)
+                collection.allowedPrerequisites = result.allowedPrerequisites
+                collection.title = result.title
+                
+                result.prerequisites.forEach { prerequisiteFS in
+                    let prerequisite = DrinkPrerequisite.findOrInsert(withId: prerequisiteFS.id ?? "No ID", context: self.context)
+                    prerequisite.overview = prerequisiteFS.description
+                    prerequisite.price = prerequisiteFS.price
+                    prerequisite.title = prerequisiteFS.title
+                    collection.addToPrerequisites(prerequisite)
+                }
+                
+                result.forItems.forEach { items in
+                    let drink = Drink.findOrInsert(withId: items, context: self.context)
+                    drink.addToPrerequisites(collection)
+                }
+            }
         }
+        PersistenceController.saveContext(self.context)
+    }
+    
+    func getDrinkPrerequisites(for drinkId: String) {
+        let drink = Drink.findOrInsert(withId: drinkId, context: self.context)
+        getDocuments(for: .drinkPrerequisites, from: FSDrinkPrerequisites.self, whereField: "forItems", contains: drinkId) { results in
+            results.forEach { result in
+                let collection = DrinkPrerequisiteCollection.findOrInsert(withId: drinkId, context: self.context)
+                collection.allowedPrerequisites = result.allowedPrerequisites
+                collection.title = result.title
+            
+                result.prerequisites.forEach { prerequisiteFS in
+                    let prerequisite = DrinkPrerequisite.findOrInsert(withId: prerequisiteFS.id ?? "No ID", context: self.context)
+                    prerequisite.overview = prerequisiteFS.description
+                    prerequisite.price = prerequisiteFS.price
+                    prerequisite.title = prerequisiteFS.title
+                    collection.addToPrerequisites(prerequisite)
+                }
+                
+                drink.addToPrerequisites(collection)
+            }
+        }
+        PersistenceController.saveContext(self.context)
     }
     
     func getDrinkCategories() {
-        getDocuments
+        getDocuments(for: .drinkCategories, from: FSDrinkCategories.self) { results in
+            results.forEach({ result in
+                let category = DrinksCategory.findOrInsert(withId: result.id ?? "No ID", context: self.context)
+                category.category = result.category
+                
+                result.restaurant.forEach { restaurantFS  in
+                    let restaurant = Restaurant.findOrInsert(id: restaurantFS , context: self.context)
+                    restaurant.addToDrinkCategories(category)
+                }
+            })
+        }
+        PersistenceController.saveContext(self.context)
+    }
+    
+    func getDrinkCategories(for restaurantId: String) {
+        let restaurant = Restaurant.findOrInsert(id: restaurantId, context: self.context
+        )
+        getDocuments(for: .drinkCategories, from: FSDrinkCategories.self) { results in
+            results.forEach({ result in
+                let category = DrinksCategory.findOrInsert(withId: result.id ?? "No ID", context: self.context)
+                category.category = result.category
+                
+                restaurant.addToDrinkCategories(category)
+            })
+        }
+        PersistenceController.saveContext(self.context)
     }
     
     func getMenuItemPrerequisites(for menuItemId: String) {
@@ -318,6 +409,7 @@ enum Collections: String {
     case drinkPrerequisites = "DrinkPrerequisites"
     case categories = "Categories"
     case restaurants = "Restaurants"
+    case drinkCategories = "DrinkCategories"
 }
 
 extension AuthErrorCode {
