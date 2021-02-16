@@ -20,7 +20,7 @@ struct LocationChooserView: View {
     var body: some View {
         ZStack {
             // TODO: Change this hard coded value to the actual user choosen value
-            NavigationLink("", destination: NavigationLazyView(HomeView(restaurant: RestaurantViewModel(id: LocationChooser.selectedRestaurant)).environmentObject(LocationChooser)), isActive: $LocationChooser.restaurantIsSelected)
+            NavigationLink("", destination: NavigationLazyView(HomeView(restaurantId: LocationChooser.selectedRestaurant).environmentObject(LocationChooser)), isActive: $LocationChooser.restaurantIsSelected)
             
             
             RestaurantMapView(restaurants: restaurants)
@@ -141,9 +141,9 @@ struct RestaurantChooserView: View {
                         Text(restaurant.address.formattedAddress)
                     }
                     .font(.system(size: 14))
-                    
+                    Spacer()
                     VStack(spacing: 20){
-                        Text("\(restaurant.schedule.getTodaysSchedule().0) - \(restaurant.schedule.getTodaysSchedule().1)")
+                        Text(Date.getTodaysDay() != "Monday" ? "\(restaurant.schedule.openingTime) - \(restaurant.schedule.closingTime)" : "Closed")
                             .font(.caption)
                             .foregroundColor(.green)
                         Spacer()

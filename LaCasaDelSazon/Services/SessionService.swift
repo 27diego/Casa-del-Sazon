@@ -28,7 +28,7 @@ class SessionService: ObservableObject {
     var signedInAnonymously: Bool = false
     
     let context: NSManagedObjectContext
-        
+    
     init() {
         context = PersistenceController.shared.container.viewContext
         checkSignIn()

@@ -11,14 +11,14 @@ import CoreData
 
 @objc(User)
 public class User: NSManagedObject {
-
+    
 }
 
 extension User {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<User> {
         return NSFetchRequest<User>(entityName: "User")
     }
-
+    
     @NSManaged public var email: String?
     @NSManaged public var name: String?
     @NSManaged public var identifier: String
@@ -43,25 +43,14 @@ extension User {
         user.phone = phone
         user.identifier = identifier
         
-        do {
-            try context.save()
-        }
-        catch {
-            print("Could not save new user |AuthenticationViewModel| : \(error.localizedDescription)")
-        }
+        PersistenceController.saveContext(context: context)
     }
     
     static func deleteLogedUser(id: String, context: NSManagedObjectContext) {
         let request = User.fetchUser(withId: id)
         if let user = try? context.fetch(request).first {
-            do {
-                context.delete(user)
-                try context.save()
-            }
-            catch {
-                context.rollback()
-                print(error.localizedDescription)
-            }
+            context.delete(user)
+            PersistenceController.saveContext(context: context)
         }
     }
 }

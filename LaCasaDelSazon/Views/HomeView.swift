@@ -8,10 +8,8 @@
 import SwiftUI
 
 struct HomeView: View {
-    @ObservedObject var restaurant: RestaurantViewModel
-    init(restaurant: RestaurantViewModel) {
-        self.restaurant = restaurant
-    }
+    @StateObject var restaurant: RestaurantViewModel = RestaurantViewModel()
+    var restaurantId: String
     var body: some View {
         TabView {
             ExploreView()
@@ -23,6 +21,9 @@ struct HomeView: View {
                 .tabItem {
                     Image(systemName: "gear")
                 }
+        }
+        .onAppear {
+            restaurant.restaurantId = restaurantId
         }
         .navigationBarBackButtonHidden(true)
         .environmentObject(restaurant)

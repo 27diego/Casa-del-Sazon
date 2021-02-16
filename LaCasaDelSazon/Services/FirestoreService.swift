@@ -56,16 +56,32 @@ class FirestoreService: ObservableObject {
         }
     }
     
-    func updateCategories(for restaurant: String) {
-        getDocuments(for: .categories, from: FSCategories.self) { res in
-            res.forEach { result in
+    func updateCategories() {
+        getDocuments(for: .categories, from: FSCategories.self) { results in
+            results.forEach { result in
                 let category: MenuItemCategory = MenuItemCategory.findOrInsert(name: result.category, context: self.context)
                 category.identifier =  result.id
+
+                result.restaurant.forEach { catRestaurant in
+                    print(catRestaurant)
+                    let restaurant = Restaurant.findOrInsert(id: catRestaurant, context: self.context)
+                    restaurant.addToMenuItemCategories(category)
+                    PersistenceController.saveContext(context: self.context)
+                }
                 
-                let restaurant = Restaurant.findOrInsert(id: restaurant, context: self.context)
-                restaurant.addToMenuItemCategories(category)
                 PersistenceController.saveContext(context: self.context)
             }
+            
+            
+            
+//            res.forEach { result in
+//                let category: MenuItemCategory = MenuItemCategory.findOrInsert(name: result.category, context: self.context)
+//                category.identifier =  result.id
+//
+//                let restaurant = Restaurant.findOrInsert(id: restaurant, context: self.context)
+//                restaurant.addToMenuItemCategories(category)
+//                PersistenceController.saveContext(context: self.context)
+//            }
         }
     }
     

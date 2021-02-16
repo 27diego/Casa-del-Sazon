@@ -78,16 +78,14 @@ class LocationChooserViewModel: ObservableObject {
     func confirmRestaurant(){
         if let user = self.user {
             user.restaurantId = selectedRestaurant
-            do {
-                try context.save()
-            } catch {
-                print("Could not save to Core Data")
-                if context.hasChanges {
-                    context.rollback()
-                }
-            }
+            PersistenceController.saveContext(context: context)
         }
         restaurantIsSelected = true
+    }
+    
+    func getColorIndicator() -> Bool {
+        
+        return true
     }
 }
 

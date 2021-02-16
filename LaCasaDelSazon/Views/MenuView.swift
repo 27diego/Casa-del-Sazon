@@ -28,17 +28,17 @@ struct MenuView: View {
 
 struct MenuCategoriesView: View {
     @Binding var selectedCategory: String
-    @FetchRequest var restaurant: FetchedResults<Restaurant>
+    @FetchRequest var categories: FetchedResults<MenuItemCategory>
     
     init(selectedCategory: Binding<String>, id: String) {
         self._selectedCategory = selectedCategory
-        self._restaurant = FetchRequest(fetchRequest: Restaurant.fetchByIdentifier(id))
+        self._categories = FetchRequest(fetchRequest: MenuItemCategory.fetchByRestaurant(id: id))
     }
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false){
             HStack(spacing: 10) {
-                ForEach(Array(restaurant.first?.menuItemCategories ?? Set<MenuItemCategory>())) { category in
+                ForEach(Array(categories)) { category in
                     Button(action: {
                         selectedCategory = selectedCategory == category.category ? "all" : category.category
                     }, label: {

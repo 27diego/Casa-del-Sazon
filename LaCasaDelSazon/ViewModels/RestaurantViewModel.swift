@@ -9,27 +9,20 @@ import Foundation
 import CoreData
 
 class RestaurantViewModel: ObservableObject {
-    let firestoreService: FirestoreService
-    var restaurantId: String {
+    let firestoreService: FirestoreService = FirestoreService.shared
+    @Published var restaurantId: String = "" {
         didSet {
             setUpCategories()
         }
     }
     let context = PersistenceController.shared.container.viewContext
     
-    init(id: String){
-        firestoreService = FirestoreService.shared
-        self.restaurantId = id
-        
-        setUpCategories()
-    }
-    
     private func setUpCategories(){
         let request = Restaurant.fetchByIdentifier(restaurantId)
         if let restaurant = try? context.fetch(request).first {
             if restaurant.menuItemCategories?.count ?? 0 == 0 {
                 print("Fetching for restaurant: \(restaurant)")
-                firestoreService.updateCategories(for: self.restaurantId)
+                firestoreService.updateCategories()
             }
             else {
                 print("Has categories")

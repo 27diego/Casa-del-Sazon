@@ -9,8 +9,6 @@ import SwiftUI
 import CoreData
 
 struct ExploreView: View {
-    @EnvironmentObject var LocationChooser: LocationChooserViewModel
-    @EnvironmentObject var Restaurant: RestaurantViewModel
     @State var menuSelection: String = "Menu"
     
     var body: some View {

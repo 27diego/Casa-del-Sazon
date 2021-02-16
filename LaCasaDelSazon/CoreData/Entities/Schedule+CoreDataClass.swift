@@ -30,6 +30,13 @@ extension Schedule {
     @NSManaged public var wednesday: String
     @NSManaged public var restaurant: Restaurant?
     
+    var openingTime: String {
+        return getTodaysSchedule().0
+    }
+    
+    var closingTime: String {
+        return getTodaysSchedule().1
+    }
 
 }
 
