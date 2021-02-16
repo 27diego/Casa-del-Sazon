@@ -20,7 +20,7 @@ extension MenuItemPrerequisiteCollection {
         return NSFetchRequest<MenuItemPrerequisiteCollection>(entityName: "MenuItemPrerequisiteCollection")
     }
 
-    @NSManaged public var allowedPrerequisites: Double
+    @NSManaged public var allowedPrerequisites: Int
     @NSManaged public var identifier: String?
     @NSManaged public var title: String?
     @NSManaged public var menuItems: NSSet?
@@ -81,9 +81,9 @@ extension MenuItemPrerequisiteCollection {
             return result
         }
         
-        let menuItem = MenuItemPrerequisiteCollection(context: context)
-        menuItem.identifier = id
+        let prerequisiteCollection = MenuItemPrerequisiteCollection(context: context)
+        prerequisiteCollection.identifier = id
         
-        return menuItem
+        return prerequisiteCollection
     }
 }

@@ -46,9 +46,9 @@ extension MenuItemPrerequisite {
             return result
         }
         
-        let menuItem = MenuItemPrerequisite(context: context)
-        menuItem.identifier = id
+        let prerequisite = MenuItemPrerequisite(context: context)
+        prerequisite.identifier = id
         
-        return menuItem
+        return prerequisite
     }
 }

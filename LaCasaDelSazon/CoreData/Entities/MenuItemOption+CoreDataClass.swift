@@ -47,9 +47,9 @@ extension MenuItemOption {
             return result
         }
         
-        let menuItem = MenuItemOption(context: context)
-        menuItem.identifier = id
+        let option = MenuItemOption(context: context)
+        option.identifier = id
         
-        return menuItem
+        return option
     }
 }

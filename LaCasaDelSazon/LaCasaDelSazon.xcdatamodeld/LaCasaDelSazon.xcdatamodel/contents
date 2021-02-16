@@ -181,12 +181,12 @@
         <element name="DrinkPrerequisiteCollection" positionX="104.9030151367188" positionY="-486.8913726806641" width="128" height="118"/>
         <element name="Drinks" positionX="272.5174560546875" positionY="-653.1224822998047" width="128" height="178"/>
         <element name="DrinksCategory" positionX="519.3861083984375" positionY="-616.1998748779297" width="128" height="103"/>
+        <element name="MenuItem" positionX="279.3762817382813" positionY="-249.9797210693359" width="128" height="238"/>
         <element name="MenuItemCategory" positionX="601.7867431640625" positionY="-181.3511199951172" width="128" height="103"/>
         <element name="MenuItemOption" positionX="115.6611938476562" positionY="146.599609375" width="128" height="118"/>
         <element name="MenuItemOptionsCollection" positionX="118.4832763671875" positionY="-17.56695556640625" width="116.4674072265625" height="118"/>
         <element name="MenuItemPrerequisite" positionX="533.995361328125" positionY="134.6672973632812" width="128" height="118"/>
         <element name="MenuItemPrerequisiteCollection" positionX="542.5078125" positionY="-22.4368896484375" width="128" height="118"/>
-        <element name="MenuItem" positionX="279.3762817382813" positionY="-249.9797210693359" width="128" height="238"/>
         <element name="Restaurant" positionX="-235.484619140625" positionY="-495.5746917724609" width="128" height="193"/>
         <element name="Schedule" positionX="-571.5836181640625" positionY="-493.7478637695312" width="128" height="178"/>
         <element name="User" positionX="-330.100830078125" positionY="-276.4525756835938" width="128" height="118"/>

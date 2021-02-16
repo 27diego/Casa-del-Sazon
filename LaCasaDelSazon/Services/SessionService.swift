@@ -65,19 +65,7 @@ class SessionService: ObservableObject {
         }
     }
     
-    func signOut() {
-        let fetchRequestCategory: NSFetchRequest<MenuItemCategory> = NSFetchRequest(entityName: "MenuItemCategory")
-        
-        if let results = try? context.fetch(fetchRequestCategory) {
-            results.forEach { result in
-                context.delete(result)
-            }
-        }
-        
-        PersistenceController.saveContext(context)
-        
-        
-        
+    func signOut() {        
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "User")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         

@@ -20,7 +20,7 @@ extension MenuItemOptionsCollection {
         return NSFetchRequest<MenuItemOptionsCollection>(entityName: "MenuItemOptionsCollection")
     }
 
-    @NSManaged public var allowedOptions: Int64
+    @NSManaged public var allowedOptions: Int
     @NSManaged public var identifier: String?
     @NSManaged public var title: String?
     @NSManaged public var menuItems: NSSet?
@@ -80,10 +80,10 @@ extension MenuItemOptionsCollection {
             return result
         }
         
-        let menuItem = MenuItemOptionsCollection(context: context)
-        menuItem.identifier = id
+        let optionsCollection = MenuItemOptionsCollection(context: context)
+        optionsCollection.identifier = id
         
-        return menuItem
+        return optionsCollection
     }
 }
 
