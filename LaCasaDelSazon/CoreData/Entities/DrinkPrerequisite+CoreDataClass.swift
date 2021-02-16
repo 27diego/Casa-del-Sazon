@@ -27,3 +27,28 @@ extension DrinkPrerequisite {
     @NSManaged public var drinkCollection: DrinkPrerequisiteCollection?
 
 }
+
+extension DrinkPrerequisite {
+    static func fetchById(id: String) -> NSFetchRequest<DrinkPrerequisite> {
+        let request = NSFetchRequest<DrinkPrerequisite>(entityName: "DrinkPrerequisite")
+        request.sortDescriptors = []
+        request.predicate = NSPredicate(format: "%K == %@", #keyPath(DrinkPrerequisite.identifier), id)
+        
+        return request
+    }
+}
+
+extension DrinkPrerequisite {
+    static func findOrInsert(withId id: String, context: NSManagedObjectContext) -> DrinkPrerequisite {
+        let request = DrinkPrerequisite.fetchById(id: id)
+        
+        if let result = try? context.fetch(request).first {
+            return result
+        }
+        
+        let prerequisite = DrinkPrerequisite(context: context)
+        prerequisite.identifier = id
+        
+        return prerequisite
+    }
+}

@@ -10,6 +10,22 @@
         <attribute name="zip" attributeType="String"/>
         <relationship name="restaurant" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Restaurant" inverseName="address" inverseEntity="Restaurant"/>
     </entity>
+    <entity name="Drink" representedClassName="Drink" syncable="YES">
+        <attribute name="hasPrerequisites" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String"/>
+        <attribute name="overview" attributeType="String"/>
+        <attribute name="price" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="type" attributeType="String"/>
+        <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DrinksCategory" inverseName="drinks" inverseEntity="DrinksCategory"/>
+        <relationship name="prerequisites" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DrinkPrerequisiteCollection" inverseName="drinks" inverseEntity="DrinkPrerequisiteCollection"/>
+        <relationship name="restaurants" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Restaurant" inverseName="drinks" inverseEntity="Restaurant"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="identifier"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
     <entity name="DrinkPrerequisite" representedClassName="DrinkPrerequisite" syncable="YES">
         <attribute name="identifier" optional="YES" attributeType="String"/>
         <attribute name="overview" attributeType="String"/>
@@ -26,24 +42,8 @@
         <attribute name="allowedPrerequisites" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="identifier" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="drinks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Drinks" inverseName="prerequisites" inverseEntity="Drinks"/>
+        <relationship name="drinks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Drink" inverseName="prerequisites" inverseEntity="Drink"/>
         <relationship name="prerequisites" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DrinkPrerequisite" inverseName="drinkCollection" inverseEntity="DrinkPrerequisite"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="identifier"/>
-            </uniquenessConstraint>
-        </uniquenessConstraints>
-    </entity>
-    <entity name="Drinks" representedClassName="Drinks" syncable="YES">
-        <attribute name="hasPrerequisites" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="identifier" optional="YES" attributeType="String"/>
-        <attribute name="overview" attributeType="String"/>
-        <attribute name="price" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="title" attributeType="String"/>
-        <attribute name="type" attributeType="String"/>
-        <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DrinksCategory" inverseName="drinks" inverseEntity="DrinksCategory"/>
-        <relationship name="prerequisites" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DrinkPrerequisiteCollection" inverseName="drinks" inverseEntity="DrinkPrerequisiteCollection"/>
-        <relationship name="restaurants" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Restaurant" inverseName="drinks" inverseEntity="Restaurant"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="identifier"/>
@@ -53,7 +53,7 @@
     <entity name="DrinksCategory" representedClassName="DrinksCategory" syncable="YES">
         <attribute name="category" attributeType="String"/>
         <attribute name="identifier" optional="YES" attributeType="String"/>
-        <relationship name="drinks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Drinks" inverseName="categories" inverseEntity="Drinks"/>
+        <relationship name="drinks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Drink" inverseName="categories" inverseEntity="Drink"/>
         <relationship name="restaurants" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Restaurant" inverseName="drinkCategories" inverseEntity="Restaurant"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -147,7 +147,7 @@
         <attribute name="phone" attributeType="String"/>
         <relationship name="address" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Address" inverseName="restaurant" inverseEntity="Address"/>
         <relationship name="drinkCategories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DrinksCategory" inverseName="restaurants" inverseEntity="DrinksCategory"/>
-        <relationship name="drinks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Drinks" inverseName="restaurants" inverseEntity="Drinks"/>
+        <relationship name="drinks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Drink" inverseName="restaurants" inverseEntity="Drink"/>
         <relationship name="menuItemCategories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MenuItemCategory" inverseName="restaurants" inverseEntity="MenuItemCategory"/>
         <relationship name="menuItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MenuItem" inverseName="restaurant" inverseEntity="MenuItem"/>
         <relationship name="schedule" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Schedule" inverseName="restaurant" inverseEntity="Schedule"/>
@@ -179,7 +179,7 @@
         <element name="Address" positionX="-398.7313842773438" positionY="-699.2324981689453" width="128" height="163"/>
         <element name="DrinkPrerequisite" positionX="104.3370361328125" positionY="-324.73828125" width="128" height="118"/>
         <element name="DrinkPrerequisiteCollection" positionX="104.9030151367188" positionY="-486.8913726806641" width="128" height="118"/>
-        <element name="Drinks" positionX="272.5174560546875" positionY="-653.1224822998047" width="128" height="178"/>
+        <element name="Drink" positionX="272.5174560546875" positionY="-653.1224822998047" width="128" height="178"/>
         <element name="DrinksCategory" positionX="519.3861083984375" positionY="-616.1998748779297" width="128" height="103"/>
         <element name="MenuItem" positionX="279.3762817382813" positionY="-249.9797210693359" width="128" height="238"/>
         <element name="MenuItemCategory" positionX="601.7867431640625" positionY="-181.3511199951172" width="128" height="103"/>

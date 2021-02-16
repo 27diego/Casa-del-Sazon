@@ -31,10 +31,10 @@ extension DrinksCategory {
 extension DrinksCategory {
 
     @objc(addDrinksObject:)
-    @NSManaged public func addToDrinks(_ value: Drinks)
+    @NSManaged public func addToDrinks(_ value: Drink)
 
     @objc(removeDrinksObject:)
-    @NSManaged public func removeFromDrinks(_ value: Drinks)
+    @NSManaged public func removeFromDrinks(_ value: Drink)
 
     @objc(addDrinks:)
     @NSManaged public func addToDrinks(_ values: NSSet)
@@ -58,5 +58,29 @@ extension DrinksCategory {
 
     @objc(removeRestaurants:)
     @NSManaged public func removeFromRestaurants(_ values: NSSet)
+}
 
+extension DrinksCategory {
+    static func fetchById(id: String) -> NSFetchRequest<DrinksCategory> {
+        let request = NSFetchRequest<DrinksCategory>(entityName: "DrinksCategory")
+        request.sortDescriptors = []
+        request.predicate = NSPredicate(format: "%K == %@", #keyPath(DrinksCategory.identifier), id)
+        
+        return request
+    }
+}
+
+extension DrinksCategory {
+    static func findOrInsert(withId id: String, context: NSManagedObjectContext) -> DrinksCategory {
+        let request = DrinksCategory.fetchById(id: id)
+        
+        if let result = try? context.fetch(request).first {
+            return result
+        }
+        
+        let categorty = DrinksCategory(context: context)
+        categorty.identifier = id
+        
+        return categorty
+    }
 }

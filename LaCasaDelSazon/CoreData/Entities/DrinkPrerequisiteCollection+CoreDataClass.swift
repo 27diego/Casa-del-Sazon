@@ -32,10 +32,10 @@ extension DrinkPrerequisiteCollection {
 extension DrinkPrerequisiteCollection {
 
     @objc(addDrinksObject:)
-    @NSManaged public func addToDrinks(_ value: Drinks)
+    @NSManaged public func addToDrinks(_ value: Drink)
 
     @objc(removeDrinksObject:)
-    @NSManaged public func removeFromDrinks(_ value: Drinks)
+    @NSManaged public func removeFromDrinks(_ value: Drink)
 
     @objc(addDrinks:)
     @NSManaged public func addToDrinks(_ values: NSSet)
@@ -60,4 +60,29 @@ extension DrinkPrerequisiteCollection {
     @objc(removePrerequisites:)
     @NSManaged public func removeFromPrerequisites(_ values: NSSet)
 
+}
+
+extension DrinkPrerequisiteCollection {
+    static func fetchById(id: String) -> NSFetchRequest<DrinkPrerequisiteCollection> {
+        let request = NSFetchRequest<DrinkPrerequisiteCollection>(entityName: "DrinkPrerequisiteCollection")
+        request.sortDescriptors = []
+        request.predicate = NSPredicate(format: "%K == %@", #keyPath(DrinkPrerequisiteCollection.identifier), id)
+        
+        return request
+    }
+}
+
+extension DrinkPrerequisiteCollection {
+    static func findOrInsert(withId id: String, context: NSManagedObjectContext) -> DrinkPrerequisiteCollection {
+        let request = DrinkPrerequisiteCollection.fetchById(id: id)
+        
+        if let result = try? context.fetch(request).first {
+            return result
+        }
+        
+        let prerequisiteCollection = DrinkPrerequisiteCollection(context: context)
+        prerequisiteCollection.identifier = id
+        
+        return prerequisiteCollection
+    }
 }

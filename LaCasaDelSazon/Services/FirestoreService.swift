@@ -18,9 +18,6 @@ class FirestoreService: ObservableObject {
     private let context: NSManagedObjectContext
     
     private let restaurantRef: DocumentReference
-    
-    @Published var drinks = [FSDrink]()
-    @Published var drinkPrerequisites = [FSDrinkPrerequisites]()
         
     init(){
         FirebaseApp.configure()
@@ -149,14 +146,18 @@ class FirestoreService: ObservableObject {
     
     func getDrinks() {
         getDocuments(for: .drinks, from: FSDrink.self) { res in
-            self.drinks = res
+
         }
     }
     
     func getDrinkPrerequisites() {
         getDocuments(for: .drinkPrerequisites, from: FSDrinkPrerequisites.self) { res in
-            self.drinkPrerequisites = res
+
         }
+    }
+    
+    func getDrinkCategories() {
+        getDocuments
     }
     
     func getMenuItemPrerequisites(for menuItemId: String) {

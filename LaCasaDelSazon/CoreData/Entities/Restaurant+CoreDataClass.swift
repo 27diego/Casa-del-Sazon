@@ -28,7 +28,7 @@ extension Restaurant: Identifiable {
     @NSManaged public var menuItems: Set<MenuItem>?
     @NSManaged public var schedule: Schedule
     @NSManaged public var drinkCategories: Set<DrinksCategory>?
-    @NSManaged public var drinks: Set<Drinks>?
+    @NSManaged public var drinks: Set<Drink>?
     @NSManaged public var menuItemCategories: Set<MenuItemCategory>?
 
 }
@@ -71,10 +71,10 @@ extension Restaurant {
 extension Restaurant {
 
     @objc(addDrinksObject:)
-    @NSManaged public func addToDrinks(_ value: Drinks)
+    @NSManaged public func addToDrinks(_ value: Drink)
 
     @objc(removeDrinksObject:)
-    @NSManaged public func removeFromDrinks(_ value: Drinks)
+    @NSManaged public func removeFromDrinks(_ value: Drink)
 
     @objc(addDrinks:)
     @NSManaged public func addToDrinks(_ values: NSSet)

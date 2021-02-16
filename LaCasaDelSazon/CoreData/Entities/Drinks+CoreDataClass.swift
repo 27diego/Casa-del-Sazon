@@ -9,15 +9,15 @@
 import Foundation
 import CoreData
 
-@objc(Drinks)
-public class Drinks: NSManagedObject {
+@objc(Drink)
+public class Drink: NSManagedObject {
 
 }
 
-extension Drinks {
+extension Drink {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Drinks> {
-        return NSFetchRequest<Drinks>(entityName: "Drinks")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Drink> {
+        return NSFetchRequest<Drink>(entityName: "Drinks")
     }
 
     @NSManaged public var hasPrerequisites: Bool
@@ -33,7 +33,7 @@ extension Drinks {
 }
 
 // MARK: Generated accessors for categories
-extension Drinks {
+extension Drink {
 
     @objc(addCategoriesObject:)
     @NSManaged public func addToCategories(_ value: DrinksCategory)
@@ -50,7 +50,7 @@ extension Drinks {
 }
 
 // MARK: Generated accessors for prerequisites
-extension Drinks {
+extension Drink {
 
     @objc(addPrerequisitesObject:)
     @NSManaged public func addToPrerequisites(_ value: DrinkPrerequisiteCollection)
@@ -67,7 +67,7 @@ extension Drinks {
 }
 
 // MARK: Generated accessors for restaurants
-extension Drinks {
+extension Drink {
 
     @objc(addRestaurantsObject:)
     @NSManaged public func addToRestaurants(_ value: Restaurant)
@@ -82,3 +82,29 @@ extension Drinks {
     @NSManaged public func removeFromRestaurants(_ values: NSSet)
 
 }
+
+extension Drink {
+    static func fetchById(id: String) -> NSFetchRequest<Drink> {
+        let request = NSFetchRequest<Drink>(entityName: "Drink")
+        request.sortDescriptors = []
+        request.predicate = NSPredicate(format: "%K == %@", #keyPath(Drink.identifier), id)
+        
+        return request
+    }
+}
+
+extension Drink {
+    static func findOrInsert(withId id: String, context: NSManagedObjectContext) -> Drink {
+        let request = Drink.fetchById(id: id)
+        
+        if let result = try? context.fetch(request).first {
+            return result
+        }
+        
+        let drink = Drink(context: context)
+        drink.identifier = id
+        
+        return drink
+    }
+}
+
