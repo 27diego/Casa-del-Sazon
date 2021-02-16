@@ -27,3 +27,29 @@ extension MenuItemOption {
     @NSManaged public var optionCollection: MenuItemOptionsCollection?
 
 }
+
+
+extension MenuItemOption {
+    static func fetchById(id: String) -> NSFetchRequest<MenuItemOption> {
+        let request = NSFetchRequest<MenuItemOption>(entityName: "MenuItemOption")
+        request.sortDescriptors = []
+        request.predicate = NSPredicate(format: "%K == %@", #keyPath(MenuItemOption.identifier), id)
+        
+        return request
+    }
+}
+
+extension MenuItemOption {
+    static func findOrInsert(withId id: String, context: NSManagedObjectContext) -> MenuItemOption {
+        let request = MenuItemOption.fetchById(id: id)
+        
+        if let result = try? context.fetch(request).first {
+            return result
+        }
+        
+        let menuItem = MenuItemOption(context: context)
+        menuItem.identifier = id
+        
+        return menuItem
+    }
+}

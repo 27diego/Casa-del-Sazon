@@ -32,10 +32,10 @@ extension MenuItemOptionsCollection {
 extension MenuItemOptionsCollection {
 
     @objc(addMenuItemsObject:)
-    @NSManaged public func addToMenuItems(_ value: MenuItems)
+    @NSManaged public func addToMenuItems(_ value: MenuItem)
 
     @objc(removeMenuItemsObject:)
-    @NSManaged public func removeFromMenuItems(_ value: MenuItems)
+    @NSManaged public func removeFromMenuItems(_ value: MenuItem)
 
     @objc(addMenuItems:)
     @NSManaged public func addToMenuItems(_ values: NSSet)
@@ -61,3 +61,29 @@ extension MenuItemOptionsCollection {
     @NSManaged public func removeFromOptions(_ values: NSSet)
 
 }
+
+extension MenuItemOptionsCollection {
+    static func fetchById(id: String) -> NSFetchRequest<MenuItemOptionsCollection> {
+        let request = NSFetchRequest<MenuItemOptionsCollection>(entityName: "MenuItemOptionsCollection")
+        request.sortDescriptors = []
+        request.predicate = NSPredicate(format: "%K == %@", #keyPath(MenuItemOptionsCollection.identifier), id)
+        
+        return request
+    }
+}
+
+extension MenuItemOptionsCollection {
+    static func findOrInsert(withId id: String, context: NSManagedObjectContext) -> MenuItemOptionsCollection {
+        let request = MenuItemOptionsCollection.fetchById(id: id)
+        
+        if let result = try? context.fetch(request).first {
+            return result
+        }
+        
+        let menuItem = MenuItemOptionsCollection(context: context)
+        menuItem.identifier = id
+        
+        return menuItem
+    }
+}
+

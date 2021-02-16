@@ -10,6 +10,7 @@ import CoreData
 
 struct ExploreView: View {
     @State var menuSelection: String = "Menu"
+    @EnvironmentObject var restaurant: RestaurantViewModel
     
     var body: some View {
         VStack {
@@ -39,7 +40,7 @@ struct ExploreView: View {
             
             Group {
                 if menuSelection == "Menu" {
-                    MenuView()
+                    MenuView(restaurantId: restaurant.restaurantId)
                 }
                 else {
                     ReservationView()

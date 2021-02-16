@@ -9,25 +9,26 @@
 import Foundation
 import CoreData
 
-@objc(MenuItems)
-public class MenuItems: NSManagedObject {
+@objc(MenuItem)
+public class MenuItem: NSManagedObject {
 
 }
 
-extension MenuItems {
+extension MenuItem: Identifiable {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<MenuItems> {
-        return NSFetchRequest<MenuItems>(entityName: "MenuItems")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<MenuItem> {
+        return NSFetchRequest<MenuItem>(entityName: "MenuItems")
     }
 
     @NSManaged public var hasOptions: Bool
     @NSManaged public var hasPrerequisites: Bool
     @NSManaged public var identifier: String?
-    @NSManaged public var overview: String?
+    @NSManaged public var overview: String
+    @NSManaged public var favorites: Int
     @NSManaged public var price: Double
     @NSManaged public var timeForCompletion: Double
-    @NSManaged public var title: String?
-    @NSManaged public var type: String?
+    @NSManaged public var title: String
+    @NSManaged public var type: String
     @NSManaged public var categories: NSSet?
     @NSManaged public var options: NSSet?
     @NSManaged public var prerequisites: NSSet?
@@ -36,7 +37,7 @@ extension MenuItems {
 }
 
 // MARK: Generated accessors for categories
-extension MenuItems {
+extension MenuItem {
 
     @objc(addCategoriesObject:)
     @NSManaged public func addToCategories(_ value: MenuItemCategory)
@@ -53,7 +54,7 @@ extension MenuItems {
 }
 
 // MARK: Generated accessors for options
-extension MenuItems {
+extension MenuItem {
 
     @objc(addOptionsObject:)
     @NSManaged public func addToOptions(_ value: MenuItemOptionsCollection)
@@ -70,7 +71,7 @@ extension MenuItems {
 }
 
 // MARK: Generated accessors for prerequisites
-extension MenuItems {
+extension MenuItem {
 
     @objc(addPrerequisitesObject:)
     @NSManaged public func addToPrerequisites(_ value: MenuItemPrerequisiteCollection)
@@ -87,7 +88,7 @@ extension MenuItems {
 }
 
 // MARK: Generated accessors for restaurant
-extension MenuItems {
+extension MenuItem {
 
     @objc(addRestaurantObject:)
     @NSManaged public func addToRestaurant(_ value: Restaurant)
@@ -101,4 +102,55 @@ extension MenuItems {
     @objc(removeRestaurant:)
     @NSManaged public func removeFromRestaurant(_ values: NSSet)
 
+}
+
+extension MenuItem {
+    static func fetchById(id: String) -> NSFetchRequest<MenuItem> {
+        let request = NSFetchRequest<MenuItem>(entityName: "MenuItem")
+        request.sortDescriptors = []
+        request.predicate = NSPredicate(format: "%K == %@", #keyPath(MenuItem.identifier), id)
+        
+        return request
+    }
+    
+    static func fetchByRestaurant(id: String) -> NSFetchRequest<MenuItem> {
+        let request = NSFetchRequest<MenuItem>(entityName: "MenuItem")
+        request.sortDescriptors = [NSSortDescriptor(key: "favorites", ascending: true)]
+        request.predicate = NSPredicate(format: "ANY restaurant.identifier = %@", id)
+        
+        return request
+    }
+}
+
+extension MenuItem {
+    static func findOrInsert(withId id: String, context: NSManagedObjectContext) -> MenuItem {
+        let request = MenuItem.fetchById(id: id)
+        
+        if let result = try? context.fetch(request).first {
+            return result
+        }
+        
+        let menuItem = MenuItem(context: context)
+        menuItem.identifier = id
+        
+        return menuItem
+    }
+    
+    static func saveMenuItem(from FSItem: FSMenuItem, to coreMenuItem: MenuItem){
+        coreMenuItem.overview = FSItem.description
+        coreMenuItem.favorites = FSItem.favorites
+        coreMenuItem.hasOptions = FSItem.hasOptions
+        coreMenuItem.hasPrerequisites = FSItem.hasPrerequisites
+        coreMenuItem.price = FSItem.price
+        coreMenuItem.timeForCompletion = FSItem.timeForCompletion ?? 0.0
+        coreMenuItem.title = FSItem.title
+        coreMenuItem.type = FSItem.type
+    }
+    
+    static func isEmpty(for id: String, context: NSManagedObjectContext) -> Bool {
+        let request = MenuItem.fetchByRestaurant(id: id)
+        let count = try? context.count(for: request)
+        
+        return count ?? 0 == 0 ? true : false
+    }
 }

@@ -25,7 +25,7 @@ extension Restaurant: Identifiable {
     @NSManaged public var phone: String
     @NSManaged public var image: String
     @NSManaged public var address: Address
-    @NSManaged public var menuItems: Set<MenuItems>?
+    @NSManaged public var menuItems: Set<MenuItem>?
     @NSManaged public var schedule: Schedule
     @NSManaged public var drinkCategories: Set<DrinksCategory>?
     @NSManaged public var drinks: Set<Drinks>?
@@ -37,10 +37,10 @@ extension Restaurant: Identifiable {
 extension Restaurant {
 
     @objc(addMenuItemsObject:)
-    @NSManaged public func addToMenuItems(_ value: MenuItems)
+    @NSManaged public func addToMenuItems(_ value: MenuItem)
 
     @objc(removeMenuItemsObject:)
-    @NSManaged public func removeFromMenuItems(_ value: MenuItems)
+    @NSManaged public func removeFromMenuItems(_ value: MenuItem)
 
     @objc(addMenuItems:)
     @NSManaged public func addToMenuItems(_ values: NSSet)

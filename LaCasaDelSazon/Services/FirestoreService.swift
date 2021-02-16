@@ -19,7 +19,6 @@ class FirestoreService: ObservableObject {
     
     private let restaurantRef: DocumentReference
 
-    @Published var menuItems = [FSMenuItem]()
     @Published var menuItemPrerequisites = [FSMenuItemPrerequisites]()
     @Published var menuItemOptions = [FSMenuItemOptions]()
     
@@ -38,7 +37,6 @@ class FirestoreService: ObservableObject {
         
         restaurantRef = db.collection("Restaurants").document("Sazon431")
         
-        getMenuItems()
         getMenuItemOptions()
     }
     
@@ -115,10 +113,41 @@ class FirestoreService: ObservableObject {
     }
     
     
-    func getMenuItems(){
-        getDocuments(for: .menuItems, from: FSMenuItem.self) { res in
-            self.menuItems = res
+    func updateMenuItems(){
+        getDocuments(for: .menuItems, from: FSMenuItem.self) { results in
+            self.saveMenuItems(results, restaurantId: nil)
         }
+    }
+    
+    func updateMenuItems(for restaurantId: String){
+        getDocuments(for: .menuItems, from: FSMenuItem.self, whereField: "restaurant", contains: restaurantId) { results in
+            self.saveMenuItems(results, restaurantId: restaurantId)
+        }
+    }
+    
+    private func saveMenuItems(_ results: [FSMenuItem], restaurantId: String?) {
+        results.forEach { result in
+            let menuItem = MenuItem.findOrInsert(withId: result.id ?? "No ID", context: self.context)
+            MenuItem.saveMenuItem(from: result, to: menuItem)
+            
+            result.categories.forEach { cat in
+                let category = MenuItemCategory.findOrInsert(name: cat, context: self.context)
+                menuItem.addToCategories(category)
+            }
+            
+            
+            if let restaurantId = restaurantId {
+                let restaurant = Restaurant.findOrInsert(id: restaurantId, context: self.context)
+                menuItem.addToRestaurant(restaurant)
+            }
+
+            /*
+             @NSManaged public var options: NSSet?
+             @NSManaged public var prerequisites: NSSet?
+             */
+        }
+        
+        PersistenceController.saveContext(context: self.context)
     }
     
     func getDrinks() {

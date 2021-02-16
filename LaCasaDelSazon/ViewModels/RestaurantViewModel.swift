@@ -25,5 +25,13 @@ class RestaurantViewModel: ObservableObject {
         else {
             print("Has categories")
         }
+        
+        if MenuItem.isEmpty(for: restaurantId, context: context) {
+            print("Fetching menu items for restaurant: \(restaurantId)")
+            firestoreService.updateMenuItems(for: restaurantId)
+        }
+        else {
+            print("Has Menu Items")
+        }
     }
 }

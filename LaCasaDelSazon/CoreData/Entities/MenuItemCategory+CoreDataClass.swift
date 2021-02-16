@@ -31,10 +31,10 @@ extension MenuItemCategory: Identifiable {
 extension MenuItemCategory {
 
     @objc(addMenuItemsObject:)
-    @NSManaged public func addToMenuItems(_ value: MenuItems)
+    @NSManaged public func addToMenuItems(_ value: MenuItem)
 
     @objc(removeMenuItemsObject:)
-    @NSManaged public func removeFromMenuItems(_ value: MenuItems)
+    @NSManaged public func removeFromMenuItems(_ value: MenuItem)
 
     @objc(addMenuItems:)
     @NSManaged public func addToMenuItems(_ values: NSSet)

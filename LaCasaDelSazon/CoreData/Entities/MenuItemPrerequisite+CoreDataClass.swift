@@ -27,3 +27,28 @@ extension MenuItemPrerequisite {
     @NSManaged public var prerequisiteCollection: MenuItemPrerequisiteCollection?
 
 }
+
+extension MenuItemPrerequisite {
+    static func fetchById(id: String) -> NSFetchRequest<MenuItemPrerequisite> {
+        let request = NSFetchRequest<MenuItemPrerequisite>(entityName: "MenuItemPrerequisite")
+        request.sortDescriptors = []
+        request.predicate = NSPredicate(format: "%K == %@", #keyPath(MenuItemPrerequisite.identifier), id)
+        
+        return request
+    }
+}
+
+extension MenuItemPrerequisite {
+    static func findOrInsert(withId id: String, context: NSManagedObjectContext) -> MenuItemPrerequisite {
+        let request = MenuItemPrerequisite.fetchById(id: id)
+        
+        if let result = try? context.fetch(request).first {
+            return result
+        }
+        
+        let menuItem = MenuItemPrerequisite(context: context)
+        menuItem.identifier = id
+        
+        return menuItem
+    }
+}

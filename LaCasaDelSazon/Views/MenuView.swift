@@ -11,14 +11,23 @@ struct MenuView: View {
     @EnvironmentObject var restaurant: RestaurantViewModel
     @State var selectedCategory: String = "all"
     @ObservedObject var firestore = FirestoreService.shared
+    
+    var restaurantId: String
+    @FetchRequest var menuItems: FetchedResults<MenuItem>
+    
+    init(restaurantId: String) {
+        self.restaurantId = restaurantId
+        self._menuItems = FetchRequest(fetchRequest: MenuItem.fetchByRestaurant(id: restaurantId))
+    }
+    
     var body: some View {
         VStack {
             MenuCategoriesView(selectedCategory: $selectedCategory, id: restaurant.restaurantId)
             
             ScrollView {
                 VStack {
-                    ForEach(firestore.menuItems){ item in
-                        Text(item.id ?? "No Id")
+                    ForEach(Array(menuItems)){ item in
+                        Text(item.title)
                     }
                 }
             }
