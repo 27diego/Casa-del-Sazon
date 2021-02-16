@@ -124,5 +124,11 @@ extension Restaurant {
         restaurant.identifier = id
         return restaurant
     }
+    
+    static func isEmpty(using context: NSManagedObjectContext) -> Bool {
+        let request: NSFetchRequest<Restaurant> = Restaurant.fetchRequest()
+        let count = try? context.count  (for: request)
+        return count ?? 0 == 0 ? true : false
+    }
 }
 

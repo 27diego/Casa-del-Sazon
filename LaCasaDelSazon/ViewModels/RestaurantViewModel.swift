@@ -18,15 +18,12 @@ class RestaurantViewModel: ObservableObject {
     let context = PersistenceController.shared.container.viewContext
     
     private func setUpCategories(){
-        let request = Restaurant.fetchByIdentifier(restaurantId)
-        if let restaurant = try? context.fetch(request).first {
-            if restaurant.menuItemCategories?.count ?? 0 == 0 {
-                print("Fetching for restaurant: \(restaurant)")
-                firestoreService.updateCategories()
-            }
-            else {
-                print("Has categories")
-            }
+        if MenuItemCategory.isEmpty(for: restaurantId, using: context){
+            print("Fetching for restaurant: \(restaurantId)")
+            firestoreService.updateCategories(for: restaurantId)
+        }
+        else {
+            print("Has categories")
         }
     }
 }

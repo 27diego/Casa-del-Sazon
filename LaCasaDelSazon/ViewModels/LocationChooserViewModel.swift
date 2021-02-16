@@ -35,12 +35,8 @@ class LocationChooserViewModel: ObservableObject {
     }
     
     private func checkList() {
-        let request: NSFetchRequest<Restaurant> = Restaurant.fetchRequest()
-        
-        if let results = try? context.fetch(request) {
-            if results.count == 0 {
-                FirestoreService.shared.updateRestaurants()
-            }
+        if Restaurant.isEmpty(using: context) {
+            FirestoreService.shared.updateRestaurants()
         }
     }
     

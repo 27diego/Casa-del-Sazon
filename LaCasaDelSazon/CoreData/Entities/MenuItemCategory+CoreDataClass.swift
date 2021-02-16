@@ -92,4 +92,17 @@ extension MenuItemCategory {
         
         return category
     }
+    
+    static func isEmpty(using context: NSManagedObjectContext) -> Bool {
+        let request: NSFetchRequest<MenuItemCategory> = MenuItemCategory.fetchRequest()
+        let count = try? context.count(for: request)
+        return count ?? 0 == 0 ? true : false
+    }
+    
+    static func isEmpty(for restaurant: String, using context: NSManagedObjectContext) -> Bool {
+        let request: NSFetchRequest<MenuItemCategory> = MenuItemCategory.fetchByRestaurant(id: restaurant)
+        let count = try? context.count(for: request)
+        return count ?? 0 == 0 ? true : false
+    }
+    
 }

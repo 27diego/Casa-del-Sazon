@@ -16,6 +16,8 @@ class FirestoreService: ObservableObject {
     private let settings: FirestoreSettings
     private let db: Firestore
     private let context: NSManagedObjectContext
+    
+    private let restaurantRef: DocumentReference
 
     @Published var menuItems = [FSMenuItem]()
     @Published var menuItemPrerequisites = [FSMenuItemPrerequisites]()
@@ -33,6 +35,8 @@ class FirestoreService: ObservableObject {
         db.settings = self.settings
         
         context = PersistenceController.shared.container.viewContext
+        
+        restaurantRef = db.collection("Restaurants").document("Sazon431")
         
         getMenuItems()
         getMenuItemOptions()
@@ -63,25 +67,26 @@ class FirestoreService: ObservableObject {
                 category.identifier =  result.id
 
                 result.restaurant.forEach { catRestaurant in
-                    print(catRestaurant)
                     let restaurant = Restaurant.findOrInsert(id: catRestaurant, context: self.context)
                     restaurant.addToMenuItemCategories(category)
-                    PersistenceController.saveContext(context: self.context)
                 }
                 
                 PersistenceController.saveContext(context: self.context)
             }
-            
-            
-            
-//            res.forEach { result in
-//                let category: MenuItemCategory = MenuItemCategory.findOrInsert(name: result.category, context: self.context)
-//                category.identifier =  result.id
-//
-//                let restaurant = Restaurant.findOrInsert(id: restaurant, context: self.context)
-//                restaurant.addToMenuItemCategories(category)
-//                PersistenceController.saveContext(context: self.context)
-//            }
+        }
+    }
+    
+    func updateCategories(for restaurantId: String) {
+        getDocuments(for: .categories, from: FSCategories.self, whereField: "restaurant", contains: restaurantId) { results in
+            results.forEach { result in
+                let category = MenuItemCategory.findOrInsert(name: result.category, context: self.context)
+                category.identifier = result.id
+                
+                let restaurant = Restaurant.findOrInsert(id: restaurantId, context: self.context)
+                restaurant.addToMenuItemCategories(category)
+                
+                PersistenceController.saveContext(context: self.context)
+            }
         }
     }
     
@@ -145,7 +150,33 @@ extension FirestoreService {
     func getDocuments<T:Codable>(for type: Collections, from data: T.Type = T.self, completion: @escaping (_ res: [T]) -> Void){
         var results: [T] = .init()
         
-        db.collection("Restaurants").document("Sazon431").collection(type.rawValue).getDocuments { (querySnapShot, error) in
+        restaurantRef.collection(type.rawValue).getDocuments { (querySnapShot, error) in
+            if let error = error {
+                print("Error retrieving \(type.rawValue): \(error.localizedDescription)")
+            }
+            
+            guard let documents = querySnapShot?.documents else {
+                print("No documents pulled")
+                return
+            }
+            
+            results = documents.compactMap({ queryDocumentSnapShot -> T? in
+                do {
+                    return try queryDocumentSnapShot.data(as: T.self)
+                }
+                catch {
+                    print("There was an error in decoding the data: \(error.localizedDescription)")
+                    return nil
+                }
+            })
+            completion(results)
+        }
+    }
+    
+    func getDocuments<T:Codable>(for type: Collections, from data: T.Type = T.self, whereField field: String, contains: String, completion: @escaping (_ res: [T]) -> Void){
+        var results: [T] = .init()
+        
+        restaurantRef.collection(type.rawValue).whereField(field, arrayContains: contains).getDocuments { (querySnapShot, error) in
             if let error = error {
                 print("Error retrieving \(type.rawValue): \(error.localizedDescription)")
             }
