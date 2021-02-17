@@ -22,7 +22,7 @@ struct MenuView: View {
             MenuCategoriesView(selectedCategory: $selectedCategory, id: restaurant.restaurantId)
 
             ScrollView {
-                VStack {
+                VStack(spacing: 50) {
                     ForEach(Array(menuItems)){ item in
                         MenuItemView(menuItem: item)
                     }
@@ -77,18 +77,21 @@ struct MenuItemView: View {
         HStack {
             VStack(alignment: .leading) {
                 Text(menuItem.title)
-                    .font(.title)
+                    .font(.title2)
                 Spacer()
+                    .frame(height: 15)
                 Text(menuItem.overview)
             }
             Spacer()
             VStack(alignment: .trailing) {
-                Text("\(menuItem.price)")
+                Text("$\(menuItem.price)")
                 Spacer()
+                    .frame(height: 50)
                 Image(systemName: "heart")
             }
         }
         .padding()
-        .frame(width: UIScreen.screenWidth, height: 50)
+        .fixedSize(horizontal: false, vertical: true)
+        .frame(width: UIScreen.screenWidth)
     }
 }
