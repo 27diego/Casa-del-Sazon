@@ -32,3 +32,16 @@ extension Date {
         return dayInWeek
     }
 }
+
+// MARK: - Double Extension
+//extension Double {
+//    func removeZerosFromEnd() -> String {
+//        let number = String(self)
+//        let firstAndLast = number.components(separatedBy: ".")
+//        if firstAndLast.count < 2 {
+//            return number
+//        }
+//        
+//        
+//    }
+//}
