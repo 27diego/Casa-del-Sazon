@@ -17,7 +17,7 @@ public class Drink: NSManagedObject {
 extension Drink {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Drink> {
-        return NSFetchRequest<Drink>(entityName: "Drinks")
+        return NSFetchRequest<Drink>(entityName: "Drink")
     }
 
     @NSManaged public var hasPrerequisites: Bool

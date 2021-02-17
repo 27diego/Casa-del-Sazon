@@ -17,7 +17,7 @@ public class MenuItem: NSManagedObject {
 extension MenuItem: Identifiable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<MenuItem> {
-        return NSFetchRequest<MenuItem>(entityName: "MenuItems")
+        return NSFetchRequest<MenuItem>(entityName: "MenuItem")
     }
 
     @NSManaged public var hasOptions: Bool
@@ -116,7 +116,7 @@ extension MenuItem {
     static func fetchByRestaurant(id: String) -> NSFetchRequest<MenuItem> {
         let request = NSFetchRequest<MenuItem>(entityName: "MenuItem")
         request.sortDescriptors = [NSSortDescriptor(key: "favorites", ascending: true)]
-        request.predicate = NSPredicate(format: "ANY restaurant.identifier = %@", id)
+        request.predicate = NSPredicate(format: "ANY restaurant.identifier == %@", id)
         
         return request
     }

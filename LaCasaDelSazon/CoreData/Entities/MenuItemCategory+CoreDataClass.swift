@@ -73,7 +73,7 @@ extension MenuItemCategory {
     static func fetchByRestaurant(id restaurantId: String) -> NSFetchRequest<MenuItemCategory> {
         let request = NSFetchRequest<MenuItemCategory>(entityName: String(describing: MenuItemCategory.self))
         request.sortDescriptors = []
-        request.predicate  = NSPredicate(format: "ANY restaurants.identifier = %@", restaurantId)        
+        request.predicate  = NSPredicate(format: "ANY restaurants.identifier == %@", restaurantId)        
         return request
     }
 }

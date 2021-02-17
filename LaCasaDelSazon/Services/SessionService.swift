@@ -28,7 +28,7 @@ class SessionService: ObservableObject {
     var signedInAnonymously: Bool = false
     
     let context: NSManagedObjectContext
-        
+    
     init() {
         context = PersistenceController.shared.container.viewContext
         checkSignIn()
@@ -65,7 +65,17 @@ class SessionService: ObservableObject {
         }
     }
     
-    func signOut() {        
+    func signOut() {
+        
+        let request: NSFetchRequest<MenuItem> = MenuItem.fetchRequest()
+        if let results = try? context.fetch(request) {
+            results.forEach { item in
+                context.delete(item)
+            }
+        }
+        
+        PersistenceController.saveContext(context)
+        
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "User")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         
