@@ -25,6 +25,7 @@
 		8B47467925CCD40900F4E269 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B47467825CCD40900F4E269 /* SettingsView.swift */; };
 		8B47467C25CCD53600F4E269 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B47467B25CCD53600F4E269 /* HomeView.swift */; };
 		8B4FF27325CC799C003F8863 /* NotificationBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4FF27225CC799C003F8863 /* NotificationBanner.swift */; };
+		8B54D01525DDDB0600117906 /* MenuItemPrereqsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B54D01425DDDB0600117906 /* MenuItemPrereqsView.swift */; };
 		8B55E92F25C50387003A4861 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B55E92E25C50387003A4861 /* SessionService.swift */; };
 		8B55E93425C887D8003A4861 /* GoogleSignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B55E93325C887D8003A4861 /* GoogleSignInButton.swift */; };
 		8B55E94125C8A8D7003A4861 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B55E94025C8A8D7003A4861 /* Extensions.swift */; };
@@ -82,6 +83,7 @@
 		8B47467825CCD40900F4E269 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		8B47467B25CCD53600F4E269 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		8B4FF27225CC799C003F8863 /* NotificationBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationBanner.swift; sourceTree = "<group>"; };
+		8B54D01425DDDB0600117906 /* MenuItemPrereqsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemPrereqsView.swift; sourceTree = "<group>"; };
 		8B55E92E25C50387003A4861 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		8B55E93325C887D8003A4861 /* GoogleSignInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInButton.swift; sourceTree = "<group>"; };
 		8B55E94025C8A8D7003A4861 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				8B47467B25CCD53600F4E269 /* HomeView.swift */,
 				8B8D365725D6F57400A19814 /* MenuView.swift */,
 				8B8D365A25D6F59100A19814 /* ReservationView.swift */,
+				8B54D01425DDDB0600117906 /* MenuItemPrereqsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B15C1C125D46D43007B57C1 /* SignupViewModel.swift in Sources */,
+				8B54D01525DDDB0600117906 /* MenuItemPrereqsView.swift in Sources */,
 				8BDADB92257749780000DBB4 /* ReusableViews.swift in Sources */,
 				8B8D365825D6F57400A19814 /* MenuView.swift in Sources */,
 				8B0DCFE82577473000A8A013 /* LaCasaDelSazon.xcdatamodeld in Sources */,

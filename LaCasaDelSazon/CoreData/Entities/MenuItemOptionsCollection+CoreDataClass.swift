@@ -22,9 +22,9 @@ extension MenuItemOptionsCollection {
 
     @NSManaged public var allowedOptions: Int
     @NSManaged public var identifier: String?
-    @NSManaged public var title: String?
+    @NSManaged public var title: String
     @NSManaged public var menuItems: NSSet?
-    @NSManaged public var options: NSSet?
+    @NSManaged public var options: Set<MenuItemOption>?
 
 }
 
@@ -67,6 +67,14 @@ extension MenuItemOptionsCollection {
         let request = NSFetchRequest<MenuItemOptionsCollection>(entityName: "MenuItemOptionsCollection")
         request.sortDescriptors = []
         request.predicate = NSPredicate(format: "%K == %@", #keyPath(MenuItemOptionsCollection.identifier), id)
+        
+        return request
+    }
+    
+    static func fetchByMenuItem(id itemId: String) -> NSFetchRequest<MenuItemOptionsCollection> {
+        let request = NSFetchRequest<MenuItemOptionsCollection>(entityName: "MenuItemOptionsCollection")
+        request.predicate = NSPredicate(format: "ANY menuItems.identifier == %@", itemId)
+        request.sortDescriptors = []
         
         return request
     }

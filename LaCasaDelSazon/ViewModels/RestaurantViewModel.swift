@@ -13,8 +13,10 @@ class RestaurantViewModel: ObservableObject {
     @Published var restaurantId: String = "" {
         didSet {
             setUpCategories()
+            setUpMenuItems()
         }
     }
+    
     let context = PersistenceController.shared.container.viewContext
     
     private func setUpCategories(){
@@ -25,7 +27,9 @@ class RestaurantViewModel: ObservableObject {
         else {
             print("Has categories")
         }
-        
+    }
+    
+    private func setUpMenuItems() {
         if MenuItem.isEmpty(for: restaurantId, context: context) {
             print("Fetching menu items for restaurant: \(restaurantId)")
             firestoreService.updateMenuItems(for: restaurantId)
@@ -33,5 +37,10 @@ class RestaurantViewModel: ObservableObject {
         else {
             print("Has Menu Items")
         }
+    }
+    
+    func checkOptionsAndPrerequisites(for itemId: String) {
+        firestoreService.getMenuItemPrerequisites()
+        firestoreService.getMenuItemOptions()
     }
 }

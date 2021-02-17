@@ -19,25 +19,38 @@ struct MenuView: View {
     }
     
     var body: some View {
-        VStack {
-            MenuCategoriesView(selectedCategory: $selectedCategory, id: restaurant.restaurantId)
-            Spacer()
-                .frame(height: 20)
-            ScrollView(showsIndicators: false) {
-                VStack {
-                    ForEach(Array(menuItems)){ item in
-                        MenuItemView(menuItem: item)
-                            .onTapGesture {
-                                presentSheet.toggle()
-                            }
-                            .fullScreenCover(isPresented: $presentSheet) {
-                                Button("go back") {
+        ZStack {
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    CartButtonView()
+                }
+                .padding()
+            }
+            .padding()
+            .zIndex(1)
+            
+            VStack {
+                MenuCategoriesView(selectedCategory: $selectedCategory, id: restaurant.restaurantId)
+                Spacer()
+                    .frame(height: 20)
+                ScrollView(showsIndicators: false) {
+                    VStack {
+                        ForEach(Array(menuItems)){ item in
+                            MenuItemView(menuItem: item)
+                                .onTapGesture {
                                     presentSheet.toggle()
                                 }
-                            }
+                                .fullScreenCover(isPresented: $presentSheet) {
+                                    NavigationLazyView(MenuItemPrereqsView(itemId: item.identifier ?? "No ID", presentSheet: $presentSheet).environment(\.managedObjectContext, PersistenceController.shared.container.viewContext))
+                                }
+                        }
+                        Spacer()
+                            .frame(height: 10)
                     }
+                    .padding(.horizontal, 5)
                 }
-                .padding(.horizontal, 5)
             }
         }
     }
@@ -127,11 +140,20 @@ struct MenuItemView: View {
 }
 
 struct CartButtonView: View {
+    @State var tapped = false
     var body: some View {
         Image(systemName: "cart")
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: 30, height: 30)
             .background(Circle().foregroundColor(.green).frame(width: 50, height: 50).background(Circle().stroke(lineWidth: 3).foregroundColor(.green).frame(width: 60, height: 60)))
+            .onTapGesture {
+                tapped.toggle()
+            }
+            .sheet(isPresented: $tapped) {
+                Button("Go Back") {
+                    tapped.toggle()
+                }
+            }
     }
 }

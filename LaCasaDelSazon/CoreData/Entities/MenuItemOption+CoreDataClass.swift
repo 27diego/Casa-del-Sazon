@@ -14,16 +14,16 @@ public class MenuItemOption: NSManagedObject {
 
 }
 
-extension MenuItemOption {
+extension MenuItemOption: Identifiable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<MenuItemOption> {
         return NSFetchRequest<MenuItemOption>(entityName: "MenuItemOption")
     }
 
     @NSManaged public var identifier: String?
-    @NSManaged public var overview: String?
+    @NSManaged public var overview: String
     @NSManaged public var price: Double
-    @NSManaged public var title: String?
+    @NSManaged public var title: String
     @NSManaged public var optionCollection: MenuItemOptionsCollection?
 
 }

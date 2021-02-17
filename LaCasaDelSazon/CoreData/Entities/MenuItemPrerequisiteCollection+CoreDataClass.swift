@@ -71,6 +71,14 @@ extension MenuItemPrerequisiteCollection {
         
         return request
     }
+    
+    static func fetchByMenuItem(id itemId: String) -> NSFetchRequest<MenuItemPrerequisiteCollection> {
+        let request = NSFetchRequest<MenuItemPrerequisiteCollection>(entityName: "MenuItemPrerequisiteCollection")
+        request.predicate = NSPredicate(format: "ANY menuItems.identifier == %@", itemId)
+        request.sortDescriptors = []
+        
+        return request
+    }
 }
 
 extension MenuItemPrerequisiteCollection {
