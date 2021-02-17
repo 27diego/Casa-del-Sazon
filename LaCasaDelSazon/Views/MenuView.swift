@@ -125,3 +125,13 @@ struct MenuItemView: View {
         .fixedSize(horizontal: false, vertical: true)
     }
 }
+
+struct CartButtonView: View {
+    var body: some View {
+        Image(systemName: "cart")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 30, height: 30)
+            .background(Circle().foregroundColor(.green).frame(width: 50, height: 50).background(Circle().stroke(lineWidth: 3).foregroundColor(.green).frame(width: 60, height: 60)))
+    }
+}
