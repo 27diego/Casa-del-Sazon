@@ -115,7 +115,7 @@ extension MenuItem {
     
     static func fetchByRestaurant(id: String) -> NSFetchRequest<MenuItem> {
         let request = NSFetchRequest<MenuItem>(entityName: "MenuItem")
-        request.sortDescriptors = [NSSortDescriptor(key: "favorites", ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         request.predicate = NSPredicate(format: "ANY restaurant.identifier == %@", id)
         
         return request

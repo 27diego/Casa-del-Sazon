@@ -9,24 +9,35 @@ import SwiftUI
 
 struct MenuView: View {
     @EnvironmentObject var restaurant: RestaurantViewModel
-    @State var selectedCategory: String = "all"
-    @ObservedObject var firestore = FirestoreService.shared
     @FetchRequest var menuItems: FetchedResults<MenuItem>
-
+    
+    @State var selectedCategory = "all"
+    @State var presentSheet = false
+    
     init(restaurantId: String) {
         self._menuItems = FetchRequest(fetchRequest: MenuItem.fetchByRestaurant(id: restaurantId))
     }
-
+    
     var body: some View {
         VStack {
             MenuCategoriesView(selectedCategory: $selectedCategory, id: restaurant.restaurantId)
-
-            ScrollView {
-                VStack(spacing: 50) {
+            Spacer()
+                .frame(height: 20)
+            ScrollView(showsIndicators: false) {
+                VStack {
                     ForEach(Array(menuItems)){ item in
                         MenuItemView(menuItem: item)
+                            .onTapGesture {
+                                presentSheet.toggle()
+                            }
+                            .fullScreenCover(isPresented: $presentSheet) {
+                                Button("go back") {
+                                    presentSheet.toggle()
+                                }
+                            }
                     }
                 }
+                .padding(.horizontal, 5)
             }
         }
     }
@@ -35,12 +46,12 @@ struct MenuView: View {
 struct MenuCategoriesView: View {
     @Binding var selectedCategory: String
     @FetchRequest var categories: FetchedResults<MenuItemCategory>
-
+    
     init(selectedCategory: Binding<String>, id: String) {
         self._selectedCategory = selectedCategory
         self._categories = FetchRequest(fetchRequest: MenuItemCategory.fetchByRestaurant(id: id))
     }
-
+    
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false){
             HStack(spacing: 10) {
@@ -64,7 +75,7 @@ struct MenuCategoriesView: View {
                     })
                 }
             }
-            .padding([.leading, .trailing], UIScreen.padding)
+            .padding(.horizontal, UIScreen.padding)
         }
     }
 }
@@ -72,26 +83,45 @@ struct MenuCategoriesView: View {
 
 struct MenuItemView: View {
     var menuItem: MenuItem
+    @State var tapped = false
     
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(menuItem.title)
-                    .font(.title2)
-                Spacer()
-                    .frame(height: 15)
-                Text(menuItem.overview)
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading) {
+                        Text(menuItem.title)
+                            .bold()
+                        if menuItem.overview != "" {
+                            Spacer()
+                                .frame(height: 20)
+                            Text(menuItem.overview)
+                                .font(.subheadline)
+                                .lineLimit(2)
+                        }
+                        Spacer()
+                    }
+                }
             }
             Spacer()
             VStack(alignment: .trailing) {
                 Text("$\(menuItem.price)")
+                    .font(.system(size: 14))
                 Spacer()
-                    .frame(height: 50)
-                Image(systemName: "heart")
+                    .frame(height: menuItem.overview != "" ? 40 : 20)
+                Image(systemName: "suit.heart.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 20, height: 20)
+                    .foregroundColor(tapped ? .red : Color(.systemGray3))
+                    .onTapGesture {
+                        tapped.toggle()
+                    }
             }
         }
         .padding()
+        .background(Color(#colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)))
+        .cornerRadius(7)
         .fixedSize(horizontal: false, vertical: true)
-        .frame(width: UIScreen.screenWidth)
     }
 }
