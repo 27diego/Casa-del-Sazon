@@ -10,7 +10,8 @@ import CoreData
 
 class RestaurantViewModel: ObservableObject {
     let firestoreService: FirestoreService = FirestoreService.shared
-    @Published var restaurantId: String = "" {
+    @Published var selectedItem = ""
+    @Published var restaurantId = "" {
         didSet {
             setUpCategories()
             setUpMenuItems()
@@ -39,8 +40,21 @@ class RestaurantViewModel: ObservableObject {
         }
     }
     
-    func checkOptionsAndPrerequisites(for itemId: String) {
-        firestoreService.getMenuItemPrerequisites()
-        firestoreService.getMenuItemOptions()
+    func checkOptionsAndPrerequisites() {
+        firestoreService.getMenuItemPrerequisites(for: selectedItem)
+        firestoreService.getMenuItemOptions(for: selectedItem)
+    }
+    
+    func check() {
+        let request = MenuItemPrerequisiteCollection.fetchByMenuItem(id: selectedItem)
+        if let results = try? context.fetch(request) {
+            results.forEach { result in
+                print(result.title)
+                print("sub list: ")
+                result.prerequisites?.forEach({ prereq in
+                    print(prereq.title)
+                })
+            }
+        }
     }
 }

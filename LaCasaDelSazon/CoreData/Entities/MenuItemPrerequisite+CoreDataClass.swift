@@ -14,16 +14,16 @@ public class MenuItemPrerequisite: NSManagedObject {
 
 }
 
-extension MenuItemPrerequisite {
+extension MenuItemPrerequisite: Identifiable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<MenuItemPrerequisite> {
         return NSFetchRequest<MenuItemPrerequisite>(entityName: "MenuItemPrerequisite")
     }
 
     @NSManaged public var identifier: String?
-    @NSManaged public var overview: String?
+    @NSManaged public var overview: String
     @NSManaged public var price: Double
-    @NSManaged public var title: String?
+    @NSManaged public var title: String
     @NSManaged public var prerequisiteCollection: MenuItemPrerequisiteCollection?
 
 }

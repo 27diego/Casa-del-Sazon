@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8B047E0A25D22DCD005AB133 /* NavigationLazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B047E0925D22DCC005AB133 /* NavigationLazyView.swift */; };
+		8B047E0A25D22DCD005AB133 /* LazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B047E0925D22DCC005AB133 /* LazyView.swift */; };
 		8B093F1025C4C0F400E82884 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B093F0F25C4C0F400E82884 /* GoogleService-Info.plist */; };
 		8B0DCFDC2577472F00A8A013 /* LaCasaDelSazonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DCFDB2577472F00A8A013 /* LaCasaDelSazonApp.swift */; };
 		8B0DCFDE2577472F00A8A013 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DCFDD2577472F00A8A013 /* ContentView.swift */; };
@@ -63,7 +63,7 @@
 /* Begin PBXFileReference section */
 		4090288FE11ADB4648C29C9D /* Pods_LaCasaDelSazon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LaCasaDelSazon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CAE001D921E08A793F895B0 /* Pods-LaCasaDelSazon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LaCasaDelSazon.release.xcconfig"; path = "Target Support Files/Pods-LaCasaDelSazon/Pods-LaCasaDelSazon.release.xcconfig"; sourceTree = "<group>"; };
-		8B047E0925D22DCC005AB133 /* NavigationLazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLazyView.swift; sourceTree = "<group>"; };
+		8B047E0925D22DCC005AB133 /* LazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyView.swift; sourceTree = "<group>"; };
 		8B093F0F25C4C0F400E82884 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8B0DCFD82577472F00A8A013 /* LaCasaDelSazon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LaCasaDelSazon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B0DCFDB2577472F00A8A013 /* LaCasaDelSazonApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaCasaDelSazonApp.swift; sourceTree = "<group>"; };
@@ -288,7 +288,7 @@
 				8B8AE290257853FE0095D334 /* FetchImageView.swift */,
 				8B55E92E25C50387003A4861 /* SessionService.swift */,
 				8BEE9B5325D209B9007CF9E9 /* FirestoreService.swift */,
-				8B047E0925D22DCC005AB133 /* NavigationLazyView.swift */,
+				8B047E0925D22DCC005AB133 /* LazyView.swift */,
 				8B15C1BD25D46BD2007B57C1 /* VerifyInputs.swift */,
 			);
 			path = Services;
@@ -465,7 +465,7 @@
 				8B15C1BB25D46AC5007B57C1 /* LoginViewModel.swift in Sources */,
 				8B74CA5225D9A34000668788 /* MenuItemOptionsCollection+CoreDataClass.swift in Sources */,
 				8B8AE28D257851F60095D334 /* LocationChooserView.swift in Sources */,
-				8B047E0A25D22DCD005AB133 /* NavigationLazyView.swift in Sources */,
+				8B047E0A25D22DCD005AB133 /* LazyView.swift in Sources */,
 				8B74CA5B25D9A34000668788 /* DrinksCategory+CoreDataClass.swift in Sources */,
 				8B74CA5525D9A34000668788 /* Schedule+CoreDataClass.swift in Sources */,
 				8BF0510B25D72BD300673299 /* MenuItemModel.swift in Sources */,

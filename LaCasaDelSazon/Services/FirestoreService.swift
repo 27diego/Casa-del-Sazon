@@ -30,8 +30,6 @@ class FirestoreService: ObservableObject {
         context = PersistenceController.shared.container.viewContext
         
         restaurantRef = db.collection("Restaurants").document("Sazon431")
-        
-        getMenuItemOptions()
     }
     
     
@@ -255,12 +253,14 @@ class FirestoreService: ObservableObject {
         let menuItem = MenuItem.findOrInsert(withId: menuItemId, context: self.context)
         
         getDocuments(for: .menuItemPrerequisites, from: FSMenuItemPrerequisites.self, whereField: "forItems", contains: menuItemId) { results in
+            print("Results for Menu Item Prerequisites for: \(menuItemId) size: \(results.count)")
             results.forEach { result in
                 let prerequisitesCollection = MenuItemPrerequisiteCollection.findOrInsert(withId: result.id ?? "No ID", context: self.context)
                 prerequisitesCollection.title = result.title
                 prerequisitesCollection.allowedPrerequisites = result.allowedPrerequisites
-                
+
                 result.prerequisites.forEach { FSprereq in
+                    print(FSprereq.title)
                     let prerequisite = MenuItemPrerequisite.findOrInsert(withId: FSprereq.id ?? "No ID", context: self.context)
                     prerequisite.overview = FSprereq.description
                     prerequisite.price = FSprereq.price
@@ -276,7 +276,6 @@ class FirestoreService: ObservableObject {
     
     func getMenuItemPrerequisites() {
         getDocuments(for: .menuItemPrerequisites, from: FSMenuItemPrerequisites.self) { results in
-            print(results)
             results.forEach { result in
                 let prerequisitesCollection = MenuItemPrerequisiteCollection.findOrInsert(withId: result.id ?? "No ID", context: self.context)
                 prerequisitesCollection.title = result.title
@@ -325,7 +324,6 @@ class FirestoreService: ObservableObject {
     
     func getMenuItemOptions() {
         getDocuments(for: .menuItemOptions, from: FSMenuItemOptions.self) { results in
-            print(results)
             results.forEach { result in
                 let optionCollection = MenuItemOptionsCollection.findOrInsert(withId: result.id ?? "No ID", context: self.context)
                 optionCollection.title = result.title

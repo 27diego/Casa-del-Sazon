@@ -14,7 +14,7 @@ public class MenuItemPrerequisiteCollection: NSManagedObject {
 
 }
 
-extension MenuItemPrerequisiteCollection {
+extension MenuItemPrerequisiteCollection: Identifiable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<MenuItemPrerequisiteCollection> {
         return NSFetchRequest<MenuItemPrerequisiteCollection>(entityName: "MenuItemPrerequisiteCollection")
@@ -22,9 +22,9 @@ extension MenuItemPrerequisiteCollection {
 
     @NSManaged public var allowedPrerequisites: Int
     @NSManaged public var identifier: String?
-    @NSManaged public var title: String?
-    @NSManaged public var menuItems: NSSet?
-    @NSManaged public var prerequisites: NSSet?
+    @NSManaged public var title: String
+    @NSManaged public var menuItems: Set<MenuItem>?
+    @NSManaged public var prerequisites: Set<MenuItemPrerequisite>?
 
 }
 

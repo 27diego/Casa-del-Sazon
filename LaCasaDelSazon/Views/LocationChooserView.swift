@@ -20,7 +20,7 @@ struct LocationChooserView: View {
     var body: some View {
         ZStack {
             // TODO: Change this hard coded value to the actual user choosen value
-            NavigationLink("", destination: NavigationLazyView(HomeView(restaurantId: LocationChooser.selectedRestaurant).environmentObject(LocationChooser)), isActive: $LocationChooser.restaurantIsSelected)
+            NavigationLink("", destination: LazyView(HomeView(restaurantId: LocationChooser.selectedRestaurant).environmentObject(LocationChooser)), isActive: $LocationChooser.restaurantIsSelected)
             
             
             RestaurantMapView(restaurants: restaurants)

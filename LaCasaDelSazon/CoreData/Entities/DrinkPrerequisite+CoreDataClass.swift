@@ -14,7 +14,7 @@ public class DrinkPrerequisite: NSManagedObject {
 
 }
 
-extension DrinkPrerequisite {
+extension DrinkPrerequisite: Identifiable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<DrinkPrerequisite> {
         return NSFetchRequest<DrinkPrerequisite>(entityName: "DrinkPrerequisite")

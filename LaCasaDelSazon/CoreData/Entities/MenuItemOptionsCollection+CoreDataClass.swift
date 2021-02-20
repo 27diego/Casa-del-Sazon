@@ -14,7 +14,7 @@ public class MenuItemOptionsCollection: NSManagedObject {
 
 }
 
-extension MenuItemOptionsCollection {
+extension MenuItemOptionsCollection: Identifiable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<MenuItemOptionsCollection> {
         return NSFetchRequest<MenuItemOptionsCollection>(entityName: "MenuItemOptionsCollection")

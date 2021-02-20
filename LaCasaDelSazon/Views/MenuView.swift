@@ -14,6 +14,8 @@ struct MenuView: View {
     @State var selectedCategory = "all"
     @State var presentSheet = false
     
+    @State var selectedItem = ""
+    
     init(restaurantId: String) {
         self._menuItems = FetchRequest(fetchRequest: MenuItem.fetchByRestaurant(id: restaurantId))
     }
@@ -38,13 +40,15 @@ struct MenuView: View {
                 ScrollView(showsIndicators: false) {
                     VStack {
                         ForEach(Array(menuItems)){ item in
-                            MenuItemView(menuItem: item)
-                                .onTapGesture {
-                                    presentSheet.toggle()
-                                }
-                                .fullScreenCover(isPresented: $presentSheet) {
-                                    NavigationLazyView(MenuItemPrereqsView(itemId: item.identifier ?? "No ID", presentSheet: $presentSheet).environment(\.managedObjectContext, PersistenceController.shared.container.viewContext))
-                                }
+                            Button(action: {
+                                restaurant.selectedItem = item.identifier ?? "no id"
+                                presentSheet.toggle()
+                            }){
+                                MenuItemView(menuItem: item)
+                            }
+                            .fullScreenCover(isPresented: $presentSheet) {
+                               LazyView(MenuItemPrereqsView(itemId: restaurant.selectedItem, presentSheet: $presentSheet).environment(\.managedObjectContext, PersistenceController.shared.container.viewContext))
+                            }
                         }
                         Spacer()
                             .frame(height: 10)
