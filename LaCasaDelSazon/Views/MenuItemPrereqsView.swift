@@ -29,9 +29,7 @@ struct MenuItemPrereqsView: View {
                     presentSheet.toggle()
                 }
                 .onAppear {
-                    print("calling functions for prerequisites and options for \(restaurant.selectedItem)")
                     restaurant.checkOptionsAndPrerequisites()
-                    restaurant.check()
                 }
                 
                 ScrollView {

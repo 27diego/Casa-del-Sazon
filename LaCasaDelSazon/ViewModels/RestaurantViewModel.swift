@@ -44,17 +44,4 @@ class RestaurantViewModel: ObservableObject {
         firestoreService.getMenuItemPrerequisites(for: selectedItem)
         firestoreService.getMenuItemOptions(for: selectedItem)
     }
-    
-    func check() {
-        let request = MenuItemPrerequisiteCollection.fetchByMenuItem(id: selectedItem)
-        if let results = try? context.fetch(request) {
-            results.forEach { result in
-                print(result.title)
-                print("sub list: ")
-                result.prerequisites?.forEach({ prereq in
-                    print(prereq.title)
-                })
-            }
-        }
-    }
 }

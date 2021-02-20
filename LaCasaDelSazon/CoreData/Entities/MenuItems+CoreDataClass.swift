@@ -31,8 +31,8 @@ extension MenuItem: Identifiable {
     @NSManaged public var type: String
     @NSManaged public var categories: NSSet?
     @NSManaged public var options: Set<MenuItemOptionsCollection>?
-    @NSManaged public var prerequisites: NSSet?
-    @NSManaged public var restaurant: NSSet?
+    @NSManaged public var prerequisites: Set<MenuItemPrerequisiteCollection>?
+    @NSManaged public var restaurant: Set<Restaurant>?
 
 }
 

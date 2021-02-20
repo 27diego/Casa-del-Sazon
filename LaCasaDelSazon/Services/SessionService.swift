@@ -74,6 +74,21 @@ class SessionService: ObservableObject {
             }
         }
         
+
+        let optionsRequest: NSFetchRequest<MenuItemOptionsCollection> = MenuItemOptionsCollection.fetchRequest()
+        if let results = try? context.fetch(optionsRequest) {
+            results.forEach { item in
+                context.delete(item)
+            }
+        }
+        
+        let prereqRequest: NSFetchRequest<MenuItemPrerequisiteCollection> = MenuItemPrerequisiteCollection.fetchRequest()
+        if let results = try? context.fetch(prereqRequest) {
+            results.forEach { item in
+                context.delete(item)
+            }
+        }
+        
         PersistenceController.saveContext(context)
         
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "User")

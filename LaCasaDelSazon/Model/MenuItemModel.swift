@@ -38,6 +38,11 @@ struct FSItemPrerequisite: Codable, Identifiable, Hashable {
     var description: String
     var price: Double
     var title: String
+    
+    var identifier: String {
+        let ident = id ?? "No ID"
+        return ident + title
+    }
 }
 
 
@@ -45,13 +50,17 @@ struct FSMenuItemOptions: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var allowedOptions: Int
     var forItems: [String]
-    var options: [FSItemOptions]
+    var options: [FSItemOption]
     var title: String
 }
 
-struct FSItemOptions: Codable, Identifiable, Hashable {
+struct FSItemOption: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var description: String
     var price: Double
     var title: String
+    var identifier: String {
+        let ident = id ?? "No ID"
+        return ident + title
+    }
 }

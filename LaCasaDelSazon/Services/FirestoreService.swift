@@ -251,99 +251,103 @@ class FirestoreService: ObservableObject {
     
     func getMenuItemPrerequisites(for menuItemId: String) {
         let menuItem = MenuItem.findOrInsert(withId: menuItemId, context: self.context)
-        
         getDocuments(for: .menuItemPrerequisites, from: FSMenuItemPrerequisites.self, whereField: "forItems", contains: menuItemId) { results in
-            print("Results for Menu Item Prerequisites for: \(menuItemId) size: \(results.count)")
             results.forEach { result in
-                let prerequisitesCollection = MenuItemPrerequisiteCollection.findOrInsert(withId: result.id ?? "No ID", context: self.context)
-                prerequisitesCollection.title = result.title
-                prerequisitesCollection.allowedPrerequisites = result.allowedPrerequisites
-
-                result.prerequisites.forEach { FSprereq in
-                    print(FSprereq.title)
-                    let prerequisite = MenuItemPrerequisite.findOrInsert(withId: FSprereq.id ?? "No ID", context: self.context)
-                    prerequisite.overview = FSprereq.description
-                    prerequisite.price = FSprereq.price
-                    prerequisite.title = FSprereq.title
+                let prerequisiteCollection = MenuItemPrerequisiteCollection.findOrInsert(withId: result.id ?? "No ID", context: self.context)
+                prerequisiteCollection.allowedPrerequisites = result.allowedPrerequisites
+                prerequisiteCollection.title = result.title
+                
+                result.prerequisites.forEach { FSPrereq in
+                    let prerequisite = MenuItemPrerequisite.findOrInsert(withId: FSPrereq.identifier, context: self.context)
+                    prerequisite.overview = FSPrereq.description
+                    prerequisite.title = FSPrereq.title
+                    prerequisite.price = FSPrereq.price
                     
-                    prerequisite.prerequisiteCollection = prerequisitesCollection
+                    prerequisiteCollection.addToPrerequisites(prerequisite)
                 }
-                menuItem.addToPrerequisites(prerequisitesCollection)
+                
+                menuItem.addToPrerequisites(prerequisiteCollection)
+                
+                PersistenceController.saveContext(self.context)
             }
         }
-        PersistenceController.saveContext(self.context)
     }
     
     func getMenuItemPrerequisites() {
         getDocuments(for: .menuItemPrerequisites, from: FSMenuItemPrerequisites.self) { results in
             results.forEach { result in
-                let prerequisitesCollection = MenuItemPrerequisiteCollection.findOrInsert(withId: result.id ?? "No ID", context: self.context)
-                prerequisitesCollection.title = result.title
-                prerequisitesCollection.allowedPrerequisites = result.allowedPrerequisites
+                let prerequisiteCollecton = MenuItemPrerequisiteCollection.findOrInsert(withId: result.id ?? "No ID", context: self.context)
+                prerequisiteCollecton.allowedPrerequisites = result.allowedPrerequisites
+                prerequisiteCollecton.title = result.title
                 
-                result.prerequisites.forEach { FSprereq in
-                    let prerequisite = MenuItemPrerequisite.findOrInsert(withId: FSprereq.id ?? "No ID", context: self.context)
-                    prerequisite.overview = FSprereq.description
-                    prerequisite.price = FSprereq.price
-                    prerequisite.title = FSprereq.title
+                result.prerequisites.forEach({ FSPrereq in
+                    let prerequisite = MenuItemPrerequisite.findOrInsert(withId: FSPrereq.identifier, context: self.context)
+                    prerequisite.price = FSPrereq.price
+                    prerequisite.overview = FSPrereq.description
+                    prerequisite.title = FSPrereq.title
                     
-                    prerequisite.prerequisiteCollection = prerequisitesCollection
-                }
+                    prerequisiteCollecton.addToPrerequisites(prerequisite)
+                })
                 
                 result.forItems.forEach { itemId in
-                    let item = MenuItem.findOrInsert(withId: itemId, context: self.context)
-                    item.addToPrerequisites(prerequisitesCollection)
+                    let menuItem: MenuItem = .findOrInsert(withId: itemId, context: self.context)
+                    menuItem.addToPrerequisites(prerequisiteCollecton)
                 }
+                
+                PersistenceController.saveContext(self.context)
             }
         }
-        PersistenceController.saveContext(self.context)
+        
     }
     
     func getMenuItemOptions(for menuItemId: String) {
-        let menuItem = MenuItem.findOrInsert(withId: menuItemId, context: self.context)
-        
+        let menuItem = MenuItem.findOrInsert(withId: menuItemId, context: context)
         getDocuments(for: .menuItemOptions, from: FSMenuItemOptions.self, whereField: "forItems", contains: menuItemId) { results in
             results.forEach { result in
-                let optionCollection = MenuItemOptionsCollection.findOrInsert(withId: result.id ?? "No ID", context: self.context)
-                optionCollection.allowedOptions = result.allowedOptions
-                optionCollection.title = result.title
+                let optionsCollection: MenuItemOptionsCollection = .findOrInsert(withId: menuItemId, context: self.context)
+                optionsCollection.title = result.title
+                optionsCollection.allowedOptions = result.allowedOptions
                 
                 result.options.forEach { FSOption in
-                    let option = MenuItemOption.findOrInsert(withId: FSOption.id ?? "No ID", context: self.context)
-                    option.overview = FSOption.description
+                    let option = MenuItemOption.findOrInsert(withId: FSOption.identifier, context: self.context)
                     option.title = FSOption.title
+                    option.overview = FSOption.description
                     option.price = FSOption.price
-                    option.optionCollection = optionCollection
+                
+                    optionsCollection.addToOptions(option)
                 }
                 
-                menuItem.addToOptions(optionCollection)
+                menuItem.addToOptions(optionsCollection)
+                
+                PersistenceController.saveContext(self.context)
             }
         }
-        PersistenceController.saveContext(self.context)
     }
     
     func getMenuItemOptions() {
         getDocuments(for: .menuItemOptions, from: FSMenuItemOptions.self) { results in
             results.forEach { result in
-                let optionCollection = MenuItemOptionsCollection.findOrInsert(withId: result.id ?? "No ID", context: self.context)
-                optionCollection.title = result.title
-                optionCollection.allowedOptions = result.allowedOptions
+                let optionsCollection: MenuItemOptionsCollection = .findOrInsert(withId: result.id ?? "No ID", context: self.context)
+                optionsCollection.title = result.title
+                optionsCollection.allowedOptions = result.allowedOptions
                 
                 result.options.forEach { FSOption in
-                    let option = MenuItemOption.findOrInsert(withId: FSOption.id ?? "No ID", context: self.context)
-                    option.overview = FSOption.description
-                    option.title = FSOption.title
+                    let option = MenuItemOption.findOrInsert(withId: FSOption.identifier, context: self.context)
                     option.price = FSOption.price
-                    option.optionCollection = optionCollection
+                    option.title = FSOption.title
+                    option.overview = FSOption.description
+                    
+                    optionsCollection.addToOptions(option)
                 }
                 
                 result.forItems.forEach { itemId in
-                    let item = MenuItem.findOrInsert(withId: itemId, context: self.context)
-                    item.addToOptions(optionCollection)
+                    let menuItem = MenuItem.findOrInsert(withId: itemId, context: self.context)
+                    menuItem.addToOptions(optionsCollection)
                 }
+                
+                PersistenceController.saveContext(self.context)
             }
         }
-        PersistenceController.saveContext(self.context)
     }
 }
 
