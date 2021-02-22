@@ -42,7 +42,9 @@ struct MenuView: View {
                         ForEach(Array(menuItems)){ item in
                             Button(action: {
                                 restaurant.selectedItem = item.identifier ?? "no id"
-                                presentSheet.toggle()
+                                if item.hasOptions || item.hasPrerequisites {
+                                    presentSheet.toggle()
+                                }
                             }){
                                 MenuItemView(menuItem: item)
                             }

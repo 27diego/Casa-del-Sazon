@@ -43,7 +43,7 @@ struct MenuItemPrereqsView: View {
                                 HStack {
                                     Spacer()
                                         .frame(width: 20)
-                                    Text(option.title)
+                                    Text("\(option.title) --- \(option.price)")
                                 }
                             }
                         }
@@ -56,7 +56,7 @@ struct MenuItemPrereqsView: View {
                                 HStack {
                                     Spacer()
                                         .frame(width: 20)
-                                    Text(prereq.title)
+                                    Text("\(prereq.title) --- \(prereq.price)")
                                 }
                             }
                         }
