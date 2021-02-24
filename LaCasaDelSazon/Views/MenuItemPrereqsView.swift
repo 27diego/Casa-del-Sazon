@@ -36,14 +36,14 @@ struct MenuItemPrereqsView: View {
                     Text("Options")
                         .font(.title2)
                     
-                    VStack(alignment: .leading){
+                    VStack(alignment: .leading, spacing: 20){
                         ForEach(Array(options)) { collection in
                             Text(collection.title)
                             ForEach(Array(collection.options ?? Set<MenuItemOption>())) { option in
                                 HStack {
                                     Spacer()
                                         .frame(width: 20)
-                                    Text("\(option.title) --- \(option.price)")
+                                    CheckBoxOption(option: option)
                                 }
                             }
                         }
@@ -56,7 +56,7 @@ struct MenuItemPrereqsView: View {
                                 HStack {
                                     Spacer()
                                         .frame(width: 20)
-                                    Text("\(prereq.title) --- \(prereq.price)")
+                                    RadioOption(prereq: prereq)
                                 }
                             }
                         }
@@ -68,3 +68,61 @@ struct MenuItemPrereqsView: View {
     }
 }
 
+
+struct RadioOption: View {
+    var prereq: MenuItemPrerequisite
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Circle()
+                    .stroke(lineWidth: 2)
+                    .foregroundColor(.gray)
+                    .frame(width: 18, height: 18)
+                
+                Text(prereq.title)
+                    .font(.callout)
+                
+                if prereq.price != 0 {
+                    Spacer()
+                    Text("\(prereq.price)")
+                        .font(.footnote)
+                }
+            }
+            HStack(alignment: .bottom) {
+                Text(prereq.overview)
+                    .font(.footnote)
+            }
+        }
+        .padding(.trailing)
+    }
+}
+
+struct CheckBoxOption: View {
+    var option: MenuItemOption
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                RoundedRectangle(cornerRadius: 3)
+                    .stroke(lineWidth: 2)
+                    .foregroundColor(.gray)
+                    .frame(width: 18, height: 18)
+                
+                Text(option.title)
+                    .font(.callout)
+                
+                Spacer()
+                
+                if option.price != 0 {
+                    Spacer()
+                    Text("\(option.price)")
+                        .font(.footnote)
+                }
+            }
+            HStack(alignment: .bottom) {
+                Text(option.overview)
+                    .font(.footnote)
+            }
+        }
+        .padding(.trailing)
+    }
+}

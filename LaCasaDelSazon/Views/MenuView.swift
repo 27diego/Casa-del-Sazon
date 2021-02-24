@@ -40,17 +40,16 @@ struct MenuView: View {
                 ScrollView(showsIndicators: false) {
                     VStack {
                         ForEach(Array(menuItems)){ item in
-                            Button(action: {
-                                restaurant.selectedItem = item.identifier ?? "no id"
-                                if item.hasOptions || item.hasPrerequisites {
-                                    presentSheet.toggle()
+                            MenuItemView(menuItem: item)
+                                .onTapGesture {
+                                    restaurant.selectedItem = item.identifier ?? "no id"
+                                    if item.hasOptions || item.hasPrerequisites {
+                                        presentSheet.toggle()
+                                    }
                                 }
-                            }){
-                                MenuItemView(menuItem: item)
-                            }
-                            .fullScreenCover(isPresented: $presentSheet) {
-                                LazyView(MenuItemPrereqsView(itemId: restaurant.selectedItem, presentSheet: $presentSheet).environment(\.managedObjectContext, PersistenceController.shared.container.viewContext))
-                            }
+                                .fullScreenCover(isPresented: $presentSheet) {
+                                    LazyView(MenuItemPrereqsView(itemId: restaurant.selectedItem, presentSheet: $presentSheet).environment(\.managedObjectContext, PersistenceController.shared.container.viewContext))
+                                }
                         }
                         Spacer()
                             .frame(height: 10)
@@ -161,69 +160,5 @@ struct CartButtonView: View {
                     tapped.toggle()
                 }
             }
-    }
-}
-
-struct Option {
-    let description: String
-    let price: Double
-    let title: String
-}
-
-struct RadioOption: View {
-    let option = Option(description: "Taking it back to the motherland, Trompo style pork meat!", price: 9.25, title: "Al Pastor")
-    @State var selected = false
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Text(option.title)
-                    .font(.subheadline)
-                
-                Spacer()
-                
-                Circle()
-                    .stroke(lineWidth: 3)
-                    .foregroundColor(.gray)
-                    .frame(width: 23, height: 23)
-            }
-            HStack(alignment: .bottom) {
-                Text(option.description)
-                    .font(.footnote)
-                
-                if option.price != 0 {
-                    Spacer()
-                    Text("\(option.price)")
-                        .font(.footnote)
-                }
-            }
-        }
-        .padding()
-    }
-}
-
-//struct CheckBoxOption: View {
-//    let option = Option(description: "Taking it back to the motherland, Trompo style pork meat!", price: 9.25, title: "Al Pastor")
-//    @State var selected = false
-//
-//    var body: some View {
-//        HStack {
-//            Text(option.title)
-//                .font(.subheadline)
-//
-//            Spacer()
-//
-//            RoundedRectangle(cornerRadius: 3)
-//                .stroke(lineWidth: 3)
-//                .foregroundColor(.gray)
-//                .frame(width: 23, height: 23)
-//        }
-//        .padding()
-//    }
-//}
-
-struct MenuView_Previews: PreviewProvider {
-    static var previews: some View {
-        RadioOption()
     }
 }
