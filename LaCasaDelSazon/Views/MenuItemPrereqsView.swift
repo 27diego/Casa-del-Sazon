@@ -79,7 +79,7 @@ struct MenuItemPrereqView: View {
     var item = OrderItem.item
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 10) {
                 Text(item.title)
                     .font(.title2)
                     .bold()
@@ -143,6 +143,9 @@ struct MenuItemPrereqView: View {
                             }
                         }
                         HStack(alignment: .bottom) {
+                            Spacer()
+                                .frame(width: 28)
+                            
                             Text(option.description)
                                 .font(.footnote)
                         }
@@ -150,16 +153,27 @@ struct MenuItemPrereqView: View {
                 }
                 
                 HStack {
-                    Image(systemName: "minus")
-                    Spacer()
-                    Text("3")
-                    Spacer()
-                    Image(systemName: "plus")
+                    HStack {
+                        Image(systemName: "minus")
+                        Spacer()
+                        Text("3")
+                        Spacer()
+                        Image(systemName: "plus")
+                    }
+                    .padding()
+                    .frame(width: UIScreen.screenWidth * 0.3)
+                    .background(RoundedRectangle(cornerRadius: 10).foregroundColor(Color(.systemGray6)))
+                    
+                    
+                    
+                    Text("Add to Cart $\(item.price)")
+                        .bold()
+                        .padding()
+                        .frame(width: UIScreen.screenWidth * 0.6)
+                        .background(RoundedRectangle(cornerRadius: 10).foregroundColor(Color(.systemGray6)))
                 }
-                .padding()
-                .frame(width: 109)
-                .background(RoundedRectangle(cornerRadius: 10).foregroundColor(Color(.systemGray6)))
             }
+            .padding(.horizontal)
         }
     }
 }
