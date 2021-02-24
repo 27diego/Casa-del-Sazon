@@ -88,6 +88,9 @@ struct MenuItemPrereqView: View {
                     .font(.body)
                     .foregroundColor(Color(.gray))
                 
+                Spacer()
+                    .frame(height: 10)
+                
                 Text(item.prereqs.title)
                     .font(.headline)
                     .bold()
