@@ -47,7 +47,7 @@ struct MenuItemPrereqsView: View {
                                 }
                             }
                         }
-
+                        
                         Text("Prerequisites")
                             .font(.title2)
                         ForEach(Array(prereqs)) { collection in
@@ -68,6 +68,101 @@ struct MenuItemPrereqsView: View {
     }
 }
 
+struct MenuItemPrereqsView_Previews: PreviewProvider {
+    static var previews: some View {
+        MenuItemPrereqView()
+    }
+}
+
+
+struct MenuItemPrereqView: View {
+    var item = OrderItem.item
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading) {
+                Text(item.title)
+                    .font(.title2)
+                    .bold()
+                
+                Text(item.description)
+                    .font(.body)
+                    .foregroundColor(Color(.gray))
+                
+                Text(item.prereqs.title)
+                    .font(.headline)
+                    .bold()
+                
+                Divider()
+                
+                ForEach(item.prereqs.prereqs){ item in
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Circle()
+                                .stroke(lineWidth: 2)
+                                .foregroundColor(.gray)
+                                .frame(width: 18, height: 18)
+                            
+                            Text(item.title)
+                                .font(.callout)
+                            
+                            if item.price != 0 {
+                                Spacer()
+                                Text("\(item.price)")
+                                    .font(.footnote)
+                            }
+                        }
+                        HStack(alignment: .bottom) {
+                            Text(item.description)
+                                .font(.footnote)
+                        }
+                    }
+                }
+                
+                Text(item.options.title)
+                    .font(.headline)
+                    .bold()
+                Divider()
+                
+                ForEach(item.options.options) { option in
+                    VStack(alignment: .leading) {
+                        HStack {
+                            RoundedRectangle(cornerRadius: 3)
+                                .stroke(lineWidth: 2)
+                                .foregroundColor(.gray)
+                                .frame(width: 18, height: 18)
+                            
+                            Text(option.title)
+                                .font(.callout)
+                            
+                            Spacer()
+                            
+                            if option.price != 0 {
+                                Spacer()
+                                Text("\(option.price)")
+                                    .font(.footnote)
+                            }
+                        }
+                        HStack(alignment: .bottom) {
+                            Text(option.description)
+                                .font(.footnote)
+                        }
+                    }
+                }
+                
+                HStack {
+                    Image(systemName: "minus")
+                    Spacer()
+                    Text("3")
+                    Spacer()
+                    Image(systemName: "plus")
+                }
+                .padding()
+                .frame(width: 109)
+                .background(RoundedRectangle(cornerRadius: 10).foregroundColor(Color(.systemGray6)))
+            }
+        }
+    }
+}
 
 struct RadioOption: View {
     var prereq: MenuItemPrerequisite

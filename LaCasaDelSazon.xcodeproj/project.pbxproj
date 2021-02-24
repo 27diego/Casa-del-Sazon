@@ -52,6 +52,7 @@
 		8B983E7E25D4DAC6001F59CD /* LocationChooserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B983E7D25D4DAC6001F59CD /* LocationChooserViewModel.swift */; };
 		8B983E8225D4DB49001F59CD /* RestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B983E8125D4DB49001F59CD /* RestaurantModel.swift */; };
 		8BA33F5425CB7B4F009B41D6 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA33F5325CB7B4F009B41D6 /* VisualEffectView.swift */; };
+		8BC79FCB25E6CE9F00020E4C /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC79FCA25E6CE9F00020E4C /* MockData.swift */; };
 		8BDADB92257749780000DBB4 /* ReusableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDADB91257749780000DBB4 /* ReusableViews.swift */; };
 		8BEE9B5425D209B9007CF9E9 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEE9B5325D209B9007CF9E9 /* FirestoreService.swift */; };
 		8BF0510825D72A5F00673299 /* DrinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF0510725D72A5F00673299 /* DrinkModel.swift */; };
@@ -110,6 +111,7 @@
 		8B983E7D25D4DAC6001F59CD /* LocationChooserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationChooserViewModel.swift; sourceTree = "<group>"; };
 		8B983E8125D4DB49001F59CD /* RestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantModel.swift; sourceTree = "<group>"; };
 		8BA33F5325CB7B4F009B41D6 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
+		8BC79FCA25E6CE9F00020E4C /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		8BDADB91257749780000DBB4 /* ReusableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableViews.swift; sourceTree = "<group>"; };
 		8BEE9B5325D209B9007CF9E9 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		8BF0510725D72A5F00673299 /* DrinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkModel.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				8B8D365025D6E77300A19814 /* CategoryModel.swift */,
 				8BF0510725D72A5F00673299 /* DrinkModel.swift */,
 				8BF0510A25D72BD300673299 /* MenuItemModel.swift */,
+				8BC79FCA25E6CE9F00020E4C /* MockData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -467,6 +470,7 @@
 				8B8AE28D257851F60095D334 /* LocationChooserView.swift in Sources */,
 				8B047E0A25D22DCD005AB133 /* LazyView.swift in Sources */,
 				8B74CA5B25D9A34000668788 /* DrinksCategory+CoreDataClass.swift in Sources */,
+				8BC79FCB25E6CE9F00020E4C /* MockData.swift in Sources */,
 				8B74CA5525D9A34000668788 /* Schedule+CoreDataClass.swift in Sources */,
 				8BF0510B25D72BD300673299 /* MenuItemModel.swift in Sources */,
 				8B74CA5125D9A34000668788 /* DrinkPrerequisiteCollection+CoreDataClass.swift in Sources */,

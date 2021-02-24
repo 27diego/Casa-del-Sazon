@@ -13,7 +13,6 @@ struct MenuView: View {
     
     @State var selectedCategory = "all"
     @State var presentSheet = false
-    
     @State var selectedItem = ""
     
     init(restaurantId: String) {
