@@ -121,7 +121,7 @@ struct MenuItemView: View {
             }
             Spacer()
             VStack(alignment: .trailing) {
-                Text("$\(menuItem.price)")
+                Text("$\(menuItem.price.removeZerosFromEnd())")
                     .font(.system(size: 14))
                 Spacer()
                     .frame(height: menuItem.overview != "" ? 40 : 20)

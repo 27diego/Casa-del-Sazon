@@ -34,14 +34,12 @@ extension Date {
 }
 
 // MARK: - Double Extension
-//extension Double {
-//    func removeZerosFromEnd() -> String {
-//        let number = String(self)
-//        let firstAndLast = number.components(separatedBy: ".")
-//        if firstAndLast.count < 2 {
-//            return number
-//        }
-//        
-//        
-//    }
-//}
+extension Double {
+    func removeZerosFromEnd() -> String {
+        let formatter = NumberFormatter()
+        let number = NSNumber(value: self)
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 2
+        return String(formatter.string(from: number) ?? "")
+    }
+}

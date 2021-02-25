@@ -28,14 +28,29 @@ struct MenuItemPrereqsView: View {
     
     var body: some View {
         VStack(alignment: .leading){
-            Text(menuItem.title)
-                .font(.title2)
-                .bold()
-                .padding(.horizontal)
+            HStack {
+                Text(menuItem.title)
+                    .font(.title2)
+                    .bold()
+                    
+                Spacer()
+                
+                Image(systemName: "xmark.circle")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 25, height: 25)
+                    .foregroundColor(.black)
+                    .onTapGesture {
+                        presentSheet.toggle()
+                    }
+            }
+            .padding(.horizontal)
 
             ScrollView {
-                VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: 12) {
                     if menuItem.overview != "" {
+                        Spacer()
+                            .frame(height: 5)
                         Text(menuItem.overview)
                             .font(.body)
                             .foregroundColor(.gray)
@@ -90,7 +105,7 @@ struct MenuItemPrereqsView: View {
                         
                         
                         Button(action: { presentSheet.toggle() }){
-                            Text("Add to Cart $\(menuItem.price)")
+                            Text("Add to Cart $\(menuItem.price.removeZerosFromEnd())")
                                 .bold()
                                 .padding()
                         }
@@ -125,7 +140,7 @@ struct RadioOption: View {
                 
                 if prereq.price != 0 {
                     Spacer()
-                    Text("\(prereq.price)")
+                    Text("$\(prereq.price.removeZerosFromEnd())")
                         .font(.footnote)
                 }
             }
@@ -134,9 +149,10 @@ struct RadioOption: View {
                     .font(.footnote)
             }
         }
-        .animation(.easeInOut)
         .onTapGesture {
-            isSelected.toggle()
+            withAnimation(.linear(duration: 0.2)) {
+                isSelected.toggle()
+            }
         }
         .padding(.trailing)
     }
@@ -152,7 +168,7 @@ struct CheckBoxOption: View {
                     .stroke(lineWidth: 2)
                     .foregroundColor(isSelected ? .blue : .gray)
                     .frame(width: 18, height: 18)
-                    .overlay(Image(systemName: "checkmark").resizable().aspectRatio(contentMode: .fit).foregroundColor(isSelected ? .blue : .white).frame(width: 10, height: 10))
+                    .overlay(Image(systemName: "checkmark").resizable().aspectRatio(contentMode: .fit).foregroundColor(isSelected ? .blue : .white).frame(width: 13, height: 13))
                 
                 Text(option.title)
                     .font(.callout)
@@ -161,7 +177,7 @@ struct CheckBoxOption: View {
                 
                 if option.price != 0 {
                     Spacer()
-                    Text("\(option.price)")
+                    Text("$\(option.price.removeZerosFromEnd())")
                         .font(.footnote)
                 }
             }
@@ -170,9 +186,10 @@ struct CheckBoxOption: View {
                     .font(.footnote)
             }
         }
-        .animation(.easeInOut)
         .onTapGesture {
-            isSelected.toggle()
+            withAnimation(.linear(duration: 0.1)) {
+                isSelected.toggle()
+            }
         }
         .padding(.trailing)
     }
