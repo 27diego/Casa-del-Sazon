@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MenuItemPrereqsView: View {
+    @EnvironmentObject var orderVM: OrderViewModel
     @EnvironmentObject var restaurant: RestaurantViewModel
     @FetchRequest var options: FetchedResults<MenuItemOptionsCollection>
     @FetchRequest var prereqs: FetchedResults<MenuItemPrerequisiteCollection>
@@ -15,7 +16,6 @@ struct MenuItemPrereqsView: View {
     @Binding var presentSheet: Bool
     
     @State var quantity = 1
-    
     var menuItem: MenuItem
     
     init(menuItem: MenuItem, presentSheet: Binding<Bool>) {
@@ -67,7 +67,7 @@ struct MenuItemPrereqsView: View {
                         Divider()
                         
                         ForEach(Array(collection.prerequisites ?? Set<MenuItemPrerequisite>())) { prereq in
-                            RadioOption(prereq: prereq)
+                            RadioOption(prereq: prereq, limit: collection.allowedPrerequisites)
                         }
                     }
                     
@@ -79,7 +79,7 @@ struct MenuItemPrereqsView: View {
                         Divider()
                         
                         ForEach(Array(collection.options ?? Set<MenuItemOption>())) { option in
-                            CheckBoxOption(option: option)
+                            CheckBoxOption(option: option, limit: collection.allowedOptions)
                         }
                     }
                     
@@ -104,8 +104,11 @@ struct MenuItemPrereqsView: View {
                         .background(RoundedRectangle(cornerRadius: 10).foregroundColor(Color(.systemGray6)))
                         
                         
-                        Button(action: { presentSheet.toggle() }){
-                            Text("Add to Cart $\(menuItem.price.removeZerosFromEnd())")
+                        Button(action: {
+                            orderVM.addToCart(quantity: quantity)
+                            presentSheet.toggle()
+                        }){
+                            Text("Add to Cart $\(orderVM.overallPrice.removeZerosFromEnd())")
                                 .bold()
                                 .padding()
                         }
@@ -119,21 +122,28 @@ struct MenuItemPrereqsView: View {
         }
         .onAppear {
             restaurant.checkOptionsAndPrerequisites()
+            orderVM.addItem(item: menuItem)
+        }
+        .onDisappear {
+            orderVM.clearItem()
         }
     }
 }
 
 
 struct RadioOption: View {
+    @EnvironmentObject var orderVM: OrderViewModel
+    
     var prereq: MenuItemPrerequisite
-    @State var isSelected = false
+    var limit: Int
+    
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 Circle()
-                    .foregroundColor(isSelected ? .blue : .gray)
+                    .foregroundColor(orderVM.selectedItemContainsContainsPrereq(title: prereq.title) ? .blue : .gray)
                     .frame(width: 18, height: 18)
-                    .overlay(Circle().foregroundColor(.white).frame(width: isSelected ? 9 : 16, height: isSelected ? 9 : 16))
+                    .overlay(Circle().foregroundColor(.white).frame(width: orderVM.selectedItemContainsContainsPrereq(title: prereq.title) ? 9 : 16, height: orderVM.selectedItemContainsContainsPrereq(title: prereq.title) ? 9 : 16))
                 
                 Text(prereq.title)
                     .font(.callout)
@@ -151,7 +161,7 @@ struct RadioOption: View {
         }
         .onTapGesture {
             withAnimation(.linear(duration: 0.2)) {
-                isSelected.toggle()
+                orderVM.addPrereq(prereq, limit: limit)
             }
         }
         .padding(.trailing)
@@ -159,16 +169,19 @@ struct RadioOption: View {
 }
 
 struct CheckBoxOption: View {
+    @EnvironmentObject var orderVM: OrderViewModel
+    
     var option: MenuItemOption
-    @State var isSelected = false
+    var limit: Int
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 RoundedRectangle(cornerRadius: 3)
                     .stroke(lineWidth: 2)
-                    .foregroundColor(isSelected ? .blue : .gray)
+                    .foregroundColor(orderVM.selectedItemContainsContainsOption(title: option.title) ? .blue : .gray)
                     .frame(width: 18, height: 18)
-                    .overlay(Image(systemName: "checkmark").resizable().aspectRatio(contentMode: .fit).foregroundColor(isSelected ? .blue : .white).frame(width: 13, height: 13))
+                    .overlay(Image(systemName: "checkmark").resizable().aspectRatio(contentMode: .fit).foregroundColor(orderVM.selectedItemContainsContainsOption(title: option.title) ? .blue : .white).frame(width: 13, height: 13))
                 
                 Text(option.title)
                     .font(.callout)
@@ -188,7 +201,7 @@ struct CheckBoxOption: View {
         }
         .onTapGesture {
             withAnimation(.linear(duration: 0.1)) {
-                isSelected.toggle()
+                orderVM.addOption(option, limit: limit)
             }
         }
         .padding(.trailing)

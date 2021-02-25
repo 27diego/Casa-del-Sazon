@@ -40,7 +40,7 @@ struct ExploreView: View {
             
             Group {
                 if menuSelection == "Menu" {
-                    MenuView(restaurantId: restaurant.restaurantId)
+                    MenuView(restaurantId: restaurant.restaurantId, orderVM: OrderViewModel())
                 }
                 else {
                     ReservationView()

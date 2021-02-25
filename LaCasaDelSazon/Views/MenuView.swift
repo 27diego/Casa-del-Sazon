@@ -8,14 +8,17 @@
 import SwiftUI
 
 struct MenuView: View {
+    @ObservedObject var orderVM: OrderViewModel
+    
     @EnvironmentObject var restaurant: RestaurantViewModel
     @FetchRequest var menuItems: FetchedResults<MenuItem>
     
     @State var selectedCategory = "all"
     @State var presentSheet = false
 
-    init(restaurantId: String) {
+    init(restaurantId: String, orderVM: OrderViewModel) {
         self._menuItems = FetchRequest(fetchRequest: MenuItem.fetchByRestaurant(id: restaurantId))
+        self._orderVM = ObservedObject(initialValue: orderVM)
     }
     
     var body: some View {
@@ -46,7 +49,7 @@ struct MenuView: View {
                                     }
                                 }
                                 .fullScreenCover(isPresented: $presentSheet) {
-                                    LazyView(MenuItemPrereqsView(menuItem: restaurant.selectedItem, presentSheet: $presentSheet).environment(\.managedObjectContext, PersistenceController.shared.container.viewContext))
+                                    LazyView(MenuItemPrereqsView(menuItem: restaurant.selectedItem, presentSheet: $presentSheet).environment(\.managedObjectContext, PersistenceController.shared.container.viewContext).environmentObject(orderVM))
                                 }
                         }
                         Spacer()
