@@ -11,73 +11,114 @@ struct MenuItemPrereqsView: View {
     @EnvironmentObject var restaurant: RestaurantViewModel
     @FetchRequest var options: FetchedResults<MenuItemOptionsCollection>
     @FetchRequest var prereqs: FetchedResults<MenuItemPrerequisiteCollection>
-    var itemId: String
+    
     @Binding var presentSheet: Bool
     
-    init(itemId: String, presentSheet: Binding<Bool>) {
-        self.itemId = itemId
+    @State var quantity = 1
+    
+    var menuItem: MenuItem
+    
+    init(menuItem: MenuItem, presentSheet: Binding<Bool>) {
+        self.menuItem = menuItem
         self._presentSheet = presentSheet
         
-        _options = FetchRequest(fetchRequest: MenuItemOptionsCollection.fetchByMenuItem(id: itemId))
-        _prereqs = FetchRequest(fetchRequest: MenuItemPrerequisiteCollection.fetchByMenuItem(id: itemId))
+        _options = FetchRequest(fetchRequest: MenuItemOptionsCollection.fetchByMenuItem(id: menuItem.identifier ?? "No ID"))
+        _prereqs = FetchRequest(fetchRequest: MenuItemPrerequisiteCollection.fetchByMenuItem(id: menuItem.identifier ?? "No ID"))
     }
     
     var body: some View {
-        VStack() {
-            VStack {
-                Button("go back") {
-                    presentSheet.toggle()
-                }
-                .onAppear {
-                    restaurant.checkOptionsAndPrerequisites()
-                }
-                
-                ScrollView {
-                    Text("Options")
-                        .font(.title2)
-                    
-                    VStack(alignment: .leading, spacing: 20){
-                        ForEach(Array(options)) { collection in
-                            Text(collection.title)
-                            ForEach(Array(collection.options ?? Set<MenuItemOption>())) { option in
-                                HStack {
-                                    Spacer()
-                                        .frame(width: 20)
-                                    CheckBoxOption(option: option)
-                                }
-                            }
-                        }
+        VStack(alignment: .leading){
+            Text(menuItem.title)
+                .font(.title2)
+                .bold()
+                .padding(.horizontal)
 
-                        Text("Prerequisites")
-                            .font(.title2)
-                        ForEach(Array(prereqs)) { collection in
-                            Text(collection.title)
-                            ForEach(Array(collection.prerequisites ?? Set<MenuItemPrerequisite>())) { prereq in
-                                HStack {
-                                    Spacer()
-                                        .frame(width: 20)
-                                    RadioOption(prereq: prereq)
-                                }
-                            }
+            ScrollView {
+                VStack(alignment: .leading, spacing: 10) {
+                    if menuItem.overview != "" {
+                        Text(menuItem.overview)
+                            .font(.body)
+                            .foregroundColor(.gray)
+                        
+                        
+                        Spacer()
+                            .frame(height: 10)
+                    }
+                    
+                    ForEach(prereqs){ collection in
+                        Text(collection.title)
+                            .font(.headline)
+                            .bold()
+                        Divider()
+                        
+                        ForEach(Array(collection.prerequisites ?? Set<MenuItemPrerequisite>())) { prereq in
+                            RadioOption(prereq: prereq)
                         }
                     }
+                    
+                    ForEach(options) { collection in
+                        Text(collection.title)
+                            .font(.headline)
+                            .bold()
+                        
+                        Divider()
+                        
+                        ForEach(Array(collection.options ?? Set<MenuItemOption>())) { option in
+                            CheckBoxOption(option: option)
+                        }
+                    }
+                    
+                    HStack {
+                        HStack {
+                            Button(action: {
+                                if quantity > 1 {
+                                    quantity -= 1
+                                }
+                            }) {
+                                Image(systemName: "minus")
+                            }
+                            Spacer()
+                            Text("\(quantity)")
+                            Spacer()
+                            Button(action: {  quantity += 1 }) {
+                                Image(systemName: "plus")
+                            }
+                        }
+                        .padding()
+                        .frame(width: UIScreen.screenWidth * 0.3)
+                        .background(RoundedRectangle(cornerRadius: 10).foregroundColor(Color(.systemGray6)))
+                        
+                        
+                        Button(action: { presentSheet.toggle() }){
+                            Text("Add to Cart $\(menuItem.price)")
+                                .bold()
+                                .padding()
+                        }
+                        .frame(width: UIScreen.screenWidth*0.6)
+                        .background(RoundedRectangle(cornerRadius: 10).foregroundColor(Color(.systemGray6)))
+                    }
+                    .foregroundColor(.black)
                 }
+                .padding(.horizontal)
             }
         }
-        .frame(width: UIScreen.screenWidth)
+        .onAppear {
+            restaurant.checkOptionsAndPrerequisites()
+        }
     }
 }
 
 
 struct RadioOption: View {
     var prereq: MenuItemPrerequisite
+    @State var isSelected = false
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 Circle()
-                    .stroke(lineWidth: 2)
-                    .foregroundColor(.gray)
+                    .foregroundColor(isSelected ? .blue : .gray)
                     .frame(width: 18, height: 18)
+                    .overlay(Circle().foregroundColor(.white).frame(width: isSelected ? 9 : 16, height: isSelected ? 9 : 16))
                 
                 Text(prereq.title)
                     .font(.callout)
@@ -93,19 +134,25 @@ struct RadioOption: View {
                     .font(.footnote)
             }
         }
+        .animation(.easeInOut)
+        .onTapGesture {
+            isSelected.toggle()
+        }
         .padding(.trailing)
     }
 }
 
 struct CheckBoxOption: View {
     var option: MenuItemOption
+    @State var isSelected = false
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 RoundedRectangle(cornerRadius: 3)
                     .stroke(lineWidth: 2)
-                    .foregroundColor(.gray)
+                    .foregroundColor(isSelected ? .blue : .gray)
                     .frame(width: 18, height: 18)
+                    .overlay(Image(systemName: "checkmark").resizable().aspectRatio(contentMode: .fit).foregroundColor(isSelected ? .blue : .white).frame(width: 10, height: 10))
                 
                 Text(option.title)
                     .font(.callout)
@@ -122,6 +169,10 @@ struct CheckBoxOption: View {
                 Text(option.overview)
                     .font(.footnote)
             }
+        }
+        .animation(.easeInOut)
+        .onTapGesture {
+            isSelected.toggle()
         }
         .padding(.trailing)
     }

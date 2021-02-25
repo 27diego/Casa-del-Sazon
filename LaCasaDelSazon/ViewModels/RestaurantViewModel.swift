@@ -10,7 +10,7 @@ import CoreData
 
 class RestaurantViewModel: ObservableObject {
     let firestoreService: FirestoreService = FirestoreService.shared
-    @Published var selectedItem = ""
+    @Published var selectedItem: MenuItem = MenuItem()
     @Published var restaurantId = "" {
         didSet {
             setUpCategories()
@@ -41,7 +41,7 @@ class RestaurantViewModel: ObservableObject {
     }
     
     func checkOptionsAndPrerequisites() {
-        firestoreService.getMenuItemPrerequisites(for: selectedItem)
-        firestoreService.getMenuItemOptions(for: selectedItem)
+        firestoreService.getMenuItemPrerequisites(for: selectedItem.identifier ?? "No ID")
+        firestoreService.getMenuItemOptions(for: selectedItem.identifier ?? "No ID")
     }
 }

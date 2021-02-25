@@ -29,6 +29,7 @@
 		8B55E92F25C50387003A4861 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B55E92E25C50387003A4861 /* SessionService.swift */; };
 		8B55E93425C887D8003A4861 /* GoogleSignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B55E93325C887D8003A4861 /* GoogleSignInButton.swift */; };
 		8B55E94125C8A8D7003A4861 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B55E94025C8A8D7003A4861 /* Extensions.swift */; };
+		8B5F2DDF25E6BF2400C6DBCF /* OrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F2DDE25E6BF2400C6DBCF /* OrderViewModel.swift */; };
 		8B74CA5025D9A34000668788 /* DrinkPrerequisite+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74CA4B25D9A34000668788 /* DrinkPrerequisite+CoreDataClass.swift */; };
 		8B74CA5125D9A34000668788 /* DrinkPrerequisiteCollection+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74CA4625D9A33F00668788 /* DrinkPrerequisiteCollection+CoreDataClass.swift */; };
 		8B74CA5225D9A34000668788 /* MenuItemOptionsCollection+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74CA4825D9A33F00668788 /* MenuItemOptionsCollection+CoreDataClass.swift */; };
@@ -87,6 +88,7 @@
 		8B55E92E25C50387003A4861 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		8B55E93325C887D8003A4861 /* GoogleSignInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInButton.swift; sourceTree = "<group>"; };
 		8B55E94025C8A8D7003A4861 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		8B5F2DDE25E6BF2400C6DBCF /* OrderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewModel.swift; sourceTree = "<group>"; };
 		8B74CA4425D9A33F00668788 /* Address+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Address+CoreDataClass.swift"; path = "/Users/developer/Documents/Developer/iOS/LaCasaDelSazon/LaCasaDelSazon/CoreData/Entities/Address+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		8B74CA4525D9A33F00668788 /* MenuItemPrerequisite+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MenuItemPrerequisite+CoreDataClass.swift"; path = "/Users/developer/Documents/Developer/iOS/LaCasaDelSazon/LaCasaDelSazon/CoreData/Entities/MenuItemPrerequisite+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		8B74CA4625D9A33F00668788 /* DrinkPrerequisiteCollection+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DrinkPrerequisiteCollection+CoreDataClass.swift"; path = "/Users/developer/Documents/Developer/iOS/LaCasaDelSazon/LaCasaDelSazon/CoreData/Entities/DrinkPrerequisiteCollection+CoreDataClass.swift"; sourceTree = "<absolute>"; };
@@ -219,6 +221,7 @@
 				8B15C1BA25D46AC5007B57C1 /* LoginViewModel.swift */,
 				8B15C1C025D46D43007B57C1 /* SignupViewModel.swift */,
 				8B983E7D25D4DAC6001F59CD /* LocationChooserViewModel.swift */,
+				8B5F2DDE25E6BF2400C6DBCF /* OrderViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -475,6 +478,7 @@
 				8B15C1BE25D46BD2007B57C1 /* VerifyInputs.swift in Sources */,
 				8B0DCFDC2577472F00A8A013 /* LaCasaDelSazonApp.swift in Sources */,
 				8B74CA5425D9A34000668788 /* MenuItemOption+CoreDataClass.swift in Sources */,
+				8B5F2DDF25E6BF2400C6DBCF /* OrderViewModel.swift in Sources */,
 				8B74CA5725D9A34000668788 /* MenuItemPrerequisite+CoreDataClass.swift in Sources */,
 				8B74CA5A25D9A34000668788 /* MenuItemPrerequisiteCollection+CoreDataClass.swift in Sources */,
 				8B47467C25CCD53600F4E269 /* HomeView.swift in Sources */,
