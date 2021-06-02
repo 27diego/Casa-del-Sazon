@@ -64,6 +64,7 @@ struct MenuItemPrereqsView: View {
                         Text(collection.title)
                             .font(.headline)
                             .bold()
+                                                
                         Divider()
                         
                         ForEach(Array(collection.prerequisites ?? Set<MenuItemPrerequisite>())) { prereq in
@@ -108,7 +109,7 @@ struct MenuItemPrereqsView: View {
                             orderVM.addToCart(quantity: quantity)
                             presentSheet.toggle()
                         }){
-                            Text("Add to Cart $\(orderVM.overallPrice.removeZerosFromEnd())")
+                            Text("Add to Cart $\(orderVM.selectedItem.overAllPrice.removeZerosFromEnd())")
                                 .bold()
                                 .padding()
                         }

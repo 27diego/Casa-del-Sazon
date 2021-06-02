@@ -9,10 +9,14 @@ import Foundation
 
 class OrderViewModel: ObservableObject, Order {
     internal var cart: [OrderItem : Int] = .init()
-    @Published private(set) var selectedItem: OrderItem?
+    @Published private(set) var selectedItem = OrderItem(title: "", price: 0.0, options: [], prereqs: [])
     
     @Published var numberOfItems: Int = 0
     @Published var overallPrice: Double = 0.0
+    
+    init() {
+        print("initialized")
+    }
     
     func addItem(item: MenuItem) {
         let newOrderItem = OrderItem(title: item.title, price: item.price, options: .init(), prereqs: .init())
@@ -20,29 +24,26 @@ class OrderViewModel: ObservableObject, Order {
     }
     
     func addOption(_ option: MenuItemOption, limit: Int) {
-        if var item = selectedItem {
-            item.modifyOptions(option, limit: limit)
-        }
+        selectedItem.modifyOptions(option, limit: limit)
     }
     
     func addPrereq(_ prereq: MenuItemPrerequisite, limit: Int) {
-        if var item = selectedItem {
-            item.modifyPrerequisites(prereq, limit: limit)
-        }
+        selectedItem.modifyPrerequisites(prereq, limit: limit)
     }
     
     func addToCart(quantity: Int) {
-        guard let item = selectedItem else { return }
-        if cart[item] != nil {
-            cart[item]! += quantity
+        if var item = cart[selectedItem] {
+            item += quantity
         }
         else {
-            cart[item] = 1
+            cart[selectedItem] = quantity
         }
         
-        overallPrice += (item.price * Double(quantity))
+        overallPrice += (selectedItem.price * Double(quantity))
         numberOfItems += quantity
-        selectedItem = nil
+        selectedItem = OrderItem(title: "", price: 0.0, options: [], prereqs: [])
+        
+        print(cart.count)
     }
     
     func deleteFromCart(item: OrderItem) {
@@ -63,24 +64,20 @@ class OrderViewModel: ObservableObject, Order {
     }
     
     func clearItem() {
-        selectedItem = nil
+        selectedItem = OrderItem(title: "", price: 0.0, options: [], prereqs: [])
     }
     
     func selectedItemContainsContainsPrereq(title: String) -> Bool {
-        if let item = selectedItem {
-            if item.prereqs.contains(where: { prereq in prereq.title == title }) {
-                return true
-            }
+        if selectedItem.prereqs.contains(where: { prereq in prereq.title == title }) {
+            return true
         }
         
         return false
     }
     
     func selectedItemContainsContainsOption(title: String) -> Bool {
-        if let item = selectedItem {
-            if item.options.contains(where: { option in option.title == title }) {
-                return true
-            }
+        if selectedItem.options.contains(where: { option in option.title == title }) {
+            return true
         }
         
         return false
@@ -122,17 +119,14 @@ struct OrderItem: Hashable {
     
     mutating func modifyOptions(_ option: MenuItemOption, limit: Int) {
         let optionExists = options.contains(where: { orderOption in orderOption.title == option.title })
-        print("entering function \(options.count), \(limit), \(optionExists)")
         if options.count < limit && !optionExists  {
             let newOption = OrderAddons(title: option.title, price: option.price)
-            print("should be adding")
             options.insert(newOption)
             overAllPrice += newOption.price
         }
         else if optionExists {
             let item = options.firstIndex(where: { setOption in setOption.title == option.title })
             if let item = item {
-                print("should be removing")
                 options.remove(at: item)
                 overAllPrice -= option.price
             }
@@ -162,7 +156,7 @@ protocol Order {
     var cart: [OrderItem : Int] { get set }
     var numberOfItems: Int { get set }
     
-    var selectedItem: OrderItem? { get }
+    var selectedItem: OrderItem { get }
     var overallPrice: Double { get set }
     
     // add or delete items on cart

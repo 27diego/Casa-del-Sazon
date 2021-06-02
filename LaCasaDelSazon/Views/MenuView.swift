@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MenuView: View {
-    @ObservedObject var orderVM: OrderViewModel
+    @StateObject var orderVM: OrderViewModel
     
     @EnvironmentObject var restaurant: RestaurantViewModel
     @FetchRequest var menuItems: FetchedResults<MenuItem>
@@ -18,7 +18,7 @@ struct MenuView: View {
 
     init(restaurantId: String, orderVM: OrderViewModel) {
         self._menuItems = FetchRequest(fetchRequest: MenuItem.fetchByRestaurant(id: restaurantId))
-        self._orderVM = ObservedObject(initialValue: orderVM)
+        self._orderVM = StateObject(wrappedValue: orderVM)
     }
     
     var body: some View {
@@ -28,6 +28,7 @@ struct MenuView: View {
                 HStack {
                     Spacer()
                     CartButtonView()
+                        .environmentObject(orderVM)
                 }
                 .padding()
             }
@@ -146,8 +147,14 @@ struct MenuItemView: View {
 }
 
 struct CartButtonView: View {
+    @EnvironmentObject var orderVM: OrderViewModel
+    
     @State var tapped = false
     var body: some View {
+        
+        let keys = orderVM.cart.map{$0.key}
+        let values = orderVM.cart.map {$0.value}
+        
         Image(systemName: "cart")
             .resizable()
             .aspectRatio(contentMode: .fit)
@@ -157,8 +164,14 @@ struct CartButtonView: View {
                 tapped.toggle()
             }
             .sheet(isPresented: $tapped) {
-                Button("Go Back") {
-                    tapped.toggle()
+                VStack {
+                    Button("Go Back") {
+                        tapped.toggle()
+                    }
+                    
+                    ForEach(keys.indices) { index in
+                        Text("key: \(keys[index].title), value: \(values[index])")
+                    }
                 }
             }
     }
